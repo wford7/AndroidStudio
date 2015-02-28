@@ -1,10 +1,23 @@
 package com.gymrattrax.gymrattrax;
 
-public class CardioExercise extends WorkoutItem {
+public class CardioWorkout extends WorkoutItem {
     private int ID;
-    private String typeOfWorkout;
     private double time;
     private double METSVal;
+    private double distance;
+
+    public CardioWorkout() {
+        super();
+        this.setType(WorkoutType.CARDIO);
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
 
     public int getID() {
         return ID;
@@ -12,14 +25,6 @@ public class CardioExercise extends WorkoutItem {
 
     public void setID(int ID) {
         this.ID = ID;
-    }
-
-    public String getTypeOfWorkout() {
-        return typeOfWorkout;
-    }
-
-    public void setTypeOfWorkout(String typeOfWorkout) {
-        this.typeOfWorkout = typeOfWorkout;
     }
 
     public double getTime() {

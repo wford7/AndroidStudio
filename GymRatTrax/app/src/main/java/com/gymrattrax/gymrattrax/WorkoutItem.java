@@ -10,7 +10,15 @@ public class WorkoutItem {
     private double METSVal;
     private double Time;
 
-    public WorkoutItem () {}
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    private String name;
 
     public WorkoutType getType() {
         return type;
