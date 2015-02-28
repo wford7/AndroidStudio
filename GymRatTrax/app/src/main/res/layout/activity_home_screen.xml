@@ -7,6 +7,7 @@
     android:background="#e68d00"
     android:id="@+id/Homescreen"
     android:orientation="vertical"
+
     android:weightSum="1">
 
     <ImageView
@@ -19,40 +20,8 @@
         android:clickable="false"
         android:layout_weight="0.08" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="SCHEDULED FOR TODAY:"
-        android:id="@+id/textView"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_row="0"
-        android:layout_column="0"
-        android:textAlignment="center"
-        android:textStyle="bold|italic"
-        android:gravity="center" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Time: Exercise 1"
-        android:id="@+id/textView2"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.08" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Time: Exercise 2"
-        android:id="@+id/textView4"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.08" />
-
     <Button
-        android:layout_width="154dp"
+        android:layout_width="208dp"
         android:layout_height="wrap_content"
         android:text="BEGIN \nWORKOUT!"
         android:id="@+id/button"
@@ -60,10 +29,123 @@
         android:clickable="true"
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
         android:textStyle="bold"
         android:textSize="25sp"
         android:layout_row="1"
         android:layout_column="0"
-        android:background="#ffc93f" />
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="5"
+        android:onClick="loadCurrentSchedule"
+        android:singleLine="false"
+        />
+
+    <Button
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:text="CREATE \nSCHEDULE"
+        android:id="@+id/button6"
+        android:layout_gravity="center_horizontal"
+        android:clickable="true"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:layout_row="1"
+        android:layout_column="0"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:onClick="loadCreateSchedule" />
+
+    <Button
+        android:layout_width="204dp"
+        android:layout_height="wrap_content"
+        android:text="VIEW PROFILE"
+        android:id="@+id/button2"
+        android:clickable="true"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:layout_row="1"
+        android:layout_column="0"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:onClick="loadFitnessProfile"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="204dp"
+        android:layout_height="wrap_content"
+        android:text="VIEW PROGRESS"
+        android:id="@+id/button3"
+        android:clickable="true"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:layout_row="1"
+        android:layout_column="0"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:onClick="loadProgressReport"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="208dp"
+        android:layout_height="wrap_content"
+        android:text="CALORIE\nNEGATION"
+        android:id="@+id/button5"
+        android:clickable="true"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:layout_row="1"
+        android:layout_column="0"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:onClick="loadCalorieNegation"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="206dp"
+        android:layout_height="wrap_content"
+        android:text="SETTINGS"
+        android:id="@+id/button4"
+        android:clickable="true"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:layout_row="1"
+        android:layout_column="0"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:onClick="loadSettings"
+        android:layout_gravity="center_horizontal" />
 
 </LinearLayout>

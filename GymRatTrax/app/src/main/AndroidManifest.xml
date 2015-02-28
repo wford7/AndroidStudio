@@ -16,6 +16,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".DailyWorkout"
+            android:label="@string/title_activity_daily_workout" >
+        </activity>
+        <activity
+            android:name=".CalorieNegation"
+            android:label="@string/title_activity_calorie_negation" >
+        </activity>
+        <activity
+            android:name=".FitnessProfile"
+            android:label="@string/title_activity_fitness_profile" >
+        </activity>
     </application>
 
 </manifest>

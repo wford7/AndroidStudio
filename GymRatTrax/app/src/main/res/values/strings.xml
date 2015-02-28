@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Name of Application -->
     <string name="app_name">GymRatTrax</string>
-    <string name="hello_world">Hello world!</string>
+    <!-- Basic String Text -->
+    <string name="workout_today">Today\'s Scheduled Workout</string>
+    <!-- Name of Application -->
     <string name="action_settings">Settings</string>
     <string name="title_activity_cardio_exercise">CardioExercise</string>
+    <string name="title_activity_daily_workout">DailyWorkout</string>
+    <string name="title_activity_calorie_negation">Calorie Negation</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_fitness_profile">FitnessProfile</string>
 
 </resources>
