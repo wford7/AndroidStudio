@@ -11,7 +11,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
 import java.util.Locale;
 
 public class DBHelper extends SQLiteOpenHelper {
@@ -168,11 +167,11 @@ public class DBHelper extends SQLiteOpenHelper {
             if (subCursor.moveToFirst()) {
                 switch (subCursor.getString(1)) {
                     case "C":
-                        workouts[i] = new CardioWorkout();
+                        workouts[i] = new CardioWorkoutItem();
                         workouts[i].setMETSVal(subCursor.getDouble(2));
                         break;
                     case "S":
-                        workouts[i] = new StrengthWorkout();
+                        workouts[i] = new StrengthWorkoutItem();
                         workouts[i].setType(WorkoutType.STRENGTH);
                         break;
                 }
@@ -242,13 +241,12 @@ public class DBHelper extends SQLiteOpenHelper {
         String parameters = null;
         switch (w.getType()) {
             case CARDIO:
-                if (w.getClass() == CardioWorkout.class)
-                    parameters = String.valueOf(((CardioWorkout)w).getDistance());
+                parameters = String.valueOf(((CardioWorkoutItem)w).getDistance());
                 break;
             case STRENGTH:
-                parameters = String.valueOf(((StrengthWorkout)w).getCompletedReps()) + ":" +
-                        String.valueOf(((StrengthWorkout)w).getCompletedSets()) + ":" +
-                        String.valueOf(((StrengthWorkout)w).getWeightUsed());
+                parameters = String.valueOf(((StrengthWorkoutItem)w).getCompletedReps()) + ":" +
+                        String.valueOf(((StrengthWorkoutItem)w).getCompletedSets()) + ":" +
+                        String.valueOf(((StrengthWorkoutItem)w).getWeightUsed());
                 break;
         }
         values.put(DBContract.WorkoutTable.COLUMN_NAME_PARAMETERS, parameters);

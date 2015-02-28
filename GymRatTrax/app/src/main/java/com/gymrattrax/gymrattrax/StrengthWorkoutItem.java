@@ -1,6 +1,6 @@
 package com.gymrattrax.gymrattrax;
 
-public class StrengthWorkout extends WorkoutItem {
+public class StrengthWorkoutItem extends WorkoutItem {
     private int ID;
     private int numberOfSets;
     private int numberOfReps;
@@ -9,7 +9,7 @@ public class StrengthWorkout extends WorkoutItem {
     private int completedReps;
     private double time;
 
-    public StrengthWorkout() {
+    public StrengthWorkoutItem() {
         super();
         this.setType(WorkoutType.STRENGTH);
     }

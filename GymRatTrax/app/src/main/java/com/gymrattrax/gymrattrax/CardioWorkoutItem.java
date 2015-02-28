@@ -1,12 +1,12 @@
 package com.gymrattrax.gymrattrax;
 
-public class CardioWorkout extends WorkoutItem {
+public class CardioWorkoutItem extends WorkoutItem {
     private int ID;
     private double time;
     private double METSVal;
     private double distance;
 
-    public CardioWorkout() {
+    public CardioWorkoutItem() {
         super();
         this.setType(WorkoutType.CARDIO);
     }
