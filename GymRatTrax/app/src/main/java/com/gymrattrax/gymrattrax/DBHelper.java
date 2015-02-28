@@ -11,7 +11,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
 import java.util.Locale;
 
 public class DBHelper extends SQLiteOpenHelper {
@@ -150,19 +149,14 @@ public class DBHelper extends SQLiteOpenHelper {
                 DBContract.WorkoutTable.COLUMN_NAME_DATE_TIME + " >=  \"" + startStr + "\" AND " +
                 DBContract.WorkoutTable.COLUMN_NAME_DATE_TIME + " <=  \"" + endStr + "\"";
 
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.rawQuery(query, null);
 
         workouts = new WorkoutItem[cursor.getCount()];
-        StrengthExercise[] s = new StrengthExercise[cursor.getCount()];
         int i = 0;
 
-//        cursor.moveToFirst();
-//        while (!cursor.isAfterLast()) {
         while (cursor.moveToNext()) {
-            workouts[i].setID(Integer.parseInt(cursor.getString(0)));
-            workouts[i].setType(WorkoutType.valueOf(cursor.getString(3)));
 
             //Pull in values from exercise table.
             String subQuery = "SELECT * FROM " + DBContract.ExerciseTable.TABLE_NAME + " WHERE " +
@@ -170,19 +164,25 @@ public class DBHelper extends SQLiteOpenHelper {
                     "\"";
             Cursor subCursor = db.rawQuery(subQuery, null);
             String value = null;
-            if (cursor.moveToFirst()) {
-                switch (cursor.getString(1)) {
+            if (subCursor.moveToFirst()) {
+                switch (subCursor.getString(1)) {
                     case "C":
-                        workouts[i].setType(WorkoutType.CARDIO);
+                        workouts[i] = new CardioWorkoutItem();
+                        workouts[i].setMETSVal(subCursor.getDouble(2));
                         break;
                     case "S":
+                        workouts[i] = new StrengthWorkoutItem();
                         workouts[i].setType(WorkoutType.STRENGTH);
                         break;
                 }
-                s[i].setMETSVal(cursor.getDouble(2));
+                workouts[i].setMETSVal(subCursor.getDouble(2));
             }
             subCursor.close();
 
+            //set rest of values
+            workouts[i].setID(Integer.parseInt(cursor.getString(0)));
+            //workouts[i].setSchedule(cursor.getInteger(2));
+            workouts[i].setName(cursor.getString(3));
             try {
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.fff", Locale.US);
                 Date date = format.parse(cursor.getString(4));
@@ -227,7 +227,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 DBContract.WorkoutTable.VAL_COMPLETE);
         values.put(DBContract.WorkoutTable.COLUMN_NAME_SCHEDULE, String.valueOf(s.getID()));
         values.put(DBContract.WorkoutTable.COLUMN_NAME_EXERCISE,
-                String.valueOf(w.getTypeOfWorkout()));
+                String.valueOf(w.getName()));
 
         Calendar cal = new GregorianCalendar();
         Date date = cal.getTime();
@@ -241,12 +241,12 @@ public class DBHelper extends SQLiteOpenHelper {
         String parameters = null;
         switch (w.getType()) {
             case CARDIO:
-                parameters = String.valueOf(w.getDistance());
+                parameters = String.valueOf(((CardioWorkoutItem)w).getDistance());
                 break;
             case STRENGTH:
-                parameters = String.valueOf(w.getCompletedReps()) + ":" +
-                        String.valueOf(w.getCompletedSets()) + ":" +
-                        String.valueOf(w.getWeightUsed());
+                parameters = String.valueOf(((StrengthWorkoutItem)w).getCompletedReps()) + ":" +
+                        String.valueOf(((StrengthWorkoutItem)w).getCompletedSets()) + ":" +
+                        String.valueOf(((StrengthWorkoutItem)w).getWeightUsed());
                 break;
         }
         values.put(DBContract.WorkoutTable.COLUMN_NAME_PARAMETERS, parameters);
