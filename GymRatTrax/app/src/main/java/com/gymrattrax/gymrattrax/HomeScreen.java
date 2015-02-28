@@ -62,4 +62,18 @@ public class HomeScreen extends ActionBarActivity {
         Intent intent = new Intent (this, FitnessProfile.class);
         startActivity(intent);
     }
+
+    public void loadSettings(View view){
+        //this method is triggered when user selects "Edit Settings" button from the main page
+
+        Intent intent = new Intent (this, Settings.class);
+        startActivity(intent);
+    }
+
+    public void loadProgress(View view){
+        //this method is triggered when user selects "View Progress" button from the main page
+
+        Intent intent = new Intent (this, ViewProgress.class);
+        startActivity(intent);
+    }
 }
