@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="spinnerItems">
+    <string-array name="spinnerSexSelection">
         <item>Male</item>
         <item>Female</item>
     </string-array>

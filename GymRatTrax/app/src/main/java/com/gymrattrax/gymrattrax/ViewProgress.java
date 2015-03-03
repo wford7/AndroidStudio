@@ -4,36 +4,21 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.EditText;
 
 
-public class FitnessProfile extends ActionBarActivity {
+public class ViewProgress extends ActionBarActivity {
 
-    private Button SaveProfileButton;
-    private Button EditProfileButton;
-    private EditText NameEditText;
-    private EditText BirthDateEditText;
-    //private Spinner
-
-    //database query and then set editTexts to display the appropriate data
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fitness_profile);
-
-        SaveProfileButton = (Button)findViewById(R.id.SaveProfileButton);
-        EditProfileButton = (Button)findViewById(R.id.EditProfileButton);
-
-        NameEditText = (EditText)findViewById(R.id.NameEditText);
-
+        setContentView(R.layout.activity_view_progress);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_fitness_profile, menu);
+        getMenuInflater().inflate(R.menu.menu_view_progress, menu);
         return true;
     }
 

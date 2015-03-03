@@ -28,6 +28,14 @@
             android:name=".FitnessProfile"
             android:label="@string/title_activity_fitness_profile" >
         </activity>
+        <activity
+            android:name=".Settings"
+            android:label="@string/title_activity_settings" >
+        </activity>
+        <activity
+            android:name=".ViewProgress"
+            android:label="@string/title_activity_view_progress" >
+        </activity>
     </application>
 
 </manifest>
