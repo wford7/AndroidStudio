@@ -33,7 +33,7 @@
             android:layout_width="155dp"
             android:layout_height="wrap_content"
             android:text="BEGIN \nWORKOUT!"
-            android:id="@+id/button"
+            android:id="@+id/BeginWorkoutButton"
             android:layout_gravity="center_horizontal"
             android:clickable="true"
             android:layout_below="@+id/textView"
@@ -48,30 +48,29 @@
             android:shadowDx="2"
             android:shadowDy="2"
             android:shadowRadius="5"
-            android:onClick="loadCurrentSchedule"
             android:singleLine="false"
-            android:layout_weight="0.31" />
+            android:layout_weight="0.31"
+            android:layout_marginRight="2dp" />
 
         <Button
             android:layout_width="155dp"
             android:layout_height="wrap_content"
-            android:text="CREATE \nSCHEDULE"
-            android:id="@+id/button6"
+            android:text="VIEW \nSCHEDULES"
+            android:id="@+id/ViewScheduleButton"
             android:layout_gravity="center_horizontal"
             android:clickable="true"
             android:layout_below="@+id/textView"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="10dp"
             android:textStyle="bold"
             android:textSize="25sp"
             android:layout_row="1"
             android:layout_column="0"
-            android:background="@drawable/buttonshape"
+            android:background="@drawable/buttonshapereverse"
             android:shadowColor="#A8A8A8"
             android:shadowDx="0"
             android:shadowDy="0"
             android:shadowRadius="5"
-            android:onClick="loadCreateSchedule"
             android:layout_weight="0.42" />
 
     </LinearLayout>
@@ -91,11 +90,11 @@
             android:layout_width="155dp"
             android:layout_height="wrap_content"
             android:text="VIEW \nPROFILE"
-            android:id="@+id/button2"
+            android:id="@+id/ViewProfileButton"
             android:clickable="true"
             android:layout_below="@+id/textView"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="10dp"
             android:textStyle="bold"
             android:textSize="25sp"
             android:layout_row="1"
@@ -105,14 +104,14 @@
             android:shadowDx="0"
             android:shadowDy="0"
             android:shadowRadius="5"
-            android:onClick="loadFitnessProfile"
-            android:layout_weight="0.30" />
+            android:layout_weight="0.30"
+            android:layout_marginRight="2dp" />
 
         <Button
             android:layout_width="155dp"
             android:layout_height="wrap_content"
             android:text="VIEW \nPROGRESS"
-            android:id="@+id/button3"
+            android:id="@+id/ViewProgressButton"
             android:clickable="true"
             android:layout_below="@+id/textView"
             android:layout_centerHorizontal="true"
@@ -121,12 +120,12 @@
             android:textSize="25sp"
             android:layout_row="1"
             android:layout_column="0"
-            android:background="@drawable/buttonshape"
+            android:background="@drawable/buttonshapereverse"
             android:shadowColor="#A8A8A8"
             android:shadowDx="0"
             android:shadowDy="0"
             android:shadowRadius="5"
-            android:onClick="loadProgressReport"
+            android:onClick="loadProgress"
             android:layout_weight="0.38" />
     </LinearLayout>
 
@@ -145,7 +144,7 @@
             android:layout_width="155dp"
             android:layout_height="wrap_content"
             android:text="CALORIE\nNEGATION"
-            android:id="@+id/button5"
+            android:id="@+id/CalorieNegationButton"
             android:clickable="true"
             android:layout_below="@+id/textView"
             android:layout_centerHorizontal="true"
@@ -160,27 +159,29 @@
             android:shadowDy="0"
             android:shadowRadius="5"
             android:onClick="loadCalorieNegation"
-            android:layout_weight="0.43" />
+            android:layout_weight="0.43"
+            android:layout_marginRight="2dp" />
 
         <Button
             android:layout_width="167dp"
             android:layout_height="wrap_content"
             android:text="EDIT\nSETTINGS"
-            android:id="@+id/button4"
+            android:id="@+id/EditSettingsButton"
             android:clickable="true"
             android:layout_below="@+id/textView"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="10dp"
             android:textStyle="bold"
             android:textSize="25sp"
             android:layout_row="1"
             android:layout_column="0"
-            android:background="@drawable/buttonshape"
+            android:background="@drawable/buttonshapereverse"
             android:shadowColor="#A8A8A8"
             android:shadowDx="0"
             android:shadowDy="0"
             android:shadowRadius="5"
             android:onClick="loadSettings" />
     </LinearLayout>
+
 
 </LinearLayout>

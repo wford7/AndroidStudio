@@ -44,7 +44,13 @@
             android:layout_width="126dp"
             android:layout_height="wrap_content"
             android:background="#ffffffff"
+<<<<<<< HEAD
             android:inputType="none" />
+=======
+            android:inputType="none"
+            android:id="@+id/NameEditText"/>
+
+>>>>>>> draft_cjs
     </LinearLayout>
 
     <LinearLayout
@@ -58,7 +64,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
+<<<<<<< HEAD
             android:text="Birthday (mm/dd/yyyy)"
+=======
+            android:text="Birth Date (mm/dd/yyyy)"
+>>>>>>> draft_cjs
             android:id="@+id/textView3"
             android:layout_weight="0.08" />
 
@@ -66,7 +76,12 @@
             android:layout_width="126dp"
             android:layout_height="wrap_content"
             android:background="#ffffffff"
+<<<<<<< HEAD
             android:inputType="none"/>
+=======
+            android:inputType="none"
+            android:id="@+id/BirthDateEditText"/>
+>>>>>>> draft_cjs
     </LinearLayout>
 
     <LinearLayout
@@ -88,7 +103,11 @@
             android:layout_width="127dp"
             android:layout_height="24dp"
             android:id="@+id/spinner"
+<<<<<<< HEAD
             android:entries="@array/spinnerItems"
+=======
+            android:entries="@array/spinnerSexSelection"
+>>>>>>> draft_cjs
             android:spinnerMode="dropdown"
             android:touchscreenBlocksFocus="false" />
     </LinearLayout>
@@ -114,6 +133,10 @@
             android:layout_height="wrap_content"
             android:background="#ffffffff"
             android:inputType="none"/>
+<<<<<<< HEAD
+=======
+
+>>>>>>> draft_cjs
     </LinearLayout>
 
     <LinearLayout
@@ -220,7 +243,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="EDIT"
+<<<<<<< HEAD
         android:id="@+id/button7"
+=======
+        android:id="@+id/EditProfileButton"
+>>>>>>> draft_cjs
         android:clickable="true"
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
@@ -236,7 +263,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="SAVE"
+<<<<<<< HEAD
         android:id="@+id/button8"
+=======
+        android:id="@+id/SaveProfileButton"
+>>>>>>> draft_cjs
         android:clickable="true"
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
