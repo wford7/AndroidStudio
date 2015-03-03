@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.view.Menu;
 // import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.content.Intent;
 import android.os.Handler;
@@ -29,13 +27,10 @@ public class HomeScreen extends ActionBarActivity {
         CalorieNegationButton = (Button)findViewById(R.id.CalorieNegationButton);
         EditSettingsButton = (Button)findViewById(R.id.EditSettingsButton);
 
-        final Animation animAlpha = AnimationUtils.loadAnimation(this, R.anim.alpha);
-
         BeginWorkoutButton.setOnClickListener(new Button.OnClickListener(){
 
             @Override
             public void onClick(View view) {
-                view.startAnimation(animAlpha);
                 loadCurrentSchedule(view);
             }
         });
@@ -53,7 +48,6 @@ public class HomeScreen extends ActionBarActivity {
 
             @Override
             public void onClick(View view) {
-                view.startAnimation(animAlpha);
                 loadFitnessProfile(view);
             }
         });
@@ -63,7 +57,6 @@ public class HomeScreen extends ActionBarActivity {
 
             @Override
             public void onClick(View view) {
-                view.startAnimation(animAlpha);
                 loadProgress(view);
             }
         });
@@ -72,7 +65,6 @@ public class HomeScreen extends ActionBarActivity {
 
             @Override
             public void onClick(View view) {
-                view.startAnimation(animAlpha);
                 loadCalorieNegation(view);
             }
         });
@@ -81,7 +73,6 @@ public class HomeScreen extends ActionBarActivity {
 
             @Override
             public void onClick(View view) {
-                view.startAnimation(animAlpha);
 //                loadSettings(view);
             }
         });

@@ -4,6 +4,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -26,6 +27,22 @@ public class FitnessProfile extends ActionBarActivity {
         EditProfileButton = (Button)findViewById(R.id.EditProfileButton);
 
         NameEditText = (EditText)findViewById(R.id.NameEditText);
+
+        SaveProfileButton.setOnClickListener(new Button.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                saveChanges(view);
+            }
+        });
+
+        EditProfileButton.setOnClickListener(new Button.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                editProfile(view);
+            }
+        });
 
     }
 
@@ -50,5 +67,13 @@ public class FitnessProfile extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void saveChanges(View view){
+        // update database profile
+    }
+
+    public void editProfile(View view){
+        // unlock EditText fields and spinner
     }
 }
