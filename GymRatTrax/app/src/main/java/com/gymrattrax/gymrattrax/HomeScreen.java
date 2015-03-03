@@ -82,7 +82,7 @@ public class HomeScreen extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 view.startAnimation(animAlpha);
-                loadSettings(view);
+//                loadSettings(view);
             }
         });
 
@@ -122,25 +122,16 @@ public class HomeScreen extends ActionBarActivity {
         startActivity(intent);
     }
 
-<<<<<<< HEAD
+
     public void loadSettings(View view){
-        //this method is triggered when user selects "Edit Settings" button from the main page
-=======
-    //this method is triggered when user selects "Edit Settings" button from the main page
-    public void loadSettings(View view){
->>>>>>> draft_cjs
 
         Intent intent = new Intent (this, Settings.class);
         startActivity(intent);
     }
 
-<<<<<<< HEAD
-    public void loadProgress(View view){
-        //this method is triggered when user selects "View Progress" button from the main page
-=======
+
     //this method is triggered when user selects "View Progress" button from the main page
     public void loadProgress(View view){
->>>>>>> draft_cjs
 
         Intent intent = new Intent (this, ViewProgress.class);
         startActivity(intent);
