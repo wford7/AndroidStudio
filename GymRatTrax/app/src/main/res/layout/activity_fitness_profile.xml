@@ -173,52 +173,47 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Activity Level"
         android:id="@+id/textView8" />
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
+    <RadioGroup
+        android:layout_width="318dp"
+        android:layout_height="wrap_content">
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Little or No Exercise"
-            android:id="@+id/radioButton"
+            android:id="@+id/little_exercise"
             android:layout_weight="0.08"
+            android:onClick="onRadioButtonClicked"
             android:checked="false" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Light Exercise"
-            android:id="@+id/radioButton2"
+            android:id="@+id/light_exercise"
             android:layout_weight="0.08"
+            android:onClick="onRadioButtonClicked"
             android:checked="false" />
-    </LinearLayout>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Moderate Exercise"
-            android:id="@+id/radioButton3"
+            android:id="@+id/mod_exercise"
             android:layout_weight="0.08"
+            android:onClick="onRadioButtonClicked"
             android:checked="false" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Heavy Exercise"
-            android:id="@+id/radioButton4"
+            android:id="@+id/heavy_exercise"
             android:layout_weight="0.08"
             android:checked="false" />
-    </LinearLayout>
+
+    </RadioGroup>
 
     <Button
         android:layout_width="wrap_content"

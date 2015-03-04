@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.EditText;
 
 
@@ -75,5 +76,34 @@ public class FitnessProfile extends ActionBarActivity {
 
     public void editProfile(View view){
         // unlock EditText fields and spinner
+    }
+
+    /**
+     * Handle radio button clicks
+     * @param view
+     */
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.little_exercise:
+                if (checked)
+                    // ActivityLevel = 1.2
+                    break;
+            case R.id.light_exercise:
+                if (checked)
+                    // ActivityLevel = 1.375
+                    break;
+            case R.id.mod_exercise:
+                if (checked)
+                    // ActivityLevel = 1.55
+                    break;
+            case R.id.heavy_exercise:
+                if (checked)
+                    // ActivityLevel = 1.725
+                    break;
+        }
     }
 }

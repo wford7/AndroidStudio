@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.content.Intent;
 import android.os.Handler;
 
-//add button press listeners
 
 
 public class HomeScreen extends ActionBarActivity {
@@ -18,7 +17,10 @@ public class HomeScreen extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //initiate tutorial/profile creation if there is no Profile ID in database
+        Profile create = new Profile();
         setContentView(R.layout.activity_home_screen);
+
 
         BeginWorkoutButton = (Button)findViewById(R.id.BeginWorkoutButton);
         ViewScheduleButton = (Button)findViewById(R.id.ViewScheduleButton);
