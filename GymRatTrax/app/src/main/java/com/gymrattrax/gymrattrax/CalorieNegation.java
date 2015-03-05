@@ -4,14 +4,30 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 
 public class CalorieNegation extends ActionBarActivity {
 
+    Button SuggestWorkoutButton;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_calorie_negation);
+
+        SuggestWorkoutButton = (Button)findViewById(R.id.negateCalories);
+
+        SuggestWorkoutButton.setOnClickListener(new Button.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                /** grab random workout item ID, calculate how long it will take to burn
+                 *  x amount of calories, return workout.
+                **/
+            }
+        });
     }
 
 
@@ -36,4 +52,5 @@ public class CalorieNegation extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }
