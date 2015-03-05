@@ -1,7 +1,5 @@
 package com.gymrattrax.gymrattrax;
 
-import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,10 +11,11 @@ import android.widget.ScrollView;
 import android.widget.ImageView;
 import android.widget.Button;
 import android.content.Intent;
-import android.os.Handler;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-
+import com.jjoe64.graphview.*;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
 
 public class HomeScreen extends ActionBarActivity {
@@ -24,10 +23,10 @@ public class HomeScreen extends ActionBarActivity {
     private Button BeginWorkoutButton, ViewScheduleButton, ViewProfileButton, ViewProgressButton, CalorieNegationButton, EditSettingsButton;
     private ImageView GymRat;
     private ScrollView updateLayoutScroll;
+    private GraphView graph, graph2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        final Context mContext = this;
         super.onCreate(savedInstanceState);
         //initiate tutorial/profile creation if there is no Profile ID in database
         Profile create = new Profile();
@@ -43,6 +42,8 @@ public class HomeScreen extends ActionBarActivity {
         CalorieNegationButton = (Button)findViewById(R.id.CalorieNegationButton);
         EditSettingsButton = (Button)findViewById(R.id.EditSettingsButton);
 
+        graph = (GraphView)findViewById(R.id.graph);
+        graph2 = (GraphView)findViewById(R.id.graph2);
 
         GymRat.setOnClickListener(new ImageView.OnClickListener(){
 
@@ -55,16 +56,32 @@ public class HomeScreen extends ActionBarActivity {
 
             @Override
             public void onClick(View view) {
-                //loadCurrentSchedule(view);
-                LinearLayout newTest = (LinearLayout)findViewById(R.id.LayoutScroll);
-                TextView newText = new TextView(mContext);
-                newText.setText("Dynamic Add Text Test");
-                updateLayoutScroll = (ScrollView)findViewById(R.id.scrollView);
+                LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
+                        new DataPoint(0, 1),
+                        new DataPoint(1, 5),
+                        new DataPoint(2, 3),
+                        new DataPoint(3, 2),
+                        new DataPoint(4, 6)
+                });
+                graph.addSeries(series);
 
-                newTest.addView(newText);
+                LineGraphSeries<DataPoint> seriesUno = new LineGraphSeries<>(new DataPoint[]{
+                        new DataPoint(0, 3),
+                        new DataPoint(2, 2),
+                        new DataPoint(5, 2)
+                });
+                graph2.addSeries(seriesUno);
 
-                //updateLayoutScroll.addView(newTest);
+//                loadCurrentSchedule(view);
+//                LinearLayout newTest = (LinearLayout)findViewById(R.id.LayoutScroll);
+//                TextView newText = new TextView(HomeScreen.this);
+//                    newText.setText("Dynamic Add Text Test");
+////                updateLayoutScroll = (ScrollView)findViewById(R.id.scrollView);
+//
+//                    newTest.addView(newText);
 
+
+//                updateLayoutScroll.addView(newTest);
             }
         });
 
@@ -128,28 +145,28 @@ public class HomeScreen extends ActionBarActivity {
 
         //load current workout schedule for current date
 
-        Intent intent = new Intent (this, DailyWorkout.class);
+        Intent intent = new Intent (HomeScreen.this, DailyWorkoutActivity.class);
         startActivity(intent);
     }
 
     //the following method is triggered when user selects "Calorie Negation" button from the main page
     public void loadCalorieNegation(View view){
 
-        Intent intent = new Intent (this, CalorieNegation.class);
+        Intent intent = new Intent (HomeScreen.this, CalorieNegationActivity.class);
         startActivity(intent);
     }
 
     //the following method is triggered when user selects "Fitness Profile" button from the main page
     final public void loadFitnessProfile(View view){
 
-        Intent intent = new Intent (this, FitnessProfile.class);
+        Intent intent = new Intent (HomeScreen.this, ProfileActivity.class);
         startActivity(intent);
     }
 
 
     public void loadSettings(View view){
 
-        Intent intent = new Intent (this, Settings.class);
+        Intent intent = new Intent (HomeScreen.this, SettingsActivity.class);
         startActivity(intent);
     }
 
@@ -157,7 +174,7 @@ public class HomeScreen extends ActionBarActivity {
     //this method is triggered when user selects "View Progress" button from the main page
     public void loadProgress(View view){
 
-        Intent intent = new Intent (this, ViewProgress.class);
+        Intent intent = new Intent (HomeScreen.this, ProgressActivity.class);
         startActivity(intent);
     }
 }

@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 
-public class CalorieNegation extends ActionBarActivity {
+public class CalorieNegationActivity extends ActionBarActivity {
 
     Button SuggestWorkoutButton;
     @Override
@@ -19,13 +19,13 @@ public class CalorieNegation extends ActionBarActivity {
 
         SuggestWorkoutButton = (Button)findViewById(R.id.negateCalories);
 
-        SuggestWorkoutButton.setOnClickListener(new Button.OnClickListener(){
+        SuggestWorkoutButton.setOnClickListener(new Button.OnClickListener() {
 
             @Override
             public void onClick(View view) {
                 /** grab random workout item ID, calculate how long it will take to burn
                  *  x amount of calories, return workout.
-                **/
+                 **/
             }
         });
     }

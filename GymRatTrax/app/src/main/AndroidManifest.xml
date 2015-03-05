@@ -17,27 +17,27 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DailyWorkout"
+            android:name=".DailyWorkoutActivity"
             android:label="@string/title_activity_daily_workout" >
         </activity>
         <activity
-            android:name=".CalorieNegation"
+            android:name=".CalorieNegationActivity"
             android:label="@string/title_activity_calorie_negation" >
         </activity>
         <activity
-            android:name=".FitnessProfile"
+            android:name=".ProfileActivity"
             android:label="@string/title_activity_fitness_profile" >
         </activity>
         <activity
-            android:name=".Settings"
+            android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
         <activity
-            android:name=".ViewProgress"
+            android:name=".ProgressActivity"
             android:label="@string/title_activity_view_progress" >
         </activity>
         <activity
-            android:name=".CardioWorkout"
+            android:name=".CardioWorkoutActivity"
             android:label="@string/title_activity_cardio_workout" >
         </activity>
     </application>

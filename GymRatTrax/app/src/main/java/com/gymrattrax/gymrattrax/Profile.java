@@ -77,7 +77,7 @@ public class Profile {
         this.activityLevel = activityLevel;
     }
 
-    private double calculateBMR(double weight, double height, char gender, double age, double activityLvl, double bodyFatPercentage){
+    public double calculateBMR(double weight, double height, char gender, double age, double activityLvl, double bodyFatPercentage){
 
 //        if (fatPercentage == NULL) {
 ////Harris Benedict Method
