@@ -2,6 +2,12 @@ package com.gymrattrax.gymrattrax;
 
 import android.provider.BaseColumns;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+
 public final class DBContract {
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "grt.db";
@@ -23,6 +29,18 @@ public final class DBContract {
         public static final String COLUMN_NAME_KEY = "key";
         public static final String COLUMN_NAME_VALUE = "value";
 
+        public static final String KEY_NAME = "NAME";
+        public static final String KEY_BIRTH_DATE = "BIRTH_DATE";
+        public static final String KEY_SEX = "SEX";
+        public static final String KEY_HEIGHT = "HEIGHT"; //in inches
+
+        public static final String VAL_SEX_MALE = "M";
+        public static final String VAL_SEX_FEMALE = "F";
+        public static final double VAL_ACT_LVL_LITTLE = 1.2;
+        public static final double VAL_ACT_LVL_LIGHT = 1.375;
+        public static final double VAL_ACT_LVL_MOD = 1.55;
+        public static final double VAL_ACT_LVL_HEAVY = 1.725;
+
         public static final String CREATE_TABLE =
                 "CREATE TABLE " + TABLE_NAME + L_PAREN +
                         COLUMN_NAME_KEY   + TYPE_TEXT + PRIMARY_KEY + COMMA_SEP +
@@ -32,17 +50,17 @@ public final class DBContract {
     }
     public static abstract class WeightTable implements BaseColumns {
         public static final String TABLE_NAME = "weight";
-        public static final String COLUMN_NAME_DATE = "key";
-        public static final String COLUMN_NAME_WEIGHT = "value";
-        public static final String COLUMN_NAME_BMI = "bmi";
+        public static final String COLUMN_NAME_DATE = "date";
+        public static final String COLUMN_NAME_WEIGHT = "weight";
         public static final String COLUMN_NAME_BODY_FAT_PERCENTAGE = "body_fat_percentage";
+        public static final String COLUMN_NAME_ACTIVITY_LEVEL = "activity_level";
 
         public static final String CREATE_TABLE =
                 "CREATE TABLE " + TABLE_NAME + L_PAREN +
                         COLUMN_NAME_DATE                + TYPE_TEXT + PRIMARY_KEY + COMMA_SEP +
                         COLUMN_NAME_WEIGHT              + TYPE_REAL + NOT_NULL    + COMMA_SEP +
-                        COLUMN_NAME_BMI                 + TYPE_REAL               + COMMA_SEP +
-                        COLUMN_NAME_BODY_FAT_PERCENTAGE + TYPE_REAL               + R_PAREN;
+                        COLUMN_NAME_BODY_FAT_PERCENTAGE + TYPE_REAL               + COMMA_SEP +
+                        COLUMN_NAME_ACTIVITY_LEVEL      + TYPE_REAL + NOT_NULL    + R_PAREN;
         public static final String DELETE_TABLE =
                 "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
@@ -99,10 +117,12 @@ public final class DBContract {
                         COLUMN_NAME_CALORIES    + TYPE_INTEGER + NOT_NULL    + COMMA_SEP +
                         COLUMN_NAME_PARAMETERS  + TYPE_TEXT    + NOT_NULL    + COMMA_SEP +
                         COLUMN_NAME_TIME_SPENT  + TYPE_REAL                  + COMMA_SEP +
-                        FOREIGN_KEY + COLUMN_NAME_SCHEDULE + REFERENCES + ScheduleTable.TABLE_NAME +
-                        L_PAREN + ScheduleTable.COLUMN_NAME_ID   + R_PAREN + COMMA_SEP +
-                        FOREIGN_KEY + COLUMN_NAME_EXERCISE + REFERENCES + ExerciseTable.TABLE_NAME +
-                        L_PAREN + ExerciseTable.COLUMN_NAME_NAME + R_PAREN + R_PAREN;
+                        FOREIGN_KEY + L_PAREN + COLUMN_NAME_SCHEDULE + R_PAREN + REFERENCES +
+                        ScheduleTable.TABLE_NAME + L_PAREN + ScheduleTable.COLUMN_NAME_ID   +
+                        R_PAREN + COMMA_SEP +
+                        FOREIGN_KEY + L_PAREN + COLUMN_NAME_EXERCISE + R_PAREN + REFERENCES +
+                        ExerciseTable.TABLE_NAME + L_PAREN + ExerciseTable.COLUMN_NAME_NAME +
+                        R_PAREN + R_PAREN;
         public static final String DELETE_TABLE =
                 "DROP TABLE IF EXISTS " + TABLE_NAME;
     }

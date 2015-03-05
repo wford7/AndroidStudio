@@ -45,9 +45,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
         Cursor cursor = db.rawQuery(query, null);
 
-        String value = null;
+        String value = "";
         if (cursor.moveToFirst())
-            value = cursor.getString(0);
+            value = cursor.getString(1);
         cursor.close();
         db.close();
         return value;
@@ -58,27 +58,77 @@ public class DBHelper extends SQLiteOpenHelper {
         To delete profile info, insert a blank string for the value.
          */
         SQLiteDatabase db = this.getWritableDatabase();
-        if (value.trim().isEmpty()) {
-            String query = "SELECT * FROM " + DBContract.ProfileTable.TABLE_NAME + " WHERE " +
-                    DBContract.ProfileTable.COLUMN_NAME_KEY + " =  \"" + key + "\"";
-
-            Cursor cursor = db.rawQuery(query, null);
-
+        String query = "SELECT * FROM " + DBContract.ProfileTable.TABLE_NAME + " WHERE " +
+                DBContract.ProfileTable.COLUMN_NAME_KEY + " =  \"" + key + "\"";
+        Cursor cursor = db.rawQuery(query, null);
+        if (value.trim().isEmpty()) { //delete
             if (cursor.moveToFirst()) {
                 String[] args = new String[1];
                 args[0] = key;
                 db.delete(DBContract.ProfileTable.TABLE_NAME,
                         DBContract.ProfileTable.COLUMN_NAME_KEY + " = ?", args);
             }
-            cursor.close();
         }
         else {
             ContentValues values = new ContentValues();
-            values.put(DBContract.ProfileTable.COLUMN_NAME_KEY, key);
-            values.put(DBContract.ProfileTable.COLUMN_NAME_VALUE, value);
+            if (cursor.moveToFirst()) { //update
+                String[] args = new String[1];
+                args[0] = key;
+                values.put(DBContract.ProfileTable.COLUMN_NAME_VALUE, value);
+                db.update(DBContract.ProfileTable.TABLE_NAME, values,
+                        DBContract.ProfileTable.COLUMN_NAME_KEY + "=?", args);
+            }
+            else { //insert
+                values.put(DBContract.ProfileTable.COLUMN_NAME_KEY, key);
+                values.put(DBContract.ProfileTable.COLUMN_NAME_VALUE, value);
 
-            db.insert(DBContract.ProfileTable.TABLE_NAME, null, values);
+                db.insert(DBContract.ProfileTable.TABLE_NAME, null, values);
+            }
         }
+        cursor.close();
+        db.close();
+    }
+
+    public double[] getLatestWeight() {
+        String query = "SELECT * FROM " + DBContract.WeightTable.TABLE_NAME + " ORDER BY " +
+                DBContract.WeightTable.COLUMN_NAME_DATE + " DESC";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        double[] values = new double[3];
+        if (cursor.moveToFirst()) {
+            values[0] = cursor.getDouble(1);
+            if (cursor.isNull(2))
+                values[1] = -1;
+            else
+                values[1] = cursor.getDouble(2);
+            values[2] = cursor.getDouble(3);
+        }
+        cursor.close();
+        db.close();
+        return values;
+    }
+
+    public void setWeight(double weight, double bodyFat, double activityLevel) {
+        /*
+        bodyFat is optional. To make bodyFat NULL, pass in a non-positive value.
+         */
+        String timestamp = now();
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(DBContract.WeightTable.COLUMN_NAME_DATE, timestamp);
+        values.put(DBContract.WeightTable.COLUMN_NAME_WEIGHT, weight);
+        if (bodyFat > 0)
+            values.put(DBContract.WeightTable.COLUMN_NAME_BODY_FAT_PERCENTAGE, bodyFat);
+        else
+            values.putNull(DBContract.WeightTable.COLUMN_NAME_BODY_FAT_PERCENTAGE);
+        values.put(DBContract.WeightTable.COLUMN_NAME_ACTIVITY_LEVEL, activityLevel);
+
+        db.insert(DBContract.WeightTable.TABLE_NAME, null, values);
+
         db.close();
     }
 
@@ -110,15 +160,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
             db.delete(DBContract.WorkoutTable.TABLE_NAME,
                     DBContract.WorkoutTable.COLUMN_NAME_ID + "=?", args);
-
-//                ContentValues values = new ContentValues();
-//                values.put(DBContract.WorkoutTable.COLUMN_NAME_RECORD_TYPE,
-//                        DBContract.WorkoutTable.VAL_REMOVED);
-//
-//                int intResult = db.update(DBContract.WorkoutTable.TABLE_NAME, values,
-//                        DBContract.WorkoutTable.COLUMN_NAME_ID + "=?", args);
-//                if (intResult > 0)
-//                    result = true;
         }
         cursor.close();
         db.close();
@@ -132,8 +173,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public WorkoutItem[] getWorkoutsInRange(Date start, Date end) {
         /*
-        Convert the Date values into string matching the format, “YYYY-MM-DD HH:MM:SS.SSS,” but set
-        “HH:MM:SS.SSS” to “00:00:00.000” for variable fromStr and “11:59:59.999” for variable
+        Convert the Date values into string matching the format, “yyyy-MM-dd HH:mm:ss.SSS,” but set
+        “HH:mm:ss.SSS” to “00:00:00.000” for variable fromStr and “11:59:59.999” for variable
         endStr. Perform a database query operation, “select * from WORKOUT where DATE >= fromStr
         and DATE <= endStr.” Take the output values and assign them to WorkoutItem values.
          */
@@ -184,7 +225,7 @@ public class DBHelper extends SQLiteOpenHelper {
             //workouts[i].setSchedule(cursor.getInteger(2));
             workouts[i].setName(cursor.getString(3));
             try {
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.fff", Locale.US);
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.US);
                 Date date = format.parse(cursor.getString(4));
                 workouts[i].setDate(date);
             } catch (ParseException e) {
@@ -231,7 +272,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         Calendar cal = new GregorianCalendar();
         Date date = cal.getTime();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.fff", Locale.US);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.US);
         String dateStr = dateFormat.format(date);
 
         values.put(DBContract.WorkoutTable.COLUMN_NAME_DATE_TIME, dateStr);
@@ -274,5 +315,15 @@ public class DBHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return METSVal;
+    }
+
+    private String now() {
+        Calendar cal = new GregorianCalendar();
+        Date dat = cal.getTime();
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+//        String str = sdf.format(dat) + " 00:00:00.000";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.US);
+        String str = sdf.format(dat);
+        return str;
     }
 }

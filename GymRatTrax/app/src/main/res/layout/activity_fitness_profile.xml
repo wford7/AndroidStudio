@@ -236,8 +236,8 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SAVE"
-        android:id="@+id/SaveProfileButton"
+        android:text="BACK"
+        android:id="@+id/BackProfileButton"
         android:clickable="true"
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
