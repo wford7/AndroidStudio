@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="FITNESS PROFILE"
-        android:id="@+id/textView"
+        android:id="@+id/profile_title"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_row="0"
@@ -37,7 +37,6 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Name"
-            android:id="@+id/textView2"
             android:layout_weight="1" />
 
         <EditText
@@ -45,7 +44,8 @@
             android:layout_height="wrap_content"
             android:background="#ffffffff"
             android:inputType="none"
-            android:id="@+id/NameEditText"/>
+            android:id="@+id/profile_name"
+            />
 
     </LinearLayout>
 
@@ -69,7 +69,7 @@
             android:layout_height="wrap_content"
             android:background="#ffffffff"
             android:inputType="none"
-            android:id="@+id/BirthDateEditText"/>
+            android:id="@+id/birth_date"/>
     </LinearLayout>
 
     <LinearLayout
@@ -84,13 +84,13 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Sex"
-            android:id="@+id/textView4"
+            android:id="@+id/profile_sex"
             android:layout_weight="0.08" />
 
         <Spinner
             android:layout_width="127dp"
             android:layout_height="24dp"
-            android:id="@+id/spinner"
+            android:id="@+id/profile_spinner"
             android:entries="@array/spinnerSexSelection"
             android:spinnerMode="dropdown"
             android:touchscreenBlocksFocus="false" />
@@ -116,7 +116,8 @@
             android:layout_width="126dp"
             android:layout_height="wrap_content"
             android:background="#ffffffff"
-            android:inputType="none"/>
+            android:inputType="none"
+            android:id="@+id/profile_weight"/>
 
     </LinearLayout>
 
@@ -139,7 +140,7 @@
             android:layout_width="126dp"
             android:layout_height="wrap_content"
             android:background="#ffffffff"
-            android:id="@+id/editText"
+            android:id="@+id/profile_height"
             android:inputType="none"/>
     </LinearLayout>
 
@@ -163,7 +164,8 @@
             android:layout_width="126dp"
             android:layout_height="wrap_content"
             android:background="#ffffffff"
-            android:inputType="none"/>
+            android:inputType="none"
+            android:id="@+id/fat_percentage"/>
     </LinearLayout>
 
 

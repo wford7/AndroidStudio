@@ -1,27 +1,41 @@
 package com.gymrattrax.gymrattrax;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 // import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.ScrollView;
+import android.widget.ImageView;
 import android.widget.Button;
 import android.content.Intent;
 import android.os.Handler;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 
 
 public class HomeScreen extends ActionBarActivity {
 
     private Button BeginWorkoutButton, ViewScheduleButton, ViewProfileButton, ViewProgressButton, CalorieNegationButton, EditSettingsButton;
+    private ImageView GymRat;
+    private ScrollView updateLayoutScroll;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        final Context mContext = this;
         super.onCreate(savedInstanceState);
         //initiate tutorial/profile creation if there is no Profile ID in database
         Profile create = new Profile();
         setContentView(R.layout.activity_home_screen);
+        final Animation animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_rotate);
 
 
+        GymRat = (ImageView)findViewById(R.id.home_rat);
         BeginWorkoutButton = (Button)findViewById(R.id.BeginWorkoutButton);
         ViewScheduleButton = (Button)findViewById(R.id.ViewScheduleButton);
         ViewProfileButton = (Button)findViewById(R.id.ViewProfileButton);
@@ -29,11 +43,28 @@ public class HomeScreen extends ActionBarActivity {
         CalorieNegationButton = (Button)findViewById(R.id.CalorieNegationButton);
         EditSettingsButton = (Button)findViewById(R.id.EditSettingsButton);
 
+
+        GymRat.setOnClickListener(new ImageView.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                v.startAnimation(animTranslate);
+            }});
+
         BeginWorkoutButton.setOnClickListener(new Button.OnClickListener(){
 
             @Override
             public void onClick(View view) {
-                loadCurrentSchedule(view);
+                //loadCurrentSchedule(view);
+                LinearLayout newTest = (LinearLayout)findViewById(R.id.LayoutScroll);
+                TextView newText = new TextView(mContext);
+                newText.setText("Dynamic Add Text Test");
+                updateLayoutScroll = (ScrollView)findViewById(R.id.scrollView);
+
+                newTest.addView(newText);
+
+                //updateLayoutScroll.addView(newTest);
+
             }
         });
 

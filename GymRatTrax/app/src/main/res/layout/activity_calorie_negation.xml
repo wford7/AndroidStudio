@@ -21,14 +21,16 @@
         android:inputType="numberSigned"
         android:ems="10"
         android:id="@+id/editText2"
-        android:layout_gravity="center_horizontal"
-        android:backgroundTint="#000000" />
+        android:gravity="center"
+        android:backgroundTint="#000000"
+        android:textAlignment="center"
+        android:layout_gravity="center" />
 
     <Button
-        android:layout_width="167dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="SUGGEST WORKOUT ITEM"
-        android:id="@+id/EditSettingsButton"
+        android:id="@+id/negateCalories"
         android:clickable="true"
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
