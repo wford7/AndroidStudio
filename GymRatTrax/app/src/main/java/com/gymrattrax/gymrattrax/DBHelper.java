@@ -11,7 +11,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class DBHelper extends SQLiteOpenHelper {
     public DBHelper(Context context) {
@@ -105,6 +107,38 @@ public class DBHelper extends SQLiteOpenHelper {
             else
                 values[1] = cursor.getDouble(2);
             values[2] = cursor.getDouble(3);
+        }
+        cursor.close();
+        db.close();
+        return values;
+    }
+
+    public Map<Date,Double> getWeights(Date from,Date to) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        String fromStr = dateFormat.format(from) + " 00:00:00.000";
+        String toStr = dateFormat.format(to) + " 23:59:59.999";
+
+        String query = "SELECT * FROM " + DBContract.WeightTable.TABLE_NAME + " WHERE " +
+                DBContract.WeightTable.COLUMN_NAME_DATE + " >=  \"" + fromStr + "\" AND " +
+                DBContract.WeightTable.COLUMN_NAME_DATE + " <=  \"" + toStr + "\" ORDER BY " +
+                DBContract.WeightTable.COLUMN_NAME_DATE;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        Map<Date,Double> values = new HashMap<Date,Double>();
+        while (cursor.moveToNext()) {
+            Date d1 = new Date();
+            try {
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS",
+                        Locale.US);
+                d1 = format.parse(cursor.getString(0));
+            } catch (ParseException e) {
+                Calendar cal = new GregorianCalendar();
+                d1 = cal.getTime();
+            }
+            values.put(d1, cursor.getDouble(1));
         }
         cursor.close();
         db.close();
