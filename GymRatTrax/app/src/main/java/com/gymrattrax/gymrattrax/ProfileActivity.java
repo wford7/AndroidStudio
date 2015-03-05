@@ -48,41 +48,14 @@ public class ProfileActivity extends ActionBarActivity {
         profileSpinner = (Spinner)findViewById(R.id.profile_spinner);
         editing = false;
 
-<<<<<<< Updated upstream:GymRatTrax/app/src/main/java/com/gymrattrax/gymrattrax/FitnessProfile.java
         lockInput();
         setTextFromDatabase();
-=======
-        // make edit text unclickable until edit button is clicked & disable save button
-        SaveProfileButton.setEnabled(false);
-        SaveProfileButton.setClickable(false);
-
-        nameEditText.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
-        nameEditText.setEnabled(false);
-        nameEditText.setClickable(false);
-
-        birthDateEditText.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
-        birthDateEditText.setEnabled(false);
-        birthDateEditText.setClickable(false);
-
-        weightEditText.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
-        weightEditText.setEnabled(false);
-        weightEditText.setClickable(false);
-
-        heightEditText.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
-        heightEditText.setEnabled(false);
-        heightEditText.setClickable(false);
-
-        fatPercentageEditText.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
-        fatPercentageEditText.setEnabled(false);
-        fatPercentageEditText.setClickable(false);
->>>>>>> Stashed changes:GymRatTrax/app/src/main/java/com/gymrattrax/gymrattrax/ProfileActivity.java
 
 
         backProfileButton.setOnClickListener(new Button.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-<<<<<<< Updated upstream:GymRatTrax/app/src/main/java/com/gymrattrax/gymrattrax/FitnessProfile.java
                 if (editing) {
                     editing = false;
                     lockInput();
@@ -92,31 +65,7 @@ public class ProfileActivity extends ActionBarActivity {
                 else {
                     onBackPressed();
                 }
-=======
-                nameEditText.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
-                nameEditText.setEnabled(false);
-                nameEditText.setClickable(false);
 
-                birthDateEditText.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
-                birthDateEditText.setEnabled(false);
-                birthDateEditText.setClickable(false);
-
-                weightEditText.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
-                weightEditText.setEnabled(false);
-                weightEditText.setClickable(false);
-
-                heightEditText.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
-                heightEditText.setEnabled(false);
-                heightEditText.setClickable(false);
-
-                fatPercentageEditText.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
-                fatPercentageEditText.setEnabled(false);
-                fatPercentageEditText.setClickable(false);
-
-                SaveProfileButton.setEnabled(false);
-                SaveProfileButton.setClickable(false);
-                saveChanges(view);
->>>>>>> Stashed changes:GymRatTrax/app/src/main/java/com/gymrattrax/gymrattrax/ProfileActivity.java
             }
         });
 
@@ -124,7 +73,6 @@ public class ProfileActivity extends ActionBarActivity {
 
             @Override
             public void onClick(View view) {
-<<<<<<< Updated upstream:GymRatTrax/app/src/main/java/com/gymrattrax/gymrattrax/FitnessProfile.java
                 if (editing) {
                     editing = false;
                     lockInput();
@@ -166,30 +114,7 @@ public class ProfileActivity extends ActionBarActivity {
 
                     editProfileButton.setText("SAVE");
                 }
-=======
-                nameEditText.setBackgroundColor(getResources().getColor(android.R.color.white));
-                nameEditText.setEnabled(true);
-                nameEditText.setClickable(true);
 
-                birthDateEditText.setBackgroundColor(getResources().getColor(android.R.color.white));
-                birthDateEditText.setEnabled(true);
-                birthDateEditText.setClickable(true);
-
-                weightEditText.setBackgroundColor(getResources().getColor(android.R.color.white));
-                weightEditText.setEnabled(true);
-                weightEditText.setClickable(true);
-
-                heightEditText.setBackgroundColor(getResources().getColor(android.R.color.white));
-                heightEditText.setEnabled(true);
-                heightEditText.setClickable(true);
-
-                fatPercentageEditText.setBackgroundColor(getResources().getColor(android.R.color.white));
-                fatPercentageEditText.setEnabled(true);
-                fatPercentageEditText.setClickable(true);
-
-                SaveProfileButton.setEnabled(true);
-                SaveProfileButton.setClickable(true);
->>>>>>> Stashed changes:GymRatTrax/app/src/main/java/com/gymrattrax/gymrattrax/ProfileActivity.java
             }
         });
 
