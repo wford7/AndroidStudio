@@ -159,11 +159,11 @@ public class HomeScreen extends ActionBarActivity {
     }
 
     /**
-     * pull current workouts from database and then populate scrollview child
+     * pull workouts (current day) from database and then populate ScrollView child
+     *
      */
     private void displayCurrentWorkouts() {
         DBHelper dbh = new DBHelper(this);
-
 
         dbh.close();
     }

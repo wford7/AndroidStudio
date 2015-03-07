@@ -1,9 +1,17 @@
 package com.gymrattrax.gymrattrax;
 
+import android.graphics.Canvas;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.GridLabelRenderer;
+import com.jjoe64.graphview.TitleRenderer;
+
+
 
 
 public class ProgressActivity extends ActionBarActivity {
@@ -12,6 +20,24 @@ public class ProgressActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_progress);
+
+        GraphView graph = (GraphView) findViewById(R.id.graph);
+        GridLabelRenderer o = new GridLabelRenderer(graph);
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(new DataPoint[] {
+                new DataPoint(0, 1),
+                new DataPoint(1, 5),
+                new DataPoint(2, 3),
+                new DataPoint(3, 2),
+                new DataPoint(4, 6)
+        });
+
+        graph.setBackgroundColor(getResources().getColor(R.color.material_blue_grey_800));
+        o.setHorizontalAxisTitle("Date");
+        o.setHorizontalAxisTitleTextSize(20);
+        graph.setTitle(o.getHorizontalAxisTitle());
+        graph.addSeries(series);
+
+
     }
 
 
