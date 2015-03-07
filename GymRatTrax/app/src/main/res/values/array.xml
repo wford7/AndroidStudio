@@ -4,4 +4,11 @@
         <item>Male</item>
         <item>Female</item>
     </string-array>
+    <string-array name="debug_array">
+        <item>Profile</item>
+        <item>Weight</item>
+        <item>Schedule</item>
+        <item>Exercise</item>
+        <item>Workout</item>
+    </string-array>
 </resources>

@@ -10,6 +10,10 @@ import android.widget.RadioButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class ProfileActivity extends ActionBarActivity {
 
@@ -114,10 +118,8 @@ public class ProfileActivity extends ActionBarActivity {
 
                     editProfileButton.setText("SAVE");
                 }
-
             }
         });
-
     }
 
 
@@ -182,9 +184,20 @@ public class ProfileActivity extends ActionBarActivity {
         // update database profile
         DBHelper dbh = new DBHelper(this);
         dbh.setProfileInfo(DBContract.ProfileTable.KEY_NAME, nameEditText.getText().toString());
-        dbh.setProfileInfo(DBContract.ProfileTable.KEY_BIRTH_DATE,
-                birthDateEditText.getText().toString());
         dbh.setProfileInfo(DBContract.ProfileTable.KEY_HEIGHT, heightEditText.getText().toString());
+
+        String date = birthDateEditText.getText().toString();
+
+        SimpleDateFormat inputFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+        Date d = null;
+        try {
+            d = inputFormat.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        SimpleDateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        date = dbFormat.format(d) + " 00:00:00.000";
+        dbh.setProfileInfo(DBContract.ProfileTable.KEY_BIRTH_DATE, date);
 
         double bodyFat = -1;
         if (!fatPercentageEditText.getText().toString().trim().isEmpty())
@@ -193,20 +206,21 @@ public class ProfileActivity extends ActionBarActivity {
         double activityLevel = -1;
 
         if (littleExercise.isChecked())
-            activityLevel = DBContract.ProfileTable.VAL_ACT_LVL_LITTLE;
+            activityLevel = DBContract.WeightTable.ACT_LVL_LITTLE;
         else if (lightExercise.isChecked())
-            activityLevel = DBContract.ProfileTable.VAL_ACT_LVL_LIGHT;
+            activityLevel = DBContract.WeightTable.ACT_LVL_LIGHT;
         else if (modExercise.isChecked())
-            activityLevel = DBContract.ProfileTable.VAL_ACT_LVL_MOD;
+            activityLevel = DBContract.WeightTable.ACT_LVL_MOD;
         else if (heavyExercise.isChecked())
-            activityLevel = DBContract.ProfileTable.VAL_ACT_LVL_HEAVY;
+            activityLevel = DBContract.WeightTable.ACT_LVL_HEAVY;
         else
             System.out.println("No activity level checked");
 
         dbh.setWeight(Double.valueOf(weightEditText.getText().toString()), bodyFat, activityLevel);
 
 
-        switch (profileSpinner.getItemAtPosition(profileSpinner.getSelectedItemPosition()).toString().toUpperCase().substring(0,1)) {
+        switch (profileSpinner.getItemAtPosition(
+                profileSpinner.getSelectedItemPosition()).toString().toUpperCase().substring(0,1)) {
             case "M":
                 dbh.setProfileInfo(DBContract.ProfileTable.KEY_SEX,
                         DBContract.ProfileTable.VAL_SEX_MALE);
@@ -255,8 +269,23 @@ public class ProfileActivity extends ActionBarActivity {
     private void setTextFromDatabase() {
         DBHelper dbh = new DBHelper(this);
         nameEditText.setText(dbh.getProfileInfo(DBContract.ProfileTable.KEY_NAME));
-        birthDateEditText.setText(dbh.getProfileInfo(DBContract.ProfileTable.KEY_BIRTH_DATE));
         heightEditText.setText(dbh.getProfileInfo(DBContract.ProfileTable.KEY_HEIGHT));
+
+        String date = dbh.getProfileInfo(DBContract.ProfileTable.KEY_BIRTH_DATE);
+        if (!date.trim().isEmpty()) {
+            SimpleDateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS", Locale.US);
+            Date d = null;
+            try {
+                d = dbFormat.parse(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            SimpleDateFormat inputFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+            date = inputFormat.format(d);
+            birthDateEditText.setText(date);
+        }
+        else
+            birthDateEditText.setText("");
 
         double[] weightInfo = dbh.getLatestWeight();
         if (weightInfo[0] > 0)
@@ -267,11 +296,11 @@ public class ProfileActivity extends ActionBarActivity {
             fatPercentageEditText.setText(String.valueOf(weightInfo[1]));
         else
             fatPercentageEditText.setText("");
-        if (weightInfo[2] <= DBContract.ProfileTable.VAL_ACT_LVL_LITTLE)
+        if (weightInfo[2] <= DBContract.WeightTable.ACT_LVL_LITTLE)
             littleExercise.toggle();
-        else if (weightInfo[2] <= DBContract.ProfileTable.VAL_ACT_LVL_LIGHT)
+        else if (weightInfo[2] <= DBContract.WeightTable.ACT_LVL_LIGHT)
             lightExercise.toggle();
-        else if (weightInfo[2] <= DBContract.ProfileTable.VAL_ACT_LVL_MOD)
+        else if (weightInfo[2] <= DBContract.WeightTable.ACT_LVL_MOD)
             modExercise.toggle();
         else
             heavyExercise.toggle();

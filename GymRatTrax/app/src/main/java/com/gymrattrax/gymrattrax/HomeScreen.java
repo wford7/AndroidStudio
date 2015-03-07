@@ -3,7 +3,6 @@ package com.gymrattrax.gymrattrax;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
-// import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -14,14 +13,17 @@ import android.content.Intent;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import com.jjoe64.graphview.*;
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
 
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class HomeScreen extends ActionBarActivity {
 
     private Button BeginWorkoutButton, ViewScheduleButton, ViewProfileButton, ViewProgressButton, CalorieNegationButton, EditSettingsButton;
     private ImageView GymRat;
+    private ScrollView updateLayoutScroll;
+    private GraphView graph, graph2;
+    private int debugCheck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,10 @@ public class HomeScreen extends ActionBarActivity {
         EditSettingsButton = (Button)findViewById(R.id.EditSettingsButton);
 
         displayCurrentWorkouts();
+        graph = (GraphView)findViewById(R.id.graph);
+        graph2 = (GraphView)findViewById(R.id.graph2);
+
+        debugCheck = 0;
 
         GymRat.setOnClickListener(new ImageView.OnClickListener(){
 
@@ -53,6 +59,23 @@ public class HomeScreen extends ActionBarActivity {
             public void onClick(View v) {
                 v.startAnimation(animTranslate);
             }});
+
+        if (DBContract.ALLOW_DEBUG) {
+            GymRat.setOnLongClickListener(new View.OnLongClickListener() {
+
+                @Override
+                public boolean onLongClick(View v) {
+                    debugCheck++;
+                    if (debugCheck == 3) {
+                        debugCheck = 0;
+                        Intent intent = new Intent(HomeScreen.this, DBDebug.class);
+                        startActivity(intent);
+                    }
+                    startTimer();
+                    return true;
+                }
+            });
+        }
 
         BeginWorkoutButton.setOnClickListener(new Button.OnClickListener(){
 
@@ -103,6 +126,16 @@ public class HomeScreen extends ActionBarActivity {
             }
         });
 
+
+    }
+
+    private void startTimer() {
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            public void run() {
+                debugCheck = 0;
+            }
+        }, 7000);
     }
 
 
@@ -163,8 +196,17 @@ public class HomeScreen extends ActionBarActivity {
      */
     private void displayCurrentWorkouts() {
         DBHelper dbh = new DBHelper(this);
-
-
+//        WorkoutItem[] workoutItems = dbh.getWorkoutsForToday();
+        WorkoutItem[] workoutItems = new WorkoutItem[0];
+        for (WorkoutItem workoutItem : workoutItems) {
+            LinearLayout dailyLayout = (LinearLayout) findViewById(R.id.LayoutScroll);
+            TextView dailyWorkout = new TextView(HomeScreen.this);
+            dailyWorkout.setText(workoutItem.getName());
+            updateLayoutScroll = (ScrollView) findViewById(R.id.scrollView);
+            dailyLayout.addView(dailyWorkout);
+            updateLayoutScroll.addView(dailyLayout);
+            // " display(workoutItem[i]) "
+        }
         dbh.close();
     }
 }

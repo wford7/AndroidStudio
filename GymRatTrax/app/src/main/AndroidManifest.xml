@@ -57,6 +57,10 @@
             android:name=".StrengthWorkoutActivity"
             android:label="@string/title_activity_strength_workout" >
         </activity>
+        <activity
+            android:name=".DBDebug"
+            android:label="Debug" >
+        </activity>
     </application>
 
 </manifest>

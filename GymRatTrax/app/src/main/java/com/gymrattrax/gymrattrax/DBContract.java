@@ -9,7 +9,7 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 
 public final class DBContract {
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "grt.db";
     private static final String TYPE_TEXT = " TEXT";
     private static final String TYPE_INTEGER = " INTEGER";
@@ -22,6 +22,8 @@ public final class DBContract {
     private static final String L_PAREN = " (";
     private static final String R_PAREN = " )";
 
+    public static final boolean ALLOW_DEBUG = true;
+
     private DBContract() {}
 
     public static abstract class ProfileTable implements BaseColumns {
@@ -33,13 +35,8 @@ public final class DBContract {
         public static final String KEY_BIRTH_DATE = "BIRTH_DATE";
         public static final String KEY_SEX = "SEX";
         public static final String KEY_HEIGHT = "HEIGHT"; //in inches
-
         public static final String VAL_SEX_MALE = "M";
         public static final String VAL_SEX_FEMALE = "F";
-        public static final double VAL_ACT_LVL_LITTLE = 1.2;
-        public static final double VAL_ACT_LVL_LIGHT = 1.375;
-        public static final double VAL_ACT_LVL_MOD = 1.55;
-        public static final double VAL_ACT_LVL_HEAVY = 1.725;
 
         public static final String CREATE_TABLE =
                 "CREATE TABLE " + TABLE_NAME + L_PAREN +
@@ -54,6 +51,11 @@ public final class DBContract {
         public static final String COLUMN_NAME_WEIGHT = "weight";
         public static final String COLUMN_NAME_BODY_FAT_PERCENTAGE = "body_fat_percentage";
         public static final String COLUMN_NAME_ACTIVITY_LEVEL = "activity_level";
+
+        public static final double ACT_LVL_LITTLE = 1.2;
+        public static final double ACT_LVL_LIGHT = 1.375;
+        public static final double ACT_LVL_MOD = 1.55;
+        public static final double ACT_LVL_HEAVY = 1.725;
 
         public static final String CREATE_TABLE =
                 "CREATE TABLE " + TABLE_NAME + L_PAREN +
@@ -83,6 +85,19 @@ public final class DBContract {
         public static final String COLUMN_NAME_NAME = "name";
         public static final String COLUMN_NAME_TYPE = "type";
         public static final String COLUMN_NAME_METS = "mets";
+
+        public static final String NAME_WALK = "walk";
+        public static final String NAME_JOG = "jog";
+        public static final String NAME_RUN = "run";
+        public static final String NAME_LIFTING_LIGHT = "lift_light";
+        public static final String NAME_LIFTING_VIGOROUS = "lift_vigor";
+        public static final String TYPE_CARDIO = "C";
+        public static final String TYPE_STRENGTH = "S";
+        public static final double METS_WALK = 3.0;
+        public static final double METS_JOG = 7.0;
+        public static final double METS_RUN = 11.0;
+        public static final double METS_LIFTING_LIGHT = 3.0;
+        public static final double METS_LIFTING_VIGOROUS = 6.0;
 
         public static final String CREATE_TABLE =
                 "CREATE TABLE " + TABLE_NAME + " (" +

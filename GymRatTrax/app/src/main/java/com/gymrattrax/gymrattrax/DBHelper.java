@@ -25,18 +25,30 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(DBContract.ProfileTable.CREATE_TABLE);
         db.execSQL(DBContract.WeightTable.CREATE_TABLE);
         db.execSQL(DBContract.ScheduleTable.CREATE_TABLE);
-        db.execSQL(DBContract.ExerciseTable.CREATE_TABLE);
         db.execSQL(DBContract.WorkoutTable.CREATE_TABLE);
+        db.execSQL(DBContract.ExerciseTable.CREATE_TABLE);
+        initExerTable(db);
+        if (DBContract.ALLOW_DEBUG) {
+            initWeightTable(db);
+            initSchedTable(db);
+            initWorkoutTable(db);
+        }
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(DBContract.ProfileTable.DELETE_TABLE);
-        db.execSQL(DBContract.WeightTable.DELETE_TABLE);
-        db.execSQL(DBContract.ScheduleTable.DELETE_TABLE);
-        db.execSQL(DBContract.ExerciseTable.DELETE_TABLE);
-        db.execSQL(DBContract.WorkoutTable.DELETE_TABLE);
-        onCreate(db);
+    public void onUpgrade(final SQLiteDatabase db, final int oldVersion, final int newVersion) {
+        int upgradeTo = oldVersion + 1;
+        while (upgradeTo <= newVersion) {
+            switch (upgradeTo) {
+                case 2:
+                    db.execSQL(DBContract.ProfileTable.DELETE_TABLE);
+                    db.execSQL(DBContract.WeightTable.DELETE_TABLE);
+                    db.execSQL(DBContract.ScheduleTable.DELETE_TABLE);
+                    db.execSQL(DBContract.ExerciseTable.DELETE_TABLE);
+                    db.execSQL(DBContract.WorkoutTable.DELETE_TABLE);
+                    onCreate(db);
+            }
+        }
     }
 
     public String getProfileInfo(String key) {
@@ -74,11 +86,13 @@ public class DBHelper extends SQLiteOpenHelper {
         else {
             ContentValues values = new ContentValues();
             if (cursor.moveToFirst()) { //update
-                String[] args = new String[1];
-                args[0] = key;
-                values.put(DBContract.ProfileTable.COLUMN_NAME_VALUE, value);
-                db.update(DBContract.ProfileTable.TABLE_NAME, values,
-                        DBContract.ProfileTable.COLUMN_NAME_KEY + "=?", args);
+                if (!value.equals(cursor.getString(1))) { //no need to update if the value is the same
+                    String[] args = new String[1];
+                    args[0] = key;
+                    values.put(DBContract.ProfileTable.COLUMN_NAME_VALUE, value);
+                    db.update(DBContract.ProfileTable.TABLE_NAME, values,
+                            DBContract.ProfileTable.COLUMN_NAME_KEY + "=?", args);
+                }
             }
             else { //insert
                 values.put(DBContract.ProfileTable.COLUMN_NAME_KEY, key);
@@ -127,9 +141,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
         Cursor cursor = db.rawQuery(query, null);
 
-        Map<Date,Double> values = new HashMap<Date,Double>();
+        Map<Date,Double> values = new HashMap<>();
         while (cursor.moveToNext()) {
-            Date d1 = new Date();
+            Date d1;
             try {
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS",
                         Locale.US);
@@ -149,21 +163,24 @@ public class DBHelper extends SQLiteOpenHelper {
         /*
         bodyFat is optional. To make bodyFat NULL, pass in a non-positive value.
          */
-        String timestamp = now();
-        SQLiteDatabase db = this.getWritableDatabase();
+        double[] old = getLatestWeight();
+        if (weight != old[0] || bodyFat != old[1] || activityLevel != old[2]) {
+            String timestamp = now();
+            SQLiteDatabase db = this.getWritableDatabase();
 
-        ContentValues values = new ContentValues();
-        values.put(DBContract.WeightTable.COLUMN_NAME_DATE, timestamp);
-        values.put(DBContract.WeightTable.COLUMN_NAME_WEIGHT, weight);
-        if (bodyFat > 0)
-            values.put(DBContract.WeightTable.COLUMN_NAME_BODY_FAT_PERCENTAGE, bodyFat);
-        else
-            values.putNull(DBContract.WeightTable.COLUMN_NAME_BODY_FAT_PERCENTAGE);
-        values.put(DBContract.WeightTable.COLUMN_NAME_ACTIVITY_LEVEL, activityLevel);
+            ContentValues values = new ContentValues();
+            values.put(DBContract.WeightTable.COLUMN_NAME_DATE, timestamp);
+            values.put(DBContract.WeightTable.COLUMN_NAME_WEIGHT, weight);
+            if (bodyFat > 0)
+                values.put(DBContract.WeightTable.COLUMN_NAME_BODY_FAT_PERCENTAGE, bodyFat);
+            else
+                values.putNull(DBContract.WeightTable.COLUMN_NAME_BODY_FAT_PERCENTAGE);
+            values.put(DBContract.WeightTable.COLUMN_NAME_ACTIVITY_LEVEL, activityLevel);
 
-        db.insert(DBContract.WeightTable.TABLE_NAME, null, values);
+            db.insert(DBContract.WeightTable.TABLE_NAME, null, values);
 
-        db.close();
+            db.close();
+        }
     }
 
     public void addWorkoutToSchedule(Schedule s, WorkoutItem w) {
@@ -238,7 +255,6 @@ public class DBHelper extends SQLiteOpenHelper {
                     DBContract.ExerciseTable.COLUMN_NAME_NAME + " = \"" + cursor.getString(3) +
                     "\"";
             Cursor subCursor = db.rawQuery(subQuery, null);
-            String value = null;
             if (subCursor.moveToFirst()) {
                 switch (subCursor.getString(1)) {
                     case "C":
@@ -255,7 +271,7 @@ public class DBHelper extends SQLiteOpenHelper {
             subCursor.close();
 
             //set rest of values
-            workouts[i].setID(Integer.parseInt(cursor.getString(0)));
+            workouts[i].setID(cursor.getInt(0));
             //workouts[i].setSchedule(cursor.getInteger(2));
             workouts[i].setName(cursor.getString(3));
             try {
@@ -357,7 +373,141 @@ public class DBHelper extends SQLiteOpenHelper {
 //        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 //        String str = sdf.format(dat) + " 00:00:00.000";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.US);
-        String str = sdf.format(dat);
-        return str;
+        return sdf.format(dat);
+    }
+
+    String[][] secretDebugDeleteFromFinalReleaseRawQuery(String table) {
+        switch (table) {
+            case "Profile":
+                table = DBContract.ProfileTable.TABLE_NAME;
+                break;
+            case "Weight":
+                table = DBContract.WeightTable.TABLE_NAME;
+                break;
+            case "Schedule":
+                table = DBContract.ScheduleTable.TABLE_NAME;
+                break;
+            case "Workout":
+                table = DBContract.WorkoutTable.TABLE_NAME;
+                break;
+            case "Exercise":
+                table = DBContract.ExerciseTable.TABLE_NAME;
+                break;
+        }
+
+        String query = "SELECT * FROM " + table;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        String[][] value = new String[cursor.getCount() + 1][cursor.getColumnCount()];
+        for (int i = 0; i < cursor.getColumnCount(); i++) {
+            value[0][i] = "[ " + cursor.getColumnName(i) + " ]";
+        }
+        while (cursor.moveToNext()) {
+            for (int i = 0; i < cursor.getColumnCount(); i++)
+                value[cursor.getPosition() + 1][i] = cursor.getString(i);
+        }
+        cursor.close();
+        db.close();
+        return value;
+    }
+
+    private void initExerTable(SQLiteDatabase db) {
+        ContentValues values = new ContentValues();
+
+        values.put(DBContract.ExerciseTable.COLUMN_NAME_NAME, DBContract.ExerciseTable.NAME_WALK);
+        values.put(DBContract.ExerciseTable.COLUMN_NAME_TYPE, DBContract.ExerciseTable.TYPE_CARDIO);
+        values.put(DBContract.ExerciseTable.COLUMN_NAME_METS, DBContract.ExerciseTable.METS_WALK);
+        db.insert(DBContract.ExerciseTable.TABLE_NAME, null, values);
+
+        values.put(DBContract.ExerciseTable.COLUMN_NAME_NAME, DBContract.ExerciseTable.NAME_JOG);
+        values.put(DBContract.ExerciseTable.COLUMN_NAME_TYPE, DBContract.ExerciseTable.TYPE_CARDIO);
+        values.put(DBContract.ExerciseTable.COLUMN_NAME_METS, DBContract.ExerciseTable.METS_JOG);
+        db.insert(DBContract.ExerciseTable.TABLE_NAME, null, values);
+
+        values.put(DBContract.ExerciseTable.COLUMN_NAME_NAME, DBContract.ExerciseTable.NAME_RUN);
+        values.put(DBContract.ExerciseTable.COLUMN_NAME_TYPE, DBContract.ExerciseTable.TYPE_CARDIO);
+        values.put(DBContract.ExerciseTable.COLUMN_NAME_METS, DBContract.ExerciseTable.METS_RUN);
+        db.insert(DBContract.ExerciseTable.TABLE_NAME, null, values);
+
+        values.put(DBContract.ExerciseTable.COLUMN_NAME_NAME,
+                DBContract.ExerciseTable.NAME_LIFTING_LIGHT);
+        values.put(DBContract.ExerciseTable.COLUMN_NAME_TYPE,
+                DBContract.ExerciseTable.TYPE_STRENGTH);
+        values.put(DBContract.ExerciseTable.COLUMN_NAME_METS,
+                DBContract.ExerciseTable.METS_LIFTING_LIGHT);
+        db.insert(DBContract.ExerciseTable.TABLE_NAME, null, values);
+
+        values.put(DBContract.ExerciseTable.COLUMN_NAME_NAME,
+                DBContract.ExerciseTable.NAME_LIFTING_VIGOROUS);
+        values.put(DBContract.ExerciseTable.COLUMN_NAME_TYPE,
+                DBContract.ExerciseTable.TYPE_STRENGTH);
+        values.put(DBContract.ExerciseTable.COLUMN_NAME_METS,
+                DBContract.ExerciseTable.METS_LIFTING_VIGOROUS);
+        db.insert(DBContract.ExerciseTable.TABLE_NAME, null, values);
+    }
+    private void initWeightTable(SQLiteDatabase db) {
+        ContentValues values = new ContentValues();
+
+        values.put(DBContract.WeightTable.COLUMN_NAME_DATE, "2015-02-27 12:00:00.000");
+        values.put(DBContract.WeightTable.COLUMN_NAME_WEIGHT, 260);
+        values.putNull(DBContract.WeightTable.COLUMN_NAME_BODY_FAT_PERCENTAGE);
+        values.put(DBContract.WeightTable.COLUMN_NAME_ACTIVITY_LEVEL,
+                DBContract.WeightTable.ACT_LVL_MOD);
+        db.insert(DBContract.WeightTable.TABLE_NAME, null, values);
+
+        values.put(DBContract.WeightTable.COLUMN_NAME_DATE, "2015-03-04 12:00:00.000");
+        values.put(DBContract.WeightTable.COLUMN_NAME_WEIGHT, 258);
+        db.insert(DBContract.WeightTable.TABLE_NAME, null, values);
+
+        values.put(DBContract.WeightTable.COLUMN_NAME_DATE, "2015-03-07 12:00:00.000");
+        values.put(DBContract.WeightTable.COLUMN_NAME_WEIGHT, 256);
+        db.insert(DBContract.WeightTable.TABLE_NAME, null, values);
+    }
+    private void initSchedTable(SQLiteDatabase db) {
+        ContentValues values = new ContentValues();
+
+        values.put(DBContract.ScheduleTable.COLUMN_NAME_ID, 1);
+        values.put(DBContract.ScheduleTable.COLUMN_NAME_LENGTH_IN_DAYS, 7);
+        values.put(DBContract.ScheduleTable.COLUMN_NAME_START_DATE, "2015-03-01 00:00:00.000");
+        db.insert(DBContract.ScheduleTable.TABLE_NAME, null, values);
+
+        values.put(DBContract.ScheduleTable.COLUMN_NAME_ID, 2);
+        values.put(DBContract.ScheduleTable.COLUMN_NAME_LENGTH_IN_DAYS, 7);
+        values.put(DBContract.ScheduleTable.COLUMN_NAME_START_DATE, "2015-03-08 00:00:00.000");
+        db.insert(DBContract.ScheduleTable.TABLE_NAME, null, values);
+    }
+    private void initWorkoutTable(SQLiteDatabase db) {
+        ContentValues values = new ContentValues();
+
+        values.put(DBContract.WorkoutTable.COLUMN_NAME_ID, 1);
+        values.put(DBContract.WorkoutTable.COLUMN_NAME_SCHEDULE, 1);
+        values.put(DBContract.WorkoutTable.COLUMN_NAME_EXERCISE,
+                DBContract.ExerciseTable.NAME_LIFTING_LIGHT);
+        values.put(DBContract.WorkoutTable.COLUMN_NAME_RECORD_TYPE,
+                DBContract.WorkoutTable.VAL_PROPOSED);
+        values.put(DBContract.WorkoutTable.COLUMN_NAME_DATE_TIME, "2015-03-07 12:00:00.000");
+        values.put(DBContract.WorkoutTable.COLUMN_NAME_CALORIES, 100);
+        values.put(DBContract.WorkoutTable.COLUMN_NAME_PARAMETERS, "15:15:15");
+        values.putNull(DBContract.WorkoutTable.COLUMN_NAME_TIME_SPENT);
+        db.insert(DBContract.WorkoutTable.TABLE_NAME, null, values);
+
+        values.put(DBContract.WorkoutTable.COLUMN_NAME_ID, 2);
+        values.put(DBContract.WorkoutTable.COLUMN_NAME_SCHEDULE, 1);
+        values.put(DBContract.WorkoutTable.COLUMN_NAME_EXERCISE,
+                DBContract.ExerciseTable.NAME_LIFTING_VIGOROUS);
+        values.put(DBContract.WorkoutTable.COLUMN_NAME_DATE_TIME, "2015-03-07 14:00:00.000");
+        values.put(DBContract.WorkoutTable.COLUMN_NAME_PARAMETERS, "20:30:40");
+        db.insert(DBContract.WorkoutTable.TABLE_NAME, null, values);
+
+        values.put(DBContract.WorkoutTable.COLUMN_NAME_ID, 3);
+        values.put(DBContract.WorkoutTable.COLUMN_NAME_SCHEDULE, 2);
+        values.put(DBContract.WorkoutTable.COLUMN_NAME_EXERCISE,
+                DBContract.ExerciseTable.NAME_WALK);
+        values.put(DBContract.WorkoutTable.COLUMN_NAME_DATE_TIME, "2015-03-08 12:00:00.000");
+        values.put(DBContract.WorkoutTable.COLUMN_NAME_CALORIES, 100);
+        values.put(DBContract.WorkoutTable.COLUMN_NAME_PARAMETERS, "150");
+        db.insert(DBContract.WorkoutTable.TABLE_NAME, null, values);
     }
 }
