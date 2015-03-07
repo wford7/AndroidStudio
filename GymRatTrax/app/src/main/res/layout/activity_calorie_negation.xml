@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:inputType="numberSigned"
         android:ems="10"
-        android:id="@+id/editText2"
+        android:id="@+id/negate_calories"
         android:gravity="center"
         android:backgroundTint="#000000"
         android:textAlignment="center"
@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="SUGGEST WORKOUT ITEM"
-        android:id="@+id/negateCalories"
+        android:id="@+id/negate_cal_button"
         android:clickable="true"
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
@@ -51,5 +51,14 @@
         android:layout_height="350dp"
         android:id="@+id/scrollView2"
         android:layout_gravity="center_horizontal"
-        android:fillViewport="false" />
+        android:fillViewport="false">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent"
+            android:id="@+id/suggestions_layout">
+        </LinearLayout>
+    </ScrollView>
+
+
 </LinearLayout>

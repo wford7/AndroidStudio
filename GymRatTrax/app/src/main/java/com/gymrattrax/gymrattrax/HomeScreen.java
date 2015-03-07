@@ -22,8 +22,6 @@ public class HomeScreen extends ActionBarActivity {
 
     private Button BeginWorkoutButton, ViewScheduleButton, ViewProfileButton, ViewProgressButton, CalorieNegationButton, EditSettingsButton;
     private ImageView GymRat;
-    private ScrollView updateLayoutScroll;
-    private GraphView graph, graph2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +30,11 @@ public class HomeScreen extends ActionBarActivity {
         Profile create = new Profile();
         setContentView(R.layout.activity_home_screen);
         final Animation animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_rotate);
+
+        /**populate ScrollView's child LinearLayout with workout items that are schedule for the current date
+         * display - workout item, time
+         * if there are no scheduled workout items, display "Nothing scheduled for today"
+         **/
 
 
         GymRat = (ImageView)findViewById(R.id.home_rat);
@@ -42,8 +45,7 @@ public class HomeScreen extends ActionBarActivity {
         CalorieNegationButton = (Button)findViewById(R.id.CalorieNegationButton);
         EditSettingsButton = (Button)findViewById(R.id.EditSettingsButton);
 
-        graph = (GraphView)findViewById(R.id.graph);
-        graph2 = (GraphView)findViewById(R.id.graph2);
+        displayCurrentWorkouts();
 
         GymRat.setOnClickListener(new ImageView.OnClickListener(){
 
@@ -56,43 +58,17 @@ public class HomeScreen extends ActionBarActivity {
 
             @Override
             public void onClick(View view) {
-                LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
-                        new DataPoint(0, 1),
-                        new DataPoint(1, 5),
-                        new DataPoint(2, 3),
-                        new DataPoint(3, 2),
-                        new DataPoint(4, 6)
-                });
-                graph.addSeries(series);
-
-                LineGraphSeries<DataPoint> seriesUno = new LineGraphSeries<>(new DataPoint[]{
-                        new DataPoint(0, 3),
-                        new DataPoint(2, 2),
-                        new DataPoint(5, 2)
-                });
-                graph2.addSeries(seriesUno);
-
-//                loadCurrentSchedule(view);
-//                LinearLayout newTest = (LinearLayout)findViewById(R.id.LayoutScroll);
-//                TextView newText = new TextView(HomeScreen.this);
-//                    newText.setText("Dynamic Add Text Test");
-////                updateLayoutScroll = (ScrollView)findViewById(R.id.scrollView);
-//
-//                    newTest.addView(newText);
-
-
-//                updateLayoutScroll.addView(newTest);
-            }
+                loadDailyWorkout(view);
+           }
         });
 
-//        ViewScheduleButton.setOnClickListener(new Button.OnClickListener(){
-//
-//            @Override
-//        public void onClick(View view){
-//                view.startAnimation(animAlpha);
-//                loadScheduleEdit(view);
-//            }
-//        });
+        ViewScheduleButton.setOnClickListener(new Button.OnClickListener(){
+
+            @Override
+        public void onClick(View view){
+                loadSchedules(view);
+            }
+        });
 
         ViewProfileButton.setOnClickListener(new Button.OnClickListener(){
 
@@ -123,10 +99,9 @@ public class HomeScreen extends ActionBarActivity {
 
             @Override
             public void onClick(View view) {
-//                loadSettings(view);
+                loadSettings(view);
             }
         });
-
 
     }
 
@@ -141,7 +116,7 @@ public class HomeScreen extends ActionBarActivity {
 
     //the following method is triggered when user selects "Begin Workout" button from main page
     //if no workout is schedule, display message instructing user to "Create New Plan"
-    public void loadCurrentSchedule(View view){
+    public void loadDailyWorkout(View view){
 
         //load current workout schedule for current date
 
@@ -176,5 +151,20 @@ public class HomeScreen extends ActionBarActivity {
 
         Intent intent = new Intent (HomeScreen.this, ProgressActivity.class);
         startActivity(intent);
+    }
+
+    public void loadSchedules(View view){
+        Intent intent = new Intent (HomeScreen.this, ViewScheduleActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * pull current workouts from database and then populate scrollview child
+     */
+    private void displayCurrentWorkouts() {
+        DBHelper dbh = new DBHelper(this);
+
+
+        dbh.close();
     }
 }

@@ -4,13 +4,9 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.gymrattrax.gymrattrax.DailyWorkoutActivity"
-    android:background="#e68d00">
+    tools:context="com.gymrattrax.gymrattrax.StrengthWorkoutActivity">
 
-    <TextView android:text="@string/workout_today" android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="47dp" />
+    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

@@ -14,8 +14,7 @@
     <string name="title_activity_fitness_profile">Fitness Profile</string>
     <string name="title_activity_settings">Settings</string>
     <string name="title_activity_view_progress">View Progress</string>
-    <string name="place_holder_text_for_scroll_view">
-        \nTHIS TEXT IS A PLACE HOLDER \nthis text is a place holder \nREDLOH ECALP A SI TXET SIHT
+    <string name="place_holder_text_for_scroll_view">        \nTHIS TEXT IS A PLACE HOLDER \nthis text is a place holder \nREDLOH ECALP A SI TXET SIHT
         \nredloh ecalp a si txet siht
         \nTHIS TEXT IS A PLACE HOLDER \nthis text is a place holder \nREDLOH ECALP A SI TXET SIHT
         \nredloh ecalp a si txet siht
@@ -37,5 +36,7 @@
         \nredloh ecalp a si txet siht</string>
     <string name="gym_rat_trax_version_num">GymRatTrax Version 0.1</string>
     <string name="title_activity_cardio_workout">Cardio Workout</string>
+    <string name="title_activity_view_schedule">View Schedule Activity</string>
+    <string name="title_activity_strength_workout">Strength Workout Activity</string>
 
 </resources>

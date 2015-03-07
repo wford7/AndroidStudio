@@ -6,10 +6,12 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
+        android:screenOrientation="portrait"
         android:theme="@style/AppTheme" >
         <activity
             android:name=".HomeScreen"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -18,27 +20,42 @@
         </activity>
         <activity
             android:name=".DailyWorkoutActivity"
-            android:label="@string/title_activity_daily_workout" >
+            android:label="@string/title_activity_daily_workout"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".CalorieNegationActivity"
-            android:label="@string/title_activity_calorie_negation" >
+            android:label="@string/title_activity_calorie_negation"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".ProfileActivity"
-            android:label="@string/title_activity_fitness_profile" >
+            android:label="@string/title_activity_fitness_profile"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings" >
+            android:label="@string/title_activity_settings"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".ProgressActivity"
-            android:label="@string/title_activity_view_progress" >
+            android:label="@string/title_activity_view_progress"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".CardioWorkoutActivity"
-            android:label="@string/title_activity_cardio_workout" >
+            android:label="@string/title_activity_cardio_workout"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ViewScheduleActivity"
+            android:label="@string/title_activity_view_schedule"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".StrengthWorkoutActivity"
+            android:label="@string/title_activity_strength_workout" >
         </activity>
     </application>
 
