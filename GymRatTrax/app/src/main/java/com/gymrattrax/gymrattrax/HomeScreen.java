@@ -47,7 +47,6 @@ public class HomeScreen extends ActionBarActivity {
         CalorieNegationButton = (Button)findViewById(R.id.CalorieNegationButton);
         EditSettingsButton = (Button)findViewById(R.id.EditSettingsButton);
 
-        displayCurrentWorkouts();
 
         debugCheck = 0;
 
@@ -78,6 +77,13 @@ public class HomeScreen extends ActionBarActivity {
         BeginWorkoutButton.setOnClickListener(new Button.OnClickListener(){
 
             @Override
+            public void onClick(View v) {
+
+            }
+        });
+        ViewProgressButton.setOnClickListener(new Button.OnClickListener(){
+
+            @Override
             public void onClick(View view) {
                 loadDailyWorkout(view);
            }
@@ -99,12 +105,11 @@ public class HomeScreen extends ActionBarActivity {
             }
         });
 
-
-        ViewProgressButton.setOnClickListener(new Button.OnClickListener(){
+        BeginWorkoutButton.setOnClickListener(new Button.OnClickListener(){
 
             @Override
             public void onClick(View view) {
-                loadProgress(view);
+                loadDailyWorkout(view);
             }
         });
 
@@ -120,10 +125,10 @@ public class HomeScreen extends ActionBarActivity {
 
             @Override
             public void onClick(View view) {
+
                 loadSettings(view);
             }
         });
-
 
     }
 
@@ -151,7 +156,7 @@ public class HomeScreen extends ActionBarActivity {
 
         //load current workout schedule for current date
 
-        Intent intent = new Intent (HomeScreen.this, DailyWorkoutActivity.class);
+        Intent intent = new Intent (HomeScreen.this, BeginWorkoutActivity.class);
         startActivity(intent);
     }
 
@@ -185,26 +190,25 @@ public class HomeScreen extends ActionBarActivity {
     }
 
     public void loadSchedules(View view){
-        Intent intent = new Intent (HomeScreen.this, ViewScheduleActivity.class);
+        Intent intent = new Intent (HomeScreen.this, ScheduleActivity.class);
         startActivity(intent);
     }
-
+        }
     /**
      * pull workouts (current day) from database and then populate ScrollView child
      */
-    private void displayCurrentWorkouts() {
-        DBHelper dbh = new DBHelper(this);
-//        WorkoutItem[] workoutItems = dbh.getWorkoutsForToday();
-        WorkoutItem[] workoutItems = new WorkoutItem[0];
-        for (WorkoutItem workoutItem : workoutItems) {
-            LinearLayout dailyLayout = (LinearLayout) findViewById(R.id.LayoutScroll);
-            TextView dailyWorkout = new TextView(HomeScreen.this);
-            dailyWorkout.setText(workoutItem.getName());
-            updateLayoutScroll = (ScrollView) findViewById(R.id.scrollView);
-            dailyLayout.addView(dailyWorkout);
-            updateLayoutScroll.addView(dailyLayout);
-            // " display(workoutItem[i]) "
-        }
-        dbh.close();
-    }
-}
+//    private void displayCurrentWorkouts() {
+//        DBHelper dbh = new DBHelper(this);
+////        WorkoutItem[] workoutItems = dbh.getWorkoutsForToday();
+//        WorkoutItem[] workoutItems = new WorkoutItem[0];
+//        for (WorkoutItem workoutItem : workoutItems) {
+//            LinearLayout dailyLayout = (LinearLayout) findViewById(R.id.LayoutScroll);
+//            TextView dailyWorkout = new TextView(HomeScreen.this);
+//            dailyWorkout.setText(workoutItem.getName());
+//            updateLayoutScroll = (ScrollView) findViewById(R.id.scrollView);
+//            dailyLayout.addView(dailyWorkout);
+//            updateLayoutScroll.addView(dailyLayout);
+//            // " display(workoutItem[i]) "
+//        }
+//        dbh.close();
+//    }

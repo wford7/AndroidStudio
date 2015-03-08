@@ -8,11 +8,16 @@
     <!-- Name of Application -->
     <string name="action_settings">Settings</string>
     <string name="title_activity_cardio_exercise">Cardio Exercise</string>
+    <string name="title_activity_strength_exercise">Strength Exercise</string>
     <string name="title_activity_daily_workout">Daily Workout</string>
     <string name="title_activity_calorie_negation">Calorie Negation</string>
-    <string name="hello_world">Hello world!</string>
     <string name="title_activity_fitness_profile">Fitness Profile</string>
     <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_schedule">Workout Schedules</string>
+    <string name="schedule_activity_current_schedule">Current Schedule</string>
+    <string name="schedule_activity_add_event">Add Event</string>
+    <string name="schedule_activity_back">BACK</string>
+
     <string name="title_activity_view_progress">View Progress</string>
     <string name="place_holder_text_for_scroll_view">        \nTHIS TEXT IS A PLACE HOLDER \nthis text is a place holder \nREDLOH ECALP A SI TXET SIHT
         \nredloh ecalp a si txet siht
@@ -38,5 +43,7 @@
     <string name="title_activity_cardio_workout">Cardio Workout</string>
     <string name="title_activity_view_schedule">View Schedule Activity</string>
     <string name="title_activity_strength_workout">Strength Workout Activity</string>
+    <string name="hello_world">hello_world</string>
+
 
 </resources>
