@@ -41,7 +41,7 @@
         <activity
             android:name=".ProgressActivity"
             android:label="@string/title_activity_view_progress"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="landscape" >
         </activity>
         <activity
             android:name=".CardioWorkoutActivity"
