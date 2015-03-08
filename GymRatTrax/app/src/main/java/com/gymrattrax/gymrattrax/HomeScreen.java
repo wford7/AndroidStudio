@@ -4,8 +4,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.ScrollView;
 import android.widget.ImageView;
 import android.widget.Button;
@@ -156,7 +154,7 @@ public class HomeScreen extends ActionBarActivity {
 
         //load current workout schedule for current date
 
-        Intent intent = new Intent (HomeScreen.this, BeginWorkoutActivity.class);
+        Intent intent = new Intent (HomeScreen.this, DailyWorkoutActivity.class);
         startActivity(intent);
     }
 

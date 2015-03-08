@@ -11,7 +11,9 @@ public class Profile {
     private double BMR;
     private double fatPercentage;
     private int activityLevel;
+    private boolean complete;
 
+    public Profile() {}
 
     public char getGender() {
         return gender;
@@ -77,23 +79,23 @@ public class Profile {
         this.activityLevel = activityLevel;
     }
 
-//    public double calculateBMR(double weight, double height, char gender, double age, double activityLvl, double bodyFatPercentage){
+    private double calculateBMR(double weight, double height, char gender, double age, double activityLvl, double bodyFatPercentage){
 
-//        if (fatPercentage == NULL) {
-////Harris Benedict Method
-//            if (gender == 'M') {
-//                BMR = (66 + (6.23*weight) + (12.7*height) - (6.8*age)) * activityLvl;
-//            } else if (gender == 'F') {
-//                BMR = (655 + (4.35*weight) + (4.7*height) - (4.7*age)) * activityLvl;
-//            }
-//        } else if (fatPercentage != NULL) {
-////Katch & McArdle Method
-//            double weightInKg = weight/2.2;
-//            double leanMass = weightInKg - (weightInKg *bodyFatPercentage);
-//            BMR = (370 + (21.6 * leanMass)) * activityLvl;
-//        }
+        if (fatPercentage < 0) {  //Harris-Benedict method
+            if (gender == 'M') {
+                BMR = (66 + (6.23*weight) + (12.7*height) - (6.8*age)) * activityLvl;
+            } else if (gender == 'F') {
+                BMR = (655 + (4.35*weight) + (4.7*height) - (4.7*age)) * activityLvl;
+            }
+        } else {  //Katch & McArdle method
+            double weightInKg = weight/2.2;
+            double leanMass = weightInKg - (weightInKg *bodyFatPercentage);
+            BMR = (370 + (21.6 * leanMass)) * activityLvl;
+        }
 
-//        return BMR;
+        return BMR;
 
-//    }
+    }
+
+    private boolean isComplete() { return complete; }
 }

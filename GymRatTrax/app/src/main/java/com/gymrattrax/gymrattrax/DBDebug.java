@@ -5,32 +5,20 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 
 public class DBDebug extends ActionBarActivity {
-
-    private ScrollView updateLayoutScroll;
-//    private LinearLayout linearLayout;
     private Spinner tableSpinner;
     private TableLayout tableItself;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //initiate tutorial/profile creation if there is no Profile ID in database
-        Profile create = new Profile();
         setContentView(R.layout.activity_debug);
-        final Animation animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_rotate);
 
-        updateLayoutScroll = (ScrollView)findViewById(R.id.scrollview_table);
-//        linearLayout = (LinearLayout)findViewById(R.id.row_debug);
         tableSpinner = (Spinner)findViewById(R.id.debug_spinner);
         tableItself = (TableLayout)findViewById(R.id.table_scroll);
 
@@ -53,16 +41,12 @@ public class DBDebug extends ActionBarActivity {
                         tv.setId(((j+2) * 1000) + i);
                         tv.setText(dbValues[i][j]);
                         tv.setLayoutParams(new TableRow.LayoutParams(
-                                TableRow.LayoutParams.FILL_PARENT,
+                                TableRow.LayoutParams.WRAP_CONTENT,
                                 TableRow.LayoutParams.WRAP_CONTENT));
                         tr.addView(tv);
                     }
                     tableItself.addView(tr);
                 }
-//                updateLayoutScroll.removeAllViews();
-//                updateLayoutScroll.addView(tableItself);
-//                linearLayout.removeAllViews();
-//                linearLayout.addView(table);
             }
 
             @Override
@@ -70,7 +54,6 @@ public class DBDebug extends ActionBarActivity {
 
             }
         });
-
     }
 
 
@@ -80,5 +63,4 @@ public class DBDebug extends ActionBarActivity {
         getMenuInflater().inflate(R.menu.menu_home_screen, menu);
         return true;
     }
-
 }

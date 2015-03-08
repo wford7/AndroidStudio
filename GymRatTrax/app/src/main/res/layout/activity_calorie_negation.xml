@@ -30,7 +30,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="SUGGEST WORKOUT ITEM"
+        android:text="SUGGEST WORKOUTS"
         android:id="@+id/negate_cal_button"
         android:clickable="true"
         android:layout_below="@+id/textView"
