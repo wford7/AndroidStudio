@@ -48,8 +48,6 @@ public class HomeScreen extends ActionBarActivity {
         EditSettingsButton = (Button)findViewById(R.id.EditSettingsButton);
 
         displayCurrentWorkouts();
-        graph = (GraphView)findViewById(R.id.graph);
-        graph2 = (GraphView)findViewById(R.id.graph2);
 
         debugCheck = 0;
 
