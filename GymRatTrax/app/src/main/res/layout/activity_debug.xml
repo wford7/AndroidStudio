@@ -49,20 +49,26 @@
         <!--android:layout_weight="2.91">-->
     <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="544dp"
         android:scrollbars="none"
-        android:id="@+id/scrollview_table"
-        android:layout_weight="1">
+        android:id="@+id/scrollview_table">
 
-        <TableLayout
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/table_scroll">
-
-
-        </TableLayout>
         <!--</LinearLayout>-->
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/horizontalScrollView"
+            android:layout_gravity="right" >
+
+            <TableLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/table_scroll">
+
+
+            </TableLayout>
+        </HorizontalScrollView>
     </ScrollView>
 
 
