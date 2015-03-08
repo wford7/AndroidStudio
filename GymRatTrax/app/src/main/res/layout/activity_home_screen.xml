@@ -211,25 +211,18 @@
             android:layout_height="fill_parent"
             android:id="@+id/LayoutScroll">
 
-            <com.jjoe64.graphview.GraphView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/graph" />
-
-            <com.jjoe64.graphview.GraphView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/graph2" />
-
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageButton"
+                android:layout_weight="0.08"
+                android:background="@drawable/add_button_press"/>
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="@string/place_holder_text_for_scroll_view"/>
         </LinearLayout>
     </ScrollView>
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageButton"
-        android:layout_weight="0.08"
-        android:background="@drawable/add_button_press"/>
 
 
 </LinearLayout>
