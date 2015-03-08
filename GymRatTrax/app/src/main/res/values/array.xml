@@ -11,4 +11,9 @@
         <item>Exercise</item>
         <item>Workout</item>
     </string-array>
+
+    <string-array name="graphs_array">
+        <item>Weight</item>
+        <item>Calories</item>
+    </string-array>
 </resources>
