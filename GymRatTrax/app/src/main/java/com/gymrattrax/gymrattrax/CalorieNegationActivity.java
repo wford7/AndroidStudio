@@ -1,5 +1,6 @@
 package com.gymrattrax.gymrattrax;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,6 +17,12 @@ public class CalorieNegationActivity extends ActionBarActivity {
     Button SuggestWorkoutButton;
     EditText NegateEditText;
     LinearLayout linearContainer;
+    Button LightStrength;
+    Button VigorousStrength;
+    Button Walking;
+    Button Jogging;
+    Button Running;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +32,11 @@ public class CalorieNegationActivity extends ActionBarActivity {
         SuggestWorkoutButton = (Button) findViewById(R.id.negate_cal_button);
         NegateEditText = (EditText) findViewById(R.id.negate_calories);
         linearContainer = (LinearLayout) findViewById(R.id.suggestions_layout);
+        LightStrength = new Button(CalorieNegationActivity.this);
+        VigorousStrength = new Button(CalorieNegationActivity.this);
+        Walking = new Button(CalorieNegationActivity.this);
+        Jogging = new Button(CalorieNegationActivity.this);
+        Running = new Button(CalorieNegationActivity.this);
 
         SuggestWorkoutButton.setOnClickListener(new Button.OnClickListener() {
 
@@ -72,22 +84,91 @@ public class CalorieNegationActivity extends ActionBarActivity {
                     TextView newView = new TextView(CalorieNegationActivity.this);
                     newView.setId(1000 + i);
                     String text = "Exercise <name of ";
-                    if (i == 0)
                     if (i == 0) {
                         text += "light strength";
-                    else if (i == 1)
+                        linearContainer.addView(LightStrength);
+                        LightStrength.setBackground(getResources().getDrawable(R.drawable.add_button_press));
+                        //
+
+
+                    }
+                    else if (i == 1) {
                         text += "vigorous strength";
-                    else if (i == 2)
+                        linearContainer.addView(VigorousStrength);
+                        VigorousStrength.setBackground(getResources().getDrawable(R.drawable.add_button_press));
+
+                    }
+
+                    else if (i == 2) {
                         text += "walking";
-                    else if (i == 3)
+                        linearContainer.addView(Walking);
+                        Walking.setBackground(getResources().getDrawable(R.drawable.add_button_press));
+
+                    }
+                    else if (i == 3) {
                         text += "jogging";
-                    else if (i == 4)
+                        linearContainer.addView(Jogging);
+                        Jogging.setBackground(getResources().getDrawable(R.drawable.add_button_press));
+                    }
+
+                    else if (i == 4) {
                         text += "running";
+                        linearContainer.addView(Running);
+                        Running.setBackground(getResources().getDrawable(R.drawable.add_button_press));
+                    }
                     text += " exercise> could be done for " + minutes + " minutes and " + seconds +
                             " seconds.";
                     newView.setText(text);
                     linearContainer.addView(newView);
                 }
+            }
+        });
+
+        LightStrength.setOnClickListener(new Button.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                //Create light strength workout item and store it in today's schedule
+                BackToHomeScreen(view);
+            }
+        });
+
+        VigorousStrength.setOnClickListener(new Button.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                //Create vigorous strength workout item and store it in today's schedule
+                BackToHomeScreen(view);
+            }
+        });
+
+        Walking.setOnClickListener(new Button.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                //Create walking workout item and store it in today's schedule
+
+                BackToHomeScreen(view);
+            }
+        });
+
+        Jogging.setOnClickListener(new Button.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                //Create jogging workout item and store it in today's schedule
+
+                BackToHomeScreen(view);
+            }
+        });
+
+        Running.setOnClickListener(new Button.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                //Create running workout item and store it in today's schedule
+
+                BackToHomeScreen(view);
             }
         });
     }
@@ -113,6 +194,11 @@ public class CalorieNegationActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void BackToHomeScreen(View view){
+        Intent intent = new Intent (CalorieNegationActivity.this, HomeScreen.class);
+        startActivity(intent);
     }
 
 }
