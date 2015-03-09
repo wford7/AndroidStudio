@@ -73,6 +73,7 @@ public class CalorieNegationActivity extends ActionBarActivity {
                     newView.setId(1000 + i);
                     String text = "Exercise <name of ";
                     if (i == 0)
+                    if (i == 0) {
                         text += "light strength";
                     else if (i == 1)
                         text += "vigorous strength";
