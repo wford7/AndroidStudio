@@ -1,8 +1,16 @@
 package com.gymrattrax.gymrattrax;
 
+import android.content.Context;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 
 public class Profile {
+    private String name;
     private char gender;
     private Date DOB;
     private int age;
@@ -10,73 +18,100 @@ public class Profile {
     private double weight;
     private double BMR;
     private double fatPercentage;
-    private int activityLevel;
+    private double activityLevel;
     private boolean complete;
 
-    public Profile() {}
+    public Profile(Context c) {
+        complete = false;
+        DBHelper dbh = new DBHelper(c);
+        name = dbh.getProfileInfo(DBContract.ProfileTable.KEY_NAME);
+        try {
+            height = Double.parseDouble(dbh.getProfileInfo(DBContract.ProfileTable.KEY_HEIGHT));
+        } catch (NumberFormatException nfe) {
+            height = -1.0;
+        }
+
+        String date = dbh.getProfileInfo(DBContract.ProfileTable.KEY_BIRTH_DATE);
+        if (!date.trim().isEmpty()) {
+            SimpleDateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS", Locale.US);
+            try {
+                DOB = dbFormat.parse(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        if (DOB != null) {
+            Calendar now = Calendar.getInstance();
+            Calendar dob = Calendar.getInstance();
+            dob.setTime(DOB);
+            int year1 = now.get(Calendar.YEAR);
+            int year2 = dob.get(Calendar.YEAR);
+            age = year1 - year2;
+            int month1 = now.get(Calendar.MONTH);
+            int month2 = dob.get(Calendar.MONTH);
+            if (month2 > month1) {
+                age--;
+            } else if (month1 == month2) {
+                int day1 = now.get(Calendar.DAY_OF_MONTH);
+                int day2 = dob.get(Calendar.DAY_OF_MONTH);
+                if (day2 > day1) {
+                    age--;
+                }
+            }
+        }
+        else {
+            age = -1;
+        }
+
+        double[] weightInfo = dbh.getLatestWeight();
+        weight = weightInfo[0];
+        fatPercentage = weightInfo[1];
+        activityLevel = weightInfo[2];
+
+        if (!dbh.getProfileInfo(DBContract.ProfileTable.KEY_SEX).trim().isEmpty())
+            gender = dbh.getProfileInfo(DBContract.ProfileTable.KEY_SEX).toUpperCase().charAt(0);
+        else
+            gender = 0;
+
+        if (weight > 0 && height > 0 && gender > 0 && age > 0 && activityLevel > 0) {
+            BMR = calculateBMR(weight, height, gender, age, activityLevel, fatPercentage);
+            if (BMR > 0)
+                complete = true;
+        }
+
+        dbh.close();
+    }
 
     public char getGender() {
         return gender;
-    }
-
-    public void setGender(char gender) {
-        this.gender = gender;
     }
 
     public Date getDOB() {
         return DOB;
     }
 
-    public void setDOB(Date DOB) {
-        this.DOB = DOB;
-    }
-
     public int getAge() {
         return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
     }
 
     public double getHeight() {
         return height;
     }
 
-    public void setHeight(double height) {
-        this.height = height;
-    }
-
     public double getWeight() {
         return weight;
-    }
-
-    public void setWeight(double weight) {
-        this.weight = weight;
     }
 
     public double getBMR() {
         return BMR;
     }
 
-    public void setBMR(double BMR) {
-        this.BMR = BMR;
-    }
-
     public double getFatPercentage() {
         return fatPercentage;
     }
 
-    public void setFatPercentage(double fatPercentage) {
-        this.fatPercentage = fatPercentage;
-    }
-
-    public int getActivityLevel() {
+    public double getActivityLevel() {
         return activityLevel;
-    }
-
-    public void setActivityLevel(int activityLevel) {
-        this.activityLevel = activityLevel;
     }
 
     private double calculateBMR(double weight, double height, char gender, double age, double activityLvl, double bodyFatPercentage){
@@ -97,5 +132,11 @@ public class Profile {
 
     }
 
-    private boolean isComplete() { return complete; }
+    public String getName() {
+        return name;
+    }
+
+    public boolean isComplete() {
+        return complete;
+    }
 }

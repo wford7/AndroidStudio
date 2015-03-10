@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.content.Intent;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Toast;
+
 import com.jjoe64.graphview.*;
 
 import java.util.Timer;
@@ -17,7 +19,8 @@ import java.util.TimerTask;
 
 public class HomeScreen extends ActionBarActivity {
 
-    private Button BeginWorkoutButton, ViewScheduleButton, ViewProfileButton, ViewProgressButton, CalorieNegationButton, EditSettingsButton;
+    private Button BeginWorkoutButton, ViewScheduleButton, ViewProfileButton, ViewProgressButton,
+            CalorieNegationButton, EditSettingsButton;
     private ImageView GymRat;
     private ScrollView updateLayoutScroll;
     private GraphView graph, graph2;
@@ -27,7 +30,14 @@ public class HomeScreen extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //initiate tutorial/profile creation if there is no Profile ID in database
-        Profile create = new Profile();
+        Profile create = new Profile(this);
+        if (!create.isComplete() && DBContract.ALLOW_DEBUG) {
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    "Profile is not adequately complete. " +
+                            "In the future, launch Create Profile activity here. " +
+                            "DO NOT ATTEMPT CALORIE NEGATION.", Toast.LENGTH_LONG);
+            toast.show();
+        }
         setContentView(R.layout.activity_home_screen);
         final Animation animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_rotate);
 

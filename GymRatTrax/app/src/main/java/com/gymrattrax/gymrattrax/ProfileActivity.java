@@ -9,9 +9,11 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -30,9 +32,11 @@ public class ProfileActivity extends ActionBarActivity {
     private RadioButton heavyExercise;
     private Spinner profileSpinner;
     private boolean editing;
+    private Profile profile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        profile = new Profile(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fitness_profile);
 
@@ -53,7 +57,7 @@ public class ProfileActivity extends ActionBarActivity {
         editing = false;
 
         lockInput();
-        setTextFromDatabase();
+        setTextFromProfile();
 
 
         backProfileButton.setOnClickListener(new Button.OnClickListener() {
@@ -64,7 +68,7 @@ public class ProfileActivity extends ActionBarActivity {
                     editing = false;
                     lockInput();
                     editProfileButton.setText("EDIT");
-                    setTextFromDatabase();
+                    setTextFromProfile();
                 }
                 else {
                     onBackPressed();
@@ -78,10 +82,18 @@ public class ProfileActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 if (editing) {
-                    editing = false;
-                    lockInput();
-                    editProfileButton.setText("EDIT");
-                    saveChanges(view);
+                    String errors = validateInput();
+                    if (errors.isEmpty()) {
+                        lockInput();
+                        editProfileButton.setText("EDIT");
+                        saveChanges(view);
+                        editing = false;
+                    }
+                    else {
+                        Toast toast = Toast.makeText(getApplicationContext(), errors,
+                                Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
                 }
                 else {
                     editing = true;
@@ -121,7 +133,6 @@ public class ProfileActivity extends ActionBarActivity {
             }
         });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -187,7 +198,6 @@ public class ProfileActivity extends ActionBarActivity {
         dbh.setProfileInfo(DBContract.ProfileTable.KEY_HEIGHT, heightEditText.getText().toString());
 
         String date = birthDateEditText.getText().toString();
-
         SimpleDateFormat inputFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
         Date d = null;
         try {
@@ -195,9 +205,11 @@ public class ProfileActivity extends ActionBarActivity {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        SimpleDateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-        date = dbFormat.format(d) + " 00:00:00.000";
-        dbh.setProfileInfo(DBContract.ProfileTable.KEY_BIRTH_DATE, date);
+        if (d != null) {
+            SimpleDateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+            date = dbFormat.format(d) + " 00:00:00.000";
+            dbh.setProfileInfo(DBContract.ProfileTable.KEY_BIRTH_DATE, date);
+        }
 
         double bodyFat = -1;
         if (!fatPercentageEditText.getText().toString().trim().isEmpty())
@@ -231,7 +243,7 @@ public class ProfileActivity extends ActionBarActivity {
                 break;
         }
 
-        dbh.close();
+        profile = new Profile(this);
     }
 
     public void editProfile(View view){
@@ -266,54 +278,142 @@ public class ProfileActivity extends ActionBarActivity {
                     break;
         }
     }
-    private void setTextFromDatabase() {
-        DBHelper dbh = new DBHelper(this);
-        nameEditText.setText(dbh.getProfileInfo(DBContract.ProfileTable.KEY_NAME));
-        heightEditText.setText(dbh.getProfileInfo(DBContract.ProfileTable.KEY_HEIGHT));
 
-        String date = dbh.getProfileInfo(DBContract.ProfileTable.KEY_BIRTH_DATE);
-        if (!date.trim().isEmpty()) {
-            SimpleDateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS", Locale.US);
-            Date d = null;
-            try {
-                d = dbFormat.parse(date);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            SimpleDateFormat inputFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-            date = inputFormat.format(d);
-            birthDateEditText.setText(date);
-        }
+    private void setTextFromProfile() {
+        nameEditText.setText(profile.getName());
+        if (profile.getHeight() > 0)
+            heightEditText.setText(String.valueOf(profile.getHeight()));
         else
-            birthDateEditText.setText("");
+            heightEditText.setText("");
 
-        double[] weightInfo = dbh.getLatestWeight();
-        if (weightInfo[0] > 0)
-            weightEditText.setText(String.valueOf(weightInfo[0]));
+        if (profile.getAge() > 0) {
+            SimpleDateFormat inputFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+            birthDateEditText.setText(inputFormat.format(profile.getDOB()));
+        }
+        else {
+            birthDateEditText.setText("");
+        }
+
+        if (profile.getWeight() > 0)
+            weightEditText.setText(String.valueOf(profile.getWeight()));
         else
             weightEditText.setText("");
-        if (weightInfo[1] > 0)
-            fatPercentageEditText.setText(String.valueOf(weightInfo[1]));
+        if (profile.getFatPercentage() > 0)
+            fatPercentageEditText.setText(String.valueOf(profile.getFatPercentage()));
         else
             fatPercentageEditText.setText("");
-        if (weightInfo[2] <= DBContract.WeightTable.ACT_LVL_LITTLE)
+        if (profile.getActivityLevel() <= DBContract.WeightTable.ACT_LVL_LITTLE)
             littleExercise.toggle();
-        else if (weightInfo[2] <= DBContract.WeightTable.ACT_LVL_LIGHT)
+        else if (profile.getActivityLevel() <= DBContract.WeightTable.ACT_LVL_LIGHT)
             lightExercise.toggle();
-        else if (weightInfo[2] <= DBContract.WeightTable.ACT_LVL_MOD)
+        else if (profile.getActivityLevel() <= DBContract.WeightTable.ACT_LVL_MOD)
             modExercise.toggle();
         else
             heavyExercise.toggle();
 
-        switch (dbh.getProfileInfo(DBContract.ProfileTable.KEY_SEX)) {
-            case "M":
+        switch (profile.getGender()) {
+            case 'M':
                 profileSpinner.setSelection(0);
                 break;
-            case "F":
+            case 'F':
                 profileSpinner.setSelection(1);
                 break;
         }
+    }
+    private String validateInput() {
+        String testVar;
+        double testDbl;
+        //Name and body fat are optional, and sex forces input.
+        //Test birth date
+        testVar = birthDateEditText.getText().toString();
+        //even though MM/DD/YYYY is stated, M/D/YYYY is allowed
+        if (testVar.trim().isEmpty())
+            return "Date is required.";
+        else if (testVar.trim().length() < 8)
+            return "Date is in incorrect format";
+        if (!testVar.equals(testVar.trim())) {
+            testVar = testVar.trim();
+            birthDateEditText.setText(testVar);
+        }
+        if (!testVar.equals(testVar.replace('-','/'))) {
+            testVar = testVar.replace('-','/');
+            birthDateEditText.setText(testVar);
+        }
+        if (testVar.charAt(1) == '/') {
+            testVar = "0" + testVar;
+            birthDateEditText.setText(testVar);
+        }
+        if (testVar.charAt(4) == '/') {
+            testVar = testVar.substring(0, 3) + "0" + testVar.substring(3);
+            birthDateEditText.setText(testVar);
+        }
+        if (!(testVar.length() == 10))
+            return "Date is in incorrect format.";
+        SimpleDateFormat inputFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+        Date testDate;
+        try {
+            testDate = inputFormat.parse(testVar);
+        } catch (ParseException e) {
+            return "Date is in incorrect format";
+        }
+        if (testDate != null) {
+            Calendar now = Calendar.getInstance();
+            Calendar testCal = Calendar.getInstance();
+            testCal.setTime(testDate);
+            if (testCal.after(now)) {
+                return "Okay, Marty McFly, you weren't born in the future.";
+            }
+        }
+        else {
+            return "Date is in incorrect format";
+        }
 
-        dbh.close();
+        //Test weight
+        testVar = weightEditText.getText().toString();
+        if (testVar.trim().isEmpty())
+            return "Weight is required.";
+        try {
+            testDbl = Double.parseDouble(testVar);
+        } catch (NumberFormatException e) {
+            return "Weight is in incorrect format.";
+        }
+        if (testDbl < 0)
+            return "Weight cannot be negative.";
+        else if (testDbl < 20)
+            return "Weight is too low.";
+        else if (testDbl > 1400)
+            return "Weight is too high.";
+
+        //Test height
+        testVar = heightEditText.getText().toString();
+        if (testVar.trim().isEmpty())
+            return "Height is required.";
+        try {
+            testDbl = Double.parseDouble(testVar);
+        } catch (NumberFormatException e) {
+            return "Height is in incorrect format.";
+        }
+        if (testDbl < 0)
+            return "Height cannot be negative.";
+        else if (testDbl < 20)
+            return "Height is too low.";
+        else if (testDbl > 120)
+            return "Height is too high.";
+
+        //Test body fat percentage
+        testVar = fatPercentageEditText.getText().toString();
+        if (!testVar.trim().isEmpty()) {
+            try {
+                testDbl = Double.parseDouble(testVar);
+            } catch (NumberFormatException e) {
+                return "Body fat percentage is in incorrect format.";
+            }
+            if (testDbl < 0)
+                return "Body fat percentage cannot be negative.";
+            else if (testDbl > 100)
+                return "Body fat percentage cannot be over 100%.";
+        }
+
+        return ""; //No errors found.
     }
 }

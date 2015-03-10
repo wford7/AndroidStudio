@@ -77,18 +77,7 @@ public class CalorieNegationActivity extends ActionBarActivity {
                 a.removeAllViews();
 
                 int caloriesToNegate = Integer.parseInt(NegateEditText.getText().toString());
-                Profile p = new Profile();
-
-                /*
-                NOTE: I believe that, when a Profile Object is instantiated, it pulls in database
-                information then, and it will calculate and store the BMR at that moment. Because
-                this might take some time, I've manually stored an example BMR here. In the future,
-                a user will not even be able to go through the main menu normally if the app detects
-                that the Profile section is unable to be completely filled in. The user will be
-                forced to enter their information in ahead of time. I wanted to get this part of the
-                algorithm in soon, so I'll clean this back up when I'm ready. -CS
-                 */
-                p.setBMR(2300);
+                Profile p = new Profile(CalorieNegationActivity.this);
 
                 double BMR = p.getBMR();
 
