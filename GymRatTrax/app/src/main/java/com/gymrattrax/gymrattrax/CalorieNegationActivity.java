@@ -50,6 +50,28 @@ public class CalorieNegationActivity extends ActionBarActivity {
                  *  x amount of calories, return workout.
                  *  update
                  **/
+
+                //Remove button views if they have already been used
+                if((AddLightStrength.getParent() != null)){
+                    ((TableRow)AddLightStrength.getParent()).removeView(AddLightStrength);
+                }
+
+                if((AddVigorousStrength.getParent() !=null)){
+                    ((TableRow)AddVigorousStrength.getParent()).removeView(AddVigorousStrength);
+                }
+
+                if((AddWalking.getParent() != null)){
+                    ((TableRow)AddWalking.getParent()).removeView(AddWalking);
+                }
+
+                if((AddJogging.getParent() !=null)){
+                    ((TableRow)AddJogging.getParent()).removeView(AddJogging);
+                }
+
+                if((AddRunning.getParent() != null)){
+                    ((TableRow)AddRunning.getParent()).removeView(AddRunning);
+                }
+
                 linearContainer.removeAllViewsInLayout();
                 TableLayout a = new TableLayout(CalorieNegationActivity.this);
                 a.removeAllViews();
@@ -106,10 +128,6 @@ public class CalorieNegationActivity extends ActionBarActivity {
 
                         row.addView(newView);
 
-                        if (row.getId() > 1000){
-                            ((TableRow)AddLightStrength.getParent()).removeView(AddLightStrength);
-                        }
-
                         AddLightStrength.setWidth(10);
                         row.addView(AddLightStrength);
                         AddLightStrength.setBackground(getResources().getDrawable(R.drawable.add_button_press));
@@ -129,9 +147,6 @@ public class CalorieNegationActivity extends ActionBarActivity {
 
                         row.addView(newView);
 
-                        if (row.getId() > 1001){
-                            ((TableRow)AddVigorousStrength.getParent()).removeView(AddVigorousStrength);
-                        }
                         AddVigorousStrength.setWidth(10);
                         row.addView(AddVigorousStrength);
                         AddVigorousStrength.setBackground(getResources().getDrawable(R.drawable.add_button_press));
@@ -149,9 +164,6 @@ public class CalorieNegationActivity extends ActionBarActivity {
 
                         row.addView(newView);
 
-                        if (row.getId() > 1002){
-                            ((TableRow)AddWalking.getParent()).removeView(AddWalking);
-                        }
                         AddWalking.setWidth(10);
                         row.addView(AddWalking);
                         AddWalking.setBackground(getResources().getDrawable(R.drawable.add_button_press));
@@ -168,9 +180,6 @@ public class CalorieNegationActivity extends ActionBarActivity {
 
                         row.addView(newView);
 
-                        if (row.getId() > 1003){
-                            ((TableRow)AddJogging.getParent()).removeView(AddJogging);
-                        }
                         AddJogging.setWidth(10);
                         row.addView(AddJogging);
                         AddJogging.setBackground(getResources().getDrawable(R.drawable.add_button_press));
@@ -186,9 +195,6 @@ public class CalorieNegationActivity extends ActionBarActivity {
 
                         row.addView(newView);
 
-                        if (row.getId() > 1004){
-                            ((TableRow)AddRunning.getParent()).removeView(AddRunning);
-                        }
                         AddRunning.setWidth(10);
                         row.addView(AddRunning);
                         AddRunning.setBackground(getResources().getDrawable(R.drawable.add_button_press));
