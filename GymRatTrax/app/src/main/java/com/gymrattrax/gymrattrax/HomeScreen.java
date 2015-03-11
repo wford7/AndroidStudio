@@ -4,6 +4,9 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.ScrollView;
 import android.widget.ImageView;
 import android.widget.Button;
@@ -23,8 +26,8 @@ public class HomeScreen extends ActionBarActivity {
             CalorieNegationButton, EditSettingsButton;
     private ImageView GymRat;
     private ScrollView updateLayoutScroll;
-    private GraphView graph, graph2;
     private int debugCheck;
+    private ImageButton addButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,7 @@ public class HomeScreen extends ActionBarActivity {
         setContentView(R.layout.activity_home_screen);
         final Animation animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_rotate);
 
+
         /**populate ScrollView's child LinearLayout with workout items that are schedule for the current date
          * display - workout item, time
          * if there are no scheduled workout items, display "Nothing scheduled for today"
@@ -55,6 +59,10 @@ public class HomeScreen extends ActionBarActivity {
         CalorieNegationButton = (Button)findViewById(R.id.CalorieNegationButton);
         EditSettingsButton = (Button)findViewById(R.id.EditSettingsButton);
 
+        addButton = (ImageButton)findViewById(R.id.add_button);
+
+
+        displayCurrentWorkouts();
 
         debugCheck = 0;
 
@@ -93,7 +101,7 @@ public class HomeScreen extends ActionBarActivity {
 
             @Override
             public void onClick(View view) {
-                loadDailyWorkout(view);
+                loadProgress(view);
            }
         });
 
@@ -201,7 +209,7 @@ public class HomeScreen extends ActionBarActivity {
         Intent intent = new Intent (HomeScreen.this, ScheduleActivity.class);
         startActivity(intent);
     }
-        }
+
     /**
      * pull workouts (current day) from database and then populate ScrollView child
      */
@@ -220,3 +228,18 @@ public class HomeScreen extends ActionBarActivity {
 //        }
 //        dbh.close();
 //    }
+    private void displayCurrentWorkouts() {
+        DBHelper dbh = new DBHelper(this);
+//        WorkoutItem[] workoutItems = dbh.getWorkoutsForToday();
+        WorkoutItem[] workoutItems = new WorkoutItem[0];
+        for (WorkoutItem workoutItem : workoutItems) {
+            LinearLayout dailyLayout = (LinearLayout) findViewById(R.id.LayoutScroll);
+            TextView dailyWorkout = new TextView(HomeScreen.this);
+            dailyWorkout.setText(workoutItem.getName());
+            updateLayoutScroll = (ScrollView) findViewById(R.id.scrollView);
+            dailyLayout.addView(dailyWorkout);
+            // " display(workoutItem[i]) "
+        }
+        dbh.close();
+    }
+}

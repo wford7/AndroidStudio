@@ -34,8 +34,8 @@
             android:layout_height="fill_parent">
 
             <com.jjoe64.graphview.GraphView
-                android:layout_width="534dp"
-                android:layout_height="200dp"
+                android:layout_width="700dp"
+                android:layout_height="251dp"
                 android:id="@+id/graph"/>
 
         </LinearLayout>

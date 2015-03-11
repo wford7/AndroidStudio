@@ -107,17 +107,20 @@ public class CalorieNegationActivity extends ActionBarActivity {
                     row.setId(1000 + i);
                     newView.setId(1000 + i);
                     row.removeAllViews();
+
                     String text = "Exercise <name of ";
+
                     if (i == 0) {
                         text += "light strength exercise> could be done for " + minutes + " minutes and " +
                                 seconds + " seconds.";
                         newView.setText(text);
-                        LayoutParams params = new TableRow.LayoutParams(0, LayoutParams.WRAP_CONTENT, 2f);
+                        LayoutParams params = new TableRow.LayoutParams(0, LayoutParams.WRAP_CONTENT, 1);
                         newView.setLayoutParams(params);
 
                         row.addView(newView);
 
-                        AddLightStrength.setWidth(10);
+
+                        AddLightStrength.setHeight(40);
                         row.addView(AddLightStrength);
                         AddLightStrength.setBackground(getResources().getDrawable(R.drawable.add_button_press));
 
@@ -131,12 +134,12 @@ public class CalorieNegationActivity extends ActionBarActivity {
                                 seconds + " seconds.";
 
                         newView.setText(text);
-                        LayoutParams params = new TableRow.LayoutParams(0, LayoutParams.WRAP_CONTENT, 2f);
+                        LayoutParams params = new TableRow.LayoutParams(0, LayoutParams.WRAP_CONTENT, 2);
                         newView.setLayoutParams(params);
 
                         row.addView(newView);
 
-                        AddVigorousStrength.setWidth(10);
+                        AddVigorousStrength.setWidth(25);
                         row.addView(AddVigorousStrength);
                         AddVigorousStrength.setBackground(getResources().getDrawable(R.drawable.add_button_press));
 
@@ -145,37 +148,37 @@ public class CalorieNegationActivity extends ActionBarActivity {
                         // VigorousStrength.setBackground(getResources().getDrawable(R.drawable.add_button_press));
 
                     } else if (i == 2) {
-                        text += "vigorous exercise> could be done for " + minutes + " minutes and " +
+                        text += "walking exercise> could be done for " + minutes + " minutes and " +
                                 seconds + " seconds.";
                         newView.setText(text);
-                        LayoutParams params = new TableRow.LayoutParams(0, LayoutParams.WRAP_CONTENT, 2f);
+                        LayoutParams params = new TableRow.LayoutParams(0, LayoutParams.WRAP_CONTENT, 2);
                         newView.setLayoutParams(params);
 
                         row.addView(newView);
 
-                        AddWalking.setWidth(10);
+                        AddWalking.setWidth(25);
                         row.addView(AddWalking);
                         AddWalking.setBackground(getResources().getDrawable(R.drawable.add_button_press));
 
                         a.addView(row);
 
                     } else if (i == 3) {
-                        text += "vigorous exercise> could be done for " + minutes + " minutes and " +
+                        text += "jogging exercise> could be done for " + minutes + " minutes and " +
                                 seconds + " seconds.";
 
                         newView.setText(text);
-                        LayoutParams params = new TableRow.LayoutParams(0, LayoutParams.WRAP_CONTENT, 2f);
+                        LayoutParams params = new TableRow.LayoutParams(0, LayoutParams.WRAP_CONTENT, 2);
                         newView.setLayoutParams(params);
 
                         row.addView(newView);
 
-                        AddJogging.setWidth(10);
+                        AddJogging.setWidth(25);
                         row.addView(AddJogging);
                         AddJogging.setBackground(getResources().getDrawable(R.drawable.add_button_press));
 
                         a.addView(row);
                     } else if (i == 4) {
-                        text += "vigorous exercise> could be done for " + minutes + " minutes and " +
+                        text += "running exercise> could be done for " + minutes + " minutes and " +
                                 seconds + " seconds.";
 
                         newView.setText(text);
@@ -184,7 +187,7 @@ public class CalorieNegationActivity extends ActionBarActivity {
 
                         row.addView(newView);
 
-                        AddRunning.setWidth(10);
+                        AddRunning.setHeight(40);
                         row.addView(AddRunning);
                         AddRunning.setBackground(getResources().getDrawable(R.drawable.add_button_press));
 
