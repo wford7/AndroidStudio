@@ -11,30 +11,56 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Spinner;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
+import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.jjoe64.graphview.GridLabelRenderer;
+import com.jjoe64.graphview.DefaultLabelFormatter;
 
+import java.util.Calendar;
 import java.util.Date;
-
+import android.graphics.Color;
+import com.jjoe64.graphview.ValueDependentColor;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 
 public class ProgressActivity extends ActionBarActivity {
 
     private Spinner GraphSpin;
     private GraphView graph;
     private GridLabelRenderer o;
+//    private DateAsXAxisLabelFormatter dateFormatter;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_progress);
 
         graph = (GraphView) findViewById(R.id.graph);
-        o = new GridLabelRenderer(graph);
-        graph.setBackgroundColor(getResources().getColor(R.color.material_blue_grey_800));
+        graph.setBackgroundColor(Color.WHITE);
+        graph.getGridLabelRenderer().setNumHorizontalLabels(10);
         GraphSpin = (Spinner)findViewById(R.id.graph_spinner);
+
+        //store as an array
+        Calendar calendar = Calendar.getInstance();
+        final Date d7 = calendar.getTime();
+        calendar.add(Calendar.DATE, -1);
+        final Date d6 = calendar.getTime();
+        calendar.add(Calendar.DATE, -1);
+        final Date d5 = calendar.getTime();
+        calendar.add(Calendar.DATE, -1);
+        final Date d4 = calendar.getTime();
+        calendar.add(Calendar.DATE, -1);
+        final Date d3 = calendar.getTime();
+        calendar.add(Calendar.DATE, -1);
+        final Date d2 = calendar.getTime();
+        calendar.add(Calendar.DATE, -1);
+        final Date d1 = calendar.getTime();
 
 
         GraphSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -42,36 +68,78 @@ public class ProgressActivity extends ActionBarActivity {
                 // display appropriate graph
 
                 switch(input){
-                    case "Weight":
+                    //must have at least
+                    case "Weekly Weight": //This will be a line graph
                         graph.removeAllSeries();
                         graph.setTitle("Weight");
                         graph.getGridLabelRenderer().setHorizontalAxisTitle("Date");
                         graph.getGridLabelRenderer().setVerticalAxisTitle("Weight");
 
                         LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(new DataPoint[] {
-                                new DataPoint(1, 250),
-                                new DataPoint(2, 248),
-                                new DataPoint(3, 240),
-                                new DataPoint(4, 270),
-                                new DataPoint(5, 250)
+                                //y values will be based on database information
+                                new DataPoint(d1, 250),
+                                new DataPoint(d2, 248),
+                                new DataPoint(d3, 240),
+                                new DataPoint(d4, 250),
+                                new DataPoint(d5, 240),
+                                new DataPoint(d6, 238),
+                                new DataPoint(d7, 235)
                         });
+
+//                        graph.getViewport().setScrollable(true);
                         graph.addSeries(series);
+                        // set date label formatter
+
+                        graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(ProgressActivity.this));
+                        graph.getGridLabelRenderer().setNumHorizontalLabels(7); // only 4 because of the space
+
+                        // set manual x bounds to have nice steps
+                        graph.getViewport().setMinX(d1.getTime());
+                        graph.getViewport().setMaxX(d7.getTime());
+                        graph.getViewport().setXAxisBoundsManual(true);
+
                         break;
 
-                    case "Calories":
+                    case "Weekly Calories": //This will be a bar graph
                         graph.removeAllSeries();
                         graph.setTitle("Calories Burned");
                         graph.getGridLabelRenderer().setHorizontalAxisTitle("Date");
                         graph.getGridLabelRenderer().setVerticalAxisTitle("Calories");
 
-                        LineGraphSeries<DataPoint> series1 = new LineGraphSeries<DataPoint>(new DataPoint[] {
-                                new DataPoint(0, 1),
-                                new DataPoint(1, 5),
-                                new DataPoint(2, 3),
-                                new DataPoint(3, 2),
-                                new DataPoint(4, 6)
+                        BarGraphSeries<DataPoint> series1 = new BarGraphSeries<DataPoint>(new DataPoint[] {
+                                //y values will be based on database information
+                                new DataPoint(d1, 1000),
+                                new DataPoint(d2, 525),
+                                new DataPoint(d3, 315),
+                                new DataPoint(d4, 700),
+                                new DataPoint(d5, 1500),
+                                new DataPoint(d6, 890),
+                                new DataPoint(d7, 1200)
                         });
+                        series1.setSpacing(10);
+
+                        series1.setValueDependentColor(new ValueDependentColor<DataPoint>() {
+                            @Override
+                            public int get(DataPoint data) {
+
+                                if (data.getX() % 2 == 0) {
+                                    return Color.BLUE;
+                                }
+                                else
+                                    return Color.GREEN;
+
+                            }
+                        });
+
                         graph.addSeries(series1);
+                        graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(ProgressActivity.this));
+                        graph.getGridLabelRenderer().setNumHorizontalLabels(7); // only 4 because of the space
+
+                        // set manual x bounds to have nice steps
+                        graph.getViewport().setMinX(d1.getTime());
+                        graph.getViewport().setMaxX(d7.getTime());
+                        graph.getViewport().setXAxisBoundsManual(true);
+
                         break;
                 }
 
