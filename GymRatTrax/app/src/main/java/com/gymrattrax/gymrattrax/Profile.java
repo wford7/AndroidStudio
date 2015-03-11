@@ -65,7 +65,7 @@ public class Profile {
 
         double[] weightInfo = dbh.getLatestWeight();
         weight = weightInfo[0];
-        fatPercentage = weightInfo[1];
+        fatPercentage = weightInfo[1] * .01;
         activityLevel = weightInfo[2];
 
         if (!dbh.getProfileInfo(DBContract.ProfileTable.KEY_SEX).trim().isEmpty())
