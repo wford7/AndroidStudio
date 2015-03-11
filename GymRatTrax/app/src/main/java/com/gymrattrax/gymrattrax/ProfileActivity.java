@@ -299,7 +299,7 @@ public class ProfileActivity extends ActionBarActivity {
         else
             weightEditText.setText("");
         if (profile.getFatPercentage() > 0)
-            fatPercentageEditText.setText(String.valueOf(profile.getFatPercentage()));
+            fatPercentageEditText.setText(String.valueOf(profile.getFatPercentage() * 100));
         else
             fatPercentageEditText.setText("");
         if (profile.getActivityLevel() <= DBContract.WeightTable.ACT_LVL_LITTLE)
