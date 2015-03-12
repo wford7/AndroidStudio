@@ -1,14 +1,11 @@
 package com.gymrattrax.gymrattrax;
 
-import android.graphics.Canvas;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.TableRow;
-import android.widget.TextView;
 import android.widget.Spinner;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
@@ -16,15 +13,11 @@ import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.jjoe64.graphview.GridLabelRenderer;
-import com.jjoe64.graphview.DefaultLabelFormatter;
 
 import java.util.Calendar;
 import java.util.Date;
 import android.graphics.Color;
 import com.jjoe64.graphview.ValueDependentColor;
-import java.util.Date;
-import java.text.SimpleDateFormat;
-import java.text.DateFormat;
 
 public class ProgressActivity extends ActionBarActivity {
 
@@ -79,11 +72,11 @@ public class ProgressActivity extends ActionBarActivity {
                                 //y values will be based on database information
                                 new DataPoint(d1, 250),
                                 new DataPoint(d2, 248),
-                                new DataPoint(d3, 240),
-                                new DataPoint(d4, 250),
-                                new DataPoint(d5, 240),
-                                new DataPoint(d6, 238),
-                                new DataPoint(d7, 235)
+                                new DataPoint(d3, 247),
+                                new DataPoint(d4, 244),
+                                new DataPoint(d5, 242),
+                                new DataPoint(d6, 240),
+                                new DataPoint(d7, 242)
                         });
 
 //                        graph.getViewport().setScrollable(true);

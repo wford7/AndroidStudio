@@ -3,28 +3,27 @@ package com.gymrattrax.gymrattrax;
 import java.util.Date;
 
 public class WorkoutItem {
-    private WorkoutType type;
+    private ExerciseType type;
     private int ID;
     private Date date;
     private double caloriesBurned;
     private double METSVal;
     private double Time;
+    private ExerciseName name;
 
-    public String getName() {
+    public ExerciseName getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(ExerciseName name) {
         this.name = name;
     }
 
-    private String name;
-
-    public WorkoutType getType() {
+    public ExerciseType getType() {
         return type;
     }
 
-    public void setType(WorkoutType type) {
+    public void setType(ExerciseType type) {
         this.type = type;
     }
 

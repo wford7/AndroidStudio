@@ -80,11 +80,6 @@ public final class DBContract {
         public static final String COLUMN_NAME_NAME = "name";
         public static final String COLUMN_NAME_TYPE = "type";
 
-        public static final String NAME_WALK = "walk";
-        public static final String NAME_JOG = "jog";
-        public static final String NAME_RUN = "run";
-        public static final String NAME_LIFTING_LIGHT = "lift_light";
-        public static final String NAME_LIFTING_VIGOROUS = "lift_vigor";
         public static final String TYPE_CARDIO = "C";
         public static final String TYPE_STRENGTH = "S";
 

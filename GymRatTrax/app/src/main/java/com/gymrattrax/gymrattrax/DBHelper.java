@@ -159,9 +159,7 @@ public class DBHelper extends SQLiteOpenHelper {
         while (cursor.moveToNext()) {
             Date d1;
             try {
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS",
-                        Locale.US);
-                d1 = format.parse(cursor.getString(0));
+                d1 = convertDate(cursor.getString(0));
             } catch (ParseException e) {
                 Calendar cal = new GregorianCalendar();
                 d1 = cal.getTime();
@@ -208,7 +206,7 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         values.put(DBContract.WorkoutTable.COLUMN_NAME_SCHEDULE, s.getID());
-        values.put(DBContract.WorkoutTable.COLUMN_NAME_EXERCISE, w.getName());
+        values.put(DBContract.WorkoutTable.COLUMN_NAME_EXERCISE, w.getName().toString());
         values.put(DBContract.WorkoutTable.COLUMN_NAME_RECORD_TYPE,
                 DBContract.WorkoutTable.VAL_PROPOSED);
         values.put(DBContract.WorkoutTable.COLUMN_NAME_DATE_TIME, convertDate(w.getDate()));
@@ -408,6 +406,13 @@ public class DBHelper extends SQLiteOpenHelper {
         SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
         return sdf.format(d);
     }
+    public String displayDateTime(Date d) {
+        String dateFormat = getProfileInfo(DBContract.ProfileTable.KEY_DATE_FORMAT);
+        if (dateFormat.trim().isEmpty())
+            dateFormat = "MM/dd/yyyy";
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat + " hh:mm a", Locale.US);
+        return sdf.format(d);
+    }
 
     public String now() {
         Calendar cal = new GregorianCalendar();
@@ -429,7 +434,7 @@ public class DBHelper extends SQLiteOpenHelper {
             case "Workout":
                 table = DBContract.WorkoutTable.TABLE_NAME;
                 break;
-            case "Exercise":
+            case "Exercsise":
                 table = DBContract.WorkoutTable.TABLE_NAME;
                 break;
         }
@@ -522,8 +527,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         values.put(DBContract.WorkoutTable.COLUMN_NAME_ID, 1);
         values.put(DBContract.WorkoutTable.COLUMN_NAME_SCHEDULE, 1);
-        values.put(DBContract.WorkoutTable.COLUMN_NAME_EXERCISE,
-                DBContract.ExerciseTable.NAME_LIFTING_LIGHT);
+        values.put(DBContract.WorkoutTable.COLUMN_NAME_EXERCISE, ExerciseName.CHEST_FLY.toString());
         values.put(DBContract.WorkoutTable.COLUMN_NAME_RECORD_TYPE,
                 DBContract.WorkoutTable.VAL_PROPOSED);
         values.put(DBContract.WorkoutTable.COLUMN_NAME_DATE_TIME, "2015-03-07 12:00:00.000");
@@ -535,18 +539,18 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(DBContract.WorkoutTable.COLUMN_NAME_ID, 2);
         values.put(DBContract.WorkoutTable.COLUMN_NAME_SCHEDULE, 1);
         values.put(DBContract.WorkoutTable.COLUMN_NAME_EXERCISE,
-                DBContract.ExerciseTable.NAME_LIFTING_VIGOROUS);
+                ExerciseName.BICEPS_CURL.toString());
         values.put(DBContract.WorkoutTable.COLUMN_NAME_DATE_TIME, "2015-03-07 14:00:00.000");
         values.put(DBContract.WorkoutTable.COLUMN_NAME_PARAMETERS, "20:30:40");
         db.insert(DBContract.WorkoutTable.TABLE_NAME, null, values);
 
         values.put(DBContract.WorkoutTable.COLUMN_NAME_ID, 3);
         values.put(DBContract.WorkoutTable.COLUMN_NAME_SCHEDULE, 2);
-        values.put(DBContract.WorkoutTable.COLUMN_NAME_EXERCISE,
-                DBContract.ExerciseTable.NAME_WALK);
-        values.put(DBContract.WorkoutTable.COLUMN_NAME_DATE_TIME, "2015-03-08 12:00:00.000");
+        values.put(DBContract.WorkoutTable.COLUMN_NAME_EXERCISE, ExerciseName.JOG.toString());
+        values.put(DBContract.WorkoutTable.COLUMN_NAME_DATE_TIME, "2015-03-10 12:00:00.000");
         values.put(DBContract.WorkoutTable.COLUMN_NAME_CALORIES, 100);
         values.put(DBContract.WorkoutTable.COLUMN_NAME_PARAMETERS, "150");
+        values.put(DBContract.WorkoutTable.COLUMN_NAME_TIME_SPENT, "60");
         db.insert(DBContract.WorkoutTable.TABLE_NAME, null, values);
     }
     private WorkoutItem[] storeWorkouts(String query) {
@@ -592,7 +596,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
             //schedule (not applicable)
             //exercise
-            workouts[i].setName(cursor.getString(2));
+            workouts[i].setName(ExerciseName.fromString(cursor.getString(2)));
 
             //date
             try {

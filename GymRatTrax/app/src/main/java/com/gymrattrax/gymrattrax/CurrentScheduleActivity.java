@@ -38,7 +38,6 @@ public class CurrentScheduleActivity extends ActionBarActivity {
 
         textDateRange.setText(dbh.displayDate(s.getStartDay()) + " - " +
                 dbh.displayDate(s.getEndDay()));
-        dbh.close();
 
         int i = 0;
         for (WorkoutItem w : workouts) {
@@ -64,7 +63,7 @@ public class CurrentScheduleActivity extends ActionBarActivity {
             main.setOrientation(LinearLayout.HORIZONTAL);
             stack.setOrientation(LinearLayout.VERTICAL);
 
-            viewTitle.setText(w.getName());
+            viewTitle.setText(w.getName().toString());
             viewTitle.setTextSize(20);
 
 
@@ -73,6 +72,11 @@ public class CurrentScheduleActivity extends ActionBarActivity {
             int seconds = secondsTotal % 60;
             int minutes = (secondsTotal - seconds) / 60;
             String time = minutes + " minutes, " + seconds + " seconds";
+
+
+            time = dbh.displayDateTime(w.getDate()) + ": " + time;
+
+
             viewTime.setText(time);
 
             LayoutParams stackParams = new LinearLayout.LayoutParams(600,
@@ -86,6 +90,8 @@ public class CurrentScheduleActivity extends ActionBarActivity {
             a.addView(row);
             i++;
         }
+
+        dbh.close();
     }
 
     @Override

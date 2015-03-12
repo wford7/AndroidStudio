@@ -15,8 +15,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
-import com.jjoe64.graphview.*;
-
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -220,7 +218,7 @@ public class HomeScreen extends ActionBarActivity {
 //        for (WorkoutItem workoutItem : workoutItems) {
 //            LinearLayout dailyLayout = (LinearLayout) findViewById(R.id.LayoutScroll);
 //            TextView dailyWorkout = new TextView(HomeScreen.this);
-//            dailyWorkout.setText(workoutItem.getName());
+//            dailyWorkout.setText(workoutItem.getggName().toString());
 //            updateLayoutScroll = (ScrollView) findViewById(R.id.scrollView);
 //            dailyLayout.addView(dailyWorkout);
 //            updateLayoutScroll.addView(dailyLayout);
@@ -235,7 +233,7 @@ public class HomeScreen extends ActionBarActivity {
         for (WorkoutItem workoutItem : workoutItems) {
             LinearLayout dailyLayout = (LinearLayout) findViewById(R.id.LayoutScroll);
             TextView dailyWorkout = new TextView(HomeScreen.this);
-            dailyWorkout.setText(workoutItem.getName());
+            dailyWorkout.setText(workoutItem.getName().toString());
             updateLayoutScroll = (ScrollView) findViewById(R.id.scrollView);
             dailyLayout.addView(dailyWorkout);
             // " display(workoutItem[i]) "

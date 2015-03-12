@@ -11,7 +11,7 @@ public class StrengthWorkoutItem extends WorkoutItem {
 
     public StrengthWorkoutItem() {
         super();
-        this.setType(WorkoutType.STRENGTH);
+        this.setType(ExerciseType.STRENGTH);
     }
 
     public int getID() {

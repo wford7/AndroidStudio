@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -19,7 +18,6 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -28,12 +26,9 @@ public class CalorieNegationActivity extends ActionBarActivity {
     Button SuggestWorkoutButton;
     EditText NegateEditText;
     LinearLayout linearContainer;
-    Button AddLightStrength;
-    Button AddVigorousStrength;
-    Button AddWalking;
-    Button AddJogging;
-    Button AddRunning;
+    Button[] buttons;
     double[] times;
+    ExerciseName[] exName;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,12 +39,12 @@ public class CalorieNegationActivity extends ActionBarActivity {
         SuggestWorkoutButton = (Button) findViewById(R.id.negate_cal_button);
         NegateEditText = (EditText) findViewById(R.id.negate_calories);
         linearContainer = (LinearLayout) findViewById(R.id.suggestions_layout);
-        AddLightStrength = new Button(CalorieNegationActivity.this);
-        AddVigorousStrength = new Button(CalorieNegationActivity.this);
-        AddWalking = new Button(CalorieNegationActivity.this);
-        AddJogging = new Button(CalorieNegationActivity.this);
-        AddRunning = new Button(CalorieNegationActivity.this);
+        buttons = new Button[5];
+        for (int i = 0; i < buttons.length; i++) {
+            buttons[i] = new Button(CalorieNegationActivity.this);
+        }
         times = new double[5];
+        exName = new ExerciseName[5];
 
         SuggestWorkoutButton.setOnClickListener(new Button.OnClickListener() {
 
@@ -68,26 +63,11 @@ public class CalorieNegationActivity extends ActionBarActivity {
                         InputMethodManager.HIDE_NOT_ALWAYS);
 
                 //Remove button views if they have already been used
-                if((AddLightStrength.getParent() != null)){
-                    ((LinearLayout)AddLightStrength.getParent()).removeView(AddLightStrength);
+                for (Button b : buttons) {
+                    if((b.getParent() != null)){
+                        ((LinearLayout)b.getParent()).removeView(b);
+                    }
                 }
-
-                if((AddVigorousStrength.getParent() != null)){
-                    ((LinearLayout)AddVigorousStrength.getParent()).removeView(AddVigorousStrength);
-                }
-
-                if((AddWalking.getParent() != null)){
-                    ((LinearLayout)AddWalking.getParent()).removeView(AddWalking);
-                }
-
-                if((AddJogging.getParent() != null)){
-                    ((LinearLayout)AddJogging.getParent()).removeView(AddJogging);
-                }
-
-                if((AddRunning.getParent() != null)){
-                    ((LinearLayout)AddRunning.getParent()).removeView(AddRunning);
-                }
-
                 linearContainer.removeAllViewsInLayout();
                 TableLayout a = new TableLayout(CalorieNegationActivity.this);
                 a.removeAllViews();
@@ -167,22 +147,28 @@ public class CalorieNegationActivity extends ActionBarActivity {
                     main.setOrientation(LinearLayout.HORIZONTAL);
                     stack.setOrientation(LinearLayout.VERTICAL);
 
-                    String text = "";
-                    if (i == 0) {
-                        text = "Light strength exercise";
-                    } else if (i == 1) {
-                        text = "Vigorous strength exercise";
+                    if (i <= 1) {
+                        exName[i] = ExerciseName.getRandomStrength();
                     } else if (i == 2) {
-                        text = "Walking";
+                        exName[2] = ExerciseName.WALK;
                     } else if (i == 3) {
-                        text = "Jogging";
+                        exName[3] = ExerciseName.JOG;
                     } else if (i == 4) {
-                        text = "Running";
+                        exName[4] = ExerciseName.RUN;
                     }
 
-                    viewTitle.setText(text);
+                    viewTitle.setText(exName[i].toString());
                     viewTitle.setTextSize(20);
                     String time = minutes + " minutes, " + seconds + " seconds";
+                    if (i == 0) {
+                        time = time.replaceAll("minutes","mins");
+                        time = time.replaceAll("seconds","secs");
+                        time += ": 12 reps, 4 sets, 10 lb weights";
+                    } else if (i == 1) {
+                        time = time.replaceAll("minutes","mins");
+                        time = time.replaceAll("seconds","secs");
+                        time += ": 20 reps, 6 sets, 20 lb weights";
+                    }
                     viewTime.setText(time);
 
 //                    LayoutParams mainParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
@@ -194,61 +180,21 @@ public class CalorieNegationActivity extends ActionBarActivity {
                     stack.addView(viewTitle);
                     stack.addView(viewTime);
                     main.addView(stack);
-
-                    if (i == 0) {
-                        AddLightStrength.setHeight(20);
-                        AddLightStrength.setWidth(20);
-                        AddLightStrength.setId(6000+i);
-                        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
-                            AddLightStrength.setBackgroundDrawable(getResources().getDrawable(R.drawable.add_button_press));
-                        else
-                            AddLightStrength.setBackground(getResources().getDrawable(R.drawable.add_button_press));
-                        main.addView(AddLightStrength);
-                    } else if (i == 1) {
-                        AddVigorousStrength.setHeight(20);
-                        AddVigorousStrength.setWidth(20);
-                        AddVigorousStrength.setId(6000 + i);
-                        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
-                            AddVigorousStrength.setBackgroundDrawable(getResources().getDrawable(R.drawable.add_button_press));
-                        else
-                            AddVigorousStrength.setBackground(getResources().getDrawable(R.drawable.add_button_press));
-                        main.addView(AddVigorousStrength);
-                    } else if (i == 2) {
-                        AddWalking.setHeight(20);
-                        AddWalking.setWidth(20);
-                        AddWalking.setId(6000 + i);
-                        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
-                            AddWalking.setBackgroundDrawable(getResources().getDrawable(R.drawable.add_button_press));
-                        else
-                            AddWalking.setBackground(getResources().getDrawable(R.drawable.add_button_press));
-                        main.addView(AddWalking);
-                    } else if (i == 3) {
-                        AddJogging.setHeight(20);
-                        AddJogging.setWidth(20);
-                        AddJogging.setId(6000 + i);
-                        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
-                            AddJogging.setBackgroundDrawable(getResources().getDrawable(R.drawable.add_button_press));
-                        else
-                            AddJogging.setBackground(getResources().getDrawable(R.drawable.add_button_press));
-                        main.addView(AddJogging);
-                    } else if (i == 4) {
-                        AddRunning.setHeight(20);
-                        AddRunning.setWidth(20);
-                        AddRunning.setId(6000 + i);
-                        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
-                            AddRunning.setBackgroundDrawable(getResources().getDrawable(R.drawable.add_button_press));
-                        else
-                            AddRunning.setBackground(getResources().getDrawable(R.drawable.add_button_press));
-                        main.addView(AddRunning);
-                    }
-
+                    buttons[i].setHeight(20);
+                    buttons[i].setWidth(20);
+                    buttons[i].setId(6000+i);
+                    if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
+                        buttons[i].setBackgroundDrawable(getResources().getDrawable(R.drawable.add_button_press));
+                    else
+                        buttons[i].setBackground(getResources().getDrawable(R.drawable.add_button_press));
+                    main.addView(buttons[i]);
                     row.addView(main);
                     a.addView(row);
                 }
             }
         });
 
-        AddLightStrength.setOnClickListener(new Button.OnClickListener() {
+        buttons[0].setOnClickListener(new Button.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -259,7 +205,7 @@ public class CalorieNegationActivity extends ActionBarActivity {
                 item.setNumberOfSets(4);
                 item.setWeightUsed(10);
                 item.setMETSVal(3);
-                item.setName("lift_light");
+                item.setName(exName[0]);
                 item.setTime(times[0]);
                 Calendar cal = Calendar.getInstance();
                 Date dat = cal.getTime();
@@ -267,13 +213,13 @@ public class CalorieNegationActivity extends ActionBarActivity {
 
                 DBHelper dbh = new DBHelper(CalorieNegationActivity.this);
                 Schedule s = dbh.getCurrentSchedule();
-                dbh.addWorkoutToSchedule(s,item, new Profile(CalorieNegationActivity.this));
+                dbh.addWorkoutToSchedule(s, item, new Profile(CalorieNegationActivity.this));
                 dbh.close();
                 BackToHomeScreen(view);
             }
         });
 
-        AddVigorousStrength.setOnClickListener(new Button.OnClickListener() {
+        buttons[1].setOnClickListener(new Button.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -283,7 +229,7 @@ public class CalorieNegationActivity extends ActionBarActivity {
                 item.setNumberOfSets(6);
                 item.setWeightUsed(20);
                 item.setMETSVal(7);
-                item.setName("lift_vigor");
+                item.setName(exName[1]);
                 item.setTime(times[1]);
                 Calendar cal = Calendar.getInstance();
                 Date dat = cal.getTime();
@@ -297,7 +243,7 @@ public class CalorieNegationActivity extends ActionBarActivity {
             }
         });
 
-        AddWalking.setOnClickListener(new Button.OnClickListener() {
+        buttons[2].setOnClickListener(new Button.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -305,7 +251,7 @@ public class CalorieNegationActivity extends ActionBarActivity {
                 CardioWorkoutItem item = new CardioWorkoutItem();
                 item.setDistance(2);
                 item.setMETSVal(11);
-                item.setName("walk");
+                item.setName(ExerciseName.WALK);
                 item.setTime(times[2]);
                 Calendar cal = Calendar.getInstance();
                 Date dat = cal.getTime();
@@ -313,13 +259,13 @@ public class CalorieNegationActivity extends ActionBarActivity {
 
                 DBHelper dbh = new DBHelper(CalorieNegationActivity.this);
                 Schedule s = dbh.getCurrentSchedule();
-                dbh.addWorkoutToSchedule(s,item, new Profile(CalorieNegationActivity.this));
+                dbh.addWorkoutToSchedule(s, item, new Profile(CalorieNegationActivity.this));
                 dbh.close();
                 BackToHomeScreen(view);
             }
         });
 
-        AddJogging.setOnClickListener(new Button.OnClickListener() {
+        buttons[3].setOnClickListener(new Button.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -327,7 +273,7 @@ public class CalorieNegationActivity extends ActionBarActivity {
                 CardioWorkoutItem item = new CardioWorkoutItem();
                 item.setDistance(2);
                 item.setMETSVal(3.5);
-                item.setName("jog");
+                item.setName(ExerciseName.JOG);
                 item.setTime(times[3]);
                 Calendar cal = Calendar.getInstance();
                 Date dat = cal.getTime();
@@ -335,13 +281,13 @@ public class CalorieNegationActivity extends ActionBarActivity {
 
                 DBHelper dbh = new DBHelper(CalorieNegationActivity.this);
                 Schedule s = dbh.getCurrentSchedule();
-                dbh.addWorkoutToSchedule(s,item, new Profile(CalorieNegationActivity.this));
+                dbh.addWorkoutToSchedule(s, item, new Profile(CalorieNegationActivity.this));
                 dbh.close();
                 BackToHomeScreen(view);
             }
         });
 
-        AddRunning.setOnClickListener(new Button.OnClickListener() {
+        buttons[4].setOnClickListener(new Button.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -349,7 +295,7 @@ public class CalorieNegationActivity extends ActionBarActivity {
                 CardioWorkoutItem item = new CardioWorkoutItem();
                 item.setDistance(2);
                 item.setMETSVal(6);
-                item.setName("run");
+                item.setName(ExerciseName.RUN);
                 item.setTime(times[4]);
                 Calendar cal = Calendar.getInstance();
                 Date dat = cal.getTime();
@@ -357,7 +303,7 @@ public class CalorieNegationActivity extends ActionBarActivity {
 
                 DBHelper dbh = new DBHelper(CalorieNegationActivity.this);
                 Schedule s = dbh.getCurrentSchedule();
-                dbh.addWorkoutToSchedule(s,item, new Profile(CalorieNegationActivity.this));
+                dbh.addWorkoutToSchedule(s, item, new Profile(CalorieNegationActivity.this));
                 dbh.close();
                 BackToHomeScreen(view);
             }
