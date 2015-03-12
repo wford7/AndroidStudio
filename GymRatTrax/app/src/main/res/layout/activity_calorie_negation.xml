@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="34dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Enter The Number of Calories to Negate"
+        android:text="Enter a Number of Calories to Negate"
         android:id="@+id/textView9"
         android:layout_gravity="center"
         android:textAlignment="center"
