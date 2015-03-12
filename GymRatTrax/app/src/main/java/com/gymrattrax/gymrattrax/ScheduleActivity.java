@@ -556,10 +556,17 @@ public class ScheduleActivity extends ActionBarActivity {
 
             @Override
             public void onClick(View view) {
-                Calendar dateToShow = Calendar.getInstance();
-                dateToShow.set(2015, Calendar.MARCH, 12, 17, 00);
+                //===== This code was commented for the 3/12 demo
+//                Calendar dateToShow = Calendar.getInstance();
+//                dateToShow.set(2015, Calendar.MARCH, 12, 17, 00);
+//
+//                loadViewSchedule(dateToShow);
+                //===== This code was commented for the 3/12 demo
 
-                loadViewSchedule(dateToShow);
+                //===== This code was added for the 3/12 demo
+                Intent intent = new Intent (ScheduleActivity.this, CurrentScheduleActivity.class);
+                startActivity(intent);
+                //===== This code was added for the 3/12 demo
             }
         });
     }

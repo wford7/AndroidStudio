@@ -1,5 +1,6 @@
 package com.gymrattrax.gymrattrax;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class Schedule {
@@ -27,6 +28,12 @@ public class Schedule {
 
     public void setLengthInDays(int lengthInDays) {
         this.lengthInDays = lengthInDays;
+        if (startDay != null) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(startDay);
+            cal.add(Calendar.DATE, lengthInDays);
+            endDay = cal.getTime();
+        }
     }
 
     public Date getCurrentDay() {
@@ -51,6 +58,12 @@ public class Schedule {
 
     public void setStartDay(Date startDay) {
         this.startDay = startDay;
+        if (lengthInDays > 0) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(startDay);
+            cal.add(Calendar.DATE, lengthInDays);
+            endDay = cal.getTime();
+        }
     }
 
     public Date getEndDay() {

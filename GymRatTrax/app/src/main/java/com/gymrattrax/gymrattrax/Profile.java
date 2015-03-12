@@ -3,11 +3,8 @@ package com.gymrattrax.gymrattrax;
 import android.content.Context;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
 
 public class Profile {
     private String name;
@@ -33,9 +30,8 @@ public class Profile {
 
         String date = dbh.getProfileInfo(DBContract.ProfileTable.KEY_BIRTH_DATE);
         if (!date.trim().isEmpty()) {
-            SimpleDateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS", Locale.US);
             try {
-                DOB = dbFormat.parse(date);
+                DOB = dbh.convertDate(date);
             } catch (ParseException e) {
                 e.printStackTrace();
             }

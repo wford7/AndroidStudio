@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.ParseException;
@@ -33,6 +34,7 @@ public class ProfileActivity extends ActionBarActivity {
     private Spinner profileSpinner;
     private boolean editing;
     private Profile profile;
+    private TextView textViewDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +56,12 @@ public class ProfileActivity extends ActionBarActivity {
         modExercise = (RadioButton)findViewById(R.id.mod_exercise);
         heavyExercise = (RadioButton)findViewById(R.id.heavy_exercise);
         profileSpinner = (Spinner)findViewById(R.id.profile_spinner);
+        textViewDate = (TextView)findViewById(R.id.textViewDate);
         editing = false;
+
+        DBHelper dbh = new DBHelper(this);
+        String dateFormat = dbh.getProfileInfo(DBContract.ProfileTable.KEY_DATE_FORMAT);
+        textViewDate.setText("Birth date (" + dateFormat.toUpperCase() + ")");
 
         lockInput();
         setTextFromProfile();
@@ -287,8 +294,9 @@ public class ProfileActivity extends ActionBarActivity {
             heightEditText.setText("");
 
         if (profile.getAge() > 0) {
-            SimpleDateFormat inputFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-            birthDateEditText.setText(inputFormat.format(profile.getDOB()));
+            DBHelper dbh = new DBHelper(ProfileActivity.this);
+            birthDateEditText.setText(dbh.displayDate(profile.getDOB()));
+            dbh.close();
         }
         else {
             birthDateEditText.setText("");

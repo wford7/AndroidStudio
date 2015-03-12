@@ -36,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Name"
+            android:text="Name (optional)"
             android:layout_weight="1" />
 
         <EditText
@@ -60,8 +60,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Birth Date (mm/dd/yyyy)"
-            android:id="@+id/textView3"
+            android:text="Birth Date"
+            android:id="@+id/textViewDate"
             android:layout_weight="0.08" />
 
         <EditText
