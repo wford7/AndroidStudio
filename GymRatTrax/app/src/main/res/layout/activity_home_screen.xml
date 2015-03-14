@@ -220,6 +220,7 @@
             android:orientation="vertical"
             android:layout_height="match_parent"
             android:id="@+id/daily_workout_layout">
+
         </LinearLayout>
     </ScrollView>
 

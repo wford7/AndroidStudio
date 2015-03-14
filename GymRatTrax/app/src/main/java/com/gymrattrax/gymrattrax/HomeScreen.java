@@ -43,18 +43,12 @@ public class HomeScreen extends ActionBarActivity {
         Button viewProgressButton = (Button) findViewById(R.id.ViewProgressButton);
         Button calorieNegationButton = (Button) findViewById(R.id.CalorieNegationButton);
         Button editSettingsButton = (Button) findViewById(R.id.EditSettingsButton);
-//        addButton = (ImageButton)findViewById(R.id.add_button);
 
-        /**populate ScrollView's child LinearLayout with workout items that are schedule for the current date
-         * display - workout item, time
-         * if there are no scheduled workout items, display "Nothing scheduled for today"
-         **/
         displayCurrentWorkouts();
 
         debugCheck = 0;
 
         gymRat.setOnClickListener(new ImageView.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 v.startAnimation(animTranslate);
@@ -286,6 +280,9 @@ public class HomeScreen extends ActionBarActivity {
                 "Profile is not adequately complete. " +
                         "In the future, launch Create Profile activity here. " +
                         "DO NOT ATTEMPT CALORIE NEGATION.", Toast.LENGTH_LONG);
+        toast.setDuration(Toast.LENGTH_LONG);
         toast.show();
+        Intent intent = new Intent(HomeScreen.this, ProfileSetupActivity.class);
+        startActivity(intent);
     }
 }

@@ -70,6 +70,10 @@
             android:label="Current Schedule"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name=".ProfileSetupActivity"
+            android:label="@string/title_activity_profile_setup" >
+        </activity>
     </application>
 
 </manifest>

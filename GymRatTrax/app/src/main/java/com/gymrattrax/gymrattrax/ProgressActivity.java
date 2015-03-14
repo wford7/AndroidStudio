@@ -13,6 +13,7 @@ import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.jjoe64.graphview.GridLabelRenderer;
+import java.util.Map;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -35,7 +36,7 @@ public class ProgressActivity extends ActionBarActivity {
         graph.getGridLabelRenderer().setNumHorizontalLabels(10);
         GraphSpin = (Spinner)findViewById(R.id.graph_spinner);
 
-        //store as an array
+        //store as an array in future (weekly) & (monthly) nng
         Calendar calendar = Calendar.getInstance();
         final Date d7 = calendar.getTime();
         calendar.add(Calendar.DATE, -1);
@@ -68,7 +69,12 @@ public class ProgressActivity extends ActionBarActivity {
                         graph.getGridLabelRenderer().setHorizontalAxisTitle("Date");
                         graph.getGridLabelRenderer().setVerticalAxisTitle("Weight");
 
+//                        DBHelper dbh = new DBHelper(ProgressActivity.this);
+//                        Map<Date, Double> data = dbh.getWeights(d1,d7);
+
+
                         LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(new DataPoint[] {
+
                                 //y values will be based on database information
                                 new DataPoint(d1, 250),
                                 new DataPoint(d2, 248),

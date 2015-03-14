@@ -17,7 +17,6 @@
     <string name="schedule_activity_current_schedule">Current Schedule</string>
     <string name="schedule_activity_add_event">Add Event</string>
     <string name="schedule_activity_back">BACK</string>
-
     <string name="title_activity_view_progress">View Progress</string>
     <string name="place_holder_text_for_scroll_view">        \nTHIS TEXT IS A PLACE HOLDER \nthis text is a place holder \nREDLOH ECALP A SI TXET SIHT
         \nredloh ecalp a si txet siht
@@ -44,6 +43,6 @@
     <string name="title_activity_view_schedule">View Schedule Activity</string>
     <string name="title_activity_strength_workout">Strength Workout Activity</string>
     <string name="hello_world">hello_world</string>
-
+    <string name="title_activity_profile_setup">Profile Setup</string>
 
 </resources>
