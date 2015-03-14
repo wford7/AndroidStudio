@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -218,20 +217,6 @@ public class HomeScreen extends ActionBarActivity {
 //        dbh.close();
 //    }
     private void displayCurrentWorkouts() {
-//        DBHelper dbh = new DBHelper(this);
-////        WorkoutItem[] workoutItems = dbh.getWorkoutsForToday();
-//        WorkoutItem[] workoutItems = new WorkoutItem[0];
-//        for (WorkoutItem workoutItem : workoutItems) {
-////            LinearLayout dailyLayout = (LinearLayout) findViewById(R.id.LayoutScroll);
-//            TextView dailyWorkout = new TextView(HomeScreen.this);
-//            dailyWorkout.setText(workoutItem.getName().toString());
-//            updateLayoutScroll = (ScrollView) findViewById(R.id.scrollView);
-////            dailyLayout.addView(dailyWorkout);
-//            // " display(workoutItem[i]) "
-//        }
-//        dbh.close();
-
-
         LinearLayout linearContainer = (LinearLayout) findViewById(R.id.daily_workout_layout);
         TextView title = (TextView) findViewById(R.id.daily_workout_title);
 
@@ -273,17 +258,12 @@ public class HomeScreen extends ActionBarActivity {
             viewTitle.setText(w.getName().toString());
             viewTitle.setTextSize(20);
 
-
             double minutesDbl = w.getTime();
             int secondsTotal = (int) (minutesDbl * 60);
             int seconds = secondsTotal % 60;
             int minutes = (secondsTotal - seconds) / 60;
             String time = minutes + " minutes, " + seconds + " seconds";
-
-
             time = dbh.displayDateTime(w.getDate()) + ": " + time;
-
-
             viewTime.setText(time);
 
             ViewGroup.LayoutParams stackParams = new LinearLayout.LayoutParams(600,
@@ -298,7 +278,6 @@ public class HomeScreen extends ActionBarActivity {
             title.setText("Workouts for Today");
             i++;
         }
-
         dbh.close();
     }
 
