@@ -1,11 +1,9 @@
 package com.gymrattrax.gymrattrax;
 
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -115,10 +113,4 @@ public class CurrentScheduleActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-    public void BackToHomeScreen(View view){
-        Intent intent = new Intent (CurrentScheduleActivity.this, ScheduleActivity.class);
-        startActivity(intent);
-    }
-
 }

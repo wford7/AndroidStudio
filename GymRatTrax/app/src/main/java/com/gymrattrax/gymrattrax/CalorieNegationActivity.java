@@ -333,6 +333,9 @@ public class CalorieNegationActivity extends ActionBarActivity {
     }
 
     public void BackToHomeScreen(View view){
+        Toast toast = Toast.makeText(getApplicationContext(),
+                "Workout successfully added to current schedule.", Toast.LENGTH_SHORT);
+        toast.show();
         Intent intent = new Intent (CalorieNegationActivity.this, HomeScreen.class);
         startActivity(intent);
     }

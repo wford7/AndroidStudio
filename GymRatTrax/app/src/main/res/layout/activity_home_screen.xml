@@ -197,6 +197,17 @@
 
     </LinearLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="34dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Upcoming Workouts"
+        android:id="@+id/daily_workout_title"
+        android:layout_gravity="center"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="161dp"
@@ -204,19 +215,11 @@
         android:fillViewport="false"
         android:layout_weight="2.91">
 
-
         <LinearLayout
+            android:layout_width="match_parent"
             android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/LayoutScroll">
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/add_button"
-                android:layout_weight="0.08"
-                android:background="@drawable/add_button_press"/>
+            android:layout_height="match_parent"
+            android:id="@+id/daily_workout_layout">
         </LinearLayout>
     </ScrollView>
 

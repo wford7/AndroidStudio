@@ -20,7 +20,6 @@ import java.util.Locale;
 
 public class ProfileActivity extends ActionBarActivity {
 
-    private Button backProfileButton;
     private Button editProfileButton;
     private EditText nameEditText;
     private EditText birthDateEditText;
@@ -34,7 +33,6 @@ public class ProfileActivity extends ActionBarActivity {
     private Spinner profileSpinner;
     private boolean editing;
     private Profile profile;
-    private TextView textViewDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +42,7 @@ public class ProfileActivity extends ActionBarActivity {
 
         //database query and then set editTexts to display the appropriate data
 
-        backProfileButton = (Button) findViewById(R.id.BackProfileButton);
+        Button backProfileButton = (Button) findViewById(R.id.BackProfileButton);
         editProfileButton = (Button) findViewById(R.id.EditProfileButton);
         nameEditText = (EditText)findViewById(R.id.profile_name);
         birthDateEditText = (EditText)findViewById(R.id.birth_date);
@@ -56,7 +54,7 @@ public class ProfileActivity extends ActionBarActivity {
         modExercise = (RadioButton)findViewById(R.id.mod_exercise);
         heavyExercise = (RadioButton)findViewById(R.id.heavy_exercise);
         profileSpinner = (Spinner)findViewById(R.id.profile_spinner);
-        textViewDate = (TextView)findViewById(R.id.textViewDate);
+        TextView textViewDate = (TextView) findViewById(R.id.textViewDate);
         editing = false;
 
         DBHelper dbh = new DBHelper(this);
@@ -76,8 +74,7 @@ public class ProfileActivity extends ActionBarActivity {
                     lockInput();
                     editProfileButton.setText("EDIT");
                     setTextFromProfile();
-                }
-                else {
+                } else {
                     onBackPressed();
                 }
 

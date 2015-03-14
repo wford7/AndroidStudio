@@ -4,8 +4,11 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.ScrollView;
 import android.widget.ImageView;
@@ -20,12 +23,8 @@ import java.util.TimerTask;
 
 public class HomeScreen extends ActionBarActivity {
 
-    private Button BeginWorkoutButton, ViewScheduleButton, ViewProfileButton, ViewProgressButton,
-            CalorieNegationButton, EditSettingsButton;
-    private ImageView GymRat;
     private ScrollView updateLayoutScroll;
     private int debugCheck;
-    private ImageButton addButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,46 +32,38 @@ public class HomeScreen extends ActionBarActivity {
         //initiate tutorial/profile creation if there is no Profile ID in database
         Profile create = new Profile(this);
         if (!create.isComplete() && DBContract.ALLOW_DEBUG) {
-            Toast toast = Toast.makeText(getApplicationContext(),
-                    "Profile is not adequately complete. " +
-                            "In the future, launch Create Profile activity here. " +
-                            "DO NOT ATTEMPT CALORIE NEGATION.", Toast.LENGTH_LONG);
-            toast.show();
+            initiateNewUserProfileSetup();
         }
         setContentView(R.layout.activity_home_screen);
         final Animation animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_rotate);
 
+        ImageView gymRat = (ImageView) findViewById(R.id.home_rat);
+        Button beginWorkoutButton = (Button) findViewById(R.id.BeginWorkoutButton);
+        Button viewScheduleButton = (Button) findViewById(R.id.ViewScheduleButton);
+        Button viewProfileButton = (Button) findViewById(R.id.ViewProfileButton);
+        Button viewProgressButton = (Button) findViewById(R.id.ViewProgressButton);
+        Button calorieNegationButton = (Button) findViewById(R.id.CalorieNegationButton);
+        Button editSettingsButton = (Button) findViewById(R.id.EditSettingsButton);
+//        addButton = (ImageButton)findViewById(R.id.add_button);
 
         /**populate ScrollView's child LinearLayout with workout items that are schedule for the current date
          * display - workout item, time
          * if there are no scheduled workout items, display "Nothing scheduled for today"
          **/
-
-
-        GymRat = (ImageView)findViewById(R.id.home_rat);
-        BeginWorkoutButton = (Button)findViewById(R.id.BeginWorkoutButton);
-        ViewScheduleButton = (Button)findViewById(R.id.ViewScheduleButton);
-        ViewProfileButton = (Button)findViewById(R.id.ViewProfileButton);
-        ViewProgressButton = (Button)findViewById(R.id.ViewProgressButton);
-        CalorieNegationButton = (Button)findViewById(R.id.CalorieNegationButton);
-        EditSettingsButton = (Button)findViewById(R.id.EditSettingsButton);
-
-        addButton = (ImageButton)findViewById(R.id.add_button);
-
-
         displayCurrentWorkouts();
 
         debugCheck = 0;
 
-        GymRat.setOnClickListener(new ImageView.OnClickListener(){
+        gymRat.setOnClickListener(new ImageView.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 v.startAnimation(animTranslate);
-            }});
+            }
+        });
 
         if (DBContract.ALLOW_DEBUG) {
-            GymRat.setOnLongClickListener(new View.OnLongClickListener() {
+            gymRat.setOnLongClickListener(new View.OnLongClickListener() {
 
                 @Override
                 public boolean onLongClick(View v) {
@@ -88,30 +79,30 @@ public class HomeScreen extends ActionBarActivity {
             });
         }
 
-        BeginWorkoutButton.setOnClickListener(new Button.OnClickListener(){
+        beginWorkoutButton.setOnClickListener(new Button.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
             }
         });
-        ViewProgressButton.setOnClickListener(new Button.OnClickListener(){
+        viewProgressButton.setOnClickListener(new Button.OnClickListener() {
 
             @Override
             public void onClick(View view) {
                 loadProgress(view);
-           }
+            }
         });
 
-        ViewScheduleButton.setOnClickListener(new Button.OnClickListener(){
+        viewScheduleButton.setOnClickListener(new Button.OnClickListener() {
 
             @Override
-        public void onClick(View view){
+            public void onClick(View view) {
                 loadSchedules(view);
             }
         });
 
-        ViewProfileButton.setOnClickListener(new Button.OnClickListener(){
+        viewProfileButton.setOnClickListener(new Button.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -119,7 +110,7 @@ public class HomeScreen extends ActionBarActivity {
             }
         });
 
-        BeginWorkoutButton.setOnClickListener(new Button.OnClickListener(){
+        beginWorkoutButton.setOnClickListener(new Button.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -127,7 +118,7 @@ public class HomeScreen extends ActionBarActivity {
             }
         });
 
-        CalorieNegationButton.setOnClickListener(new Button.OnClickListener(){
+        calorieNegationButton.setOnClickListener(new Button.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -135,7 +126,7 @@ public class HomeScreen extends ActionBarActivity {
             }
         });
 
-        EditSettingsButton.setOnClickListener(new Button.OnClickListener(){
+        editSettingsButton.setOnClickListener(new Button.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -227,17 +218,95 @@ public class HomeScreen extends ActionBarActivity {
 //        dbh.close();
 //    }
     private void displayCurrentWorkouts() {
+//        DBHelper dbh = new DBHelper(this);
+////        WorkoutItem[] workoutItems = dbh.getWorkoutsForToday();
+//        WorkoutItem[] workoutItems = new WorkoutItem[0];
+//        for (WorkoutItem workoutItem : workoutItems) {
+////            LinearLayout dailyLayout = (LinearLayout) findViewById(R.id.LayoutScroll);
+//            TextView dailyWorkout = new TextView(HomeScreen.this);
+//            dailyWorkout.setText(workoutItem.getName().toString());
+//            updateLayoutScroll = (ScrollView) findViewById(R.id.scrollView);
+////            dailyLayout.addView(dailyWorkout);
+//            // " display(workoutItem[i]) "
+//        }
+//        dbh.close();
+
+
+        LinearLayout linearContainer = (LinearLayout) findViewById(R.id.daily_workout_layout);
+        TextView title = (TextView) findViewById(R.id.daily_workout_title);
+
+        linearContainer.removeAllViewsInLayout();
+        TableLayout a = new TableLayout(HomeScreen.this);
+        a.removeAllViews();
+
         DBHelper dbh = new DBHelper(this);
-//        WorkoutItem[] workoutItems = dbh.getWorkoutsForToday();
-        WorkoutItem[] workoutItems = new WorkoutItem[0];
-        for (WorkoutItem workoutItem : workoutItems) {
-            LinearLayout dailyLayout = (LinearLayout) findViewById(R.id.LayoutScroll);
-            TextView dailyWorkout = new TextView(HomeScreen.this);
-            dailyWorkout.setText(workoutItem.getName().toString());
-            updateLayoutScroll = (ScrollView) findViewById(R.id.scrollView);
-            dailyLayout.addView(dailyWorkout);
-            // " display(workoutItem[i]) "
+//        Schedule s = dbh.getCurrentSchedule();
+//        WorkoutItem[] workouts = dbh.getWorkoutsFromSchedule(s);
+        WorkoutItem[] workouts = dbh.getWorkoutsForToday();
+        //Linear
+        linearContainer.addView(a);
+
+        int i = 0;
+        for (WorkoutItem w : workouts) {
+            TableRow row = new TableRow(HomeScreen.this);
+            LinearLayout main = new LinearLayout(HomeScreen.this);
+            LinearLayout stack = new LinearLayout(HomeScreen.this);
+            TextView viewTitle = new TextView(HomeScreen.this);
+            TextView viewTime = new TextView(HomeScreen.this);
+            row.setId(1000 + i);
+            main.setId(2000 + i);
+            stack.setId(3000 + i);
+            viewTitle.setId(4000 + i);
+            viewTime.setId(5000 + i);
+            row.removeAllViews();
+            row.setBackgroundColor(getResources().getColor(R.color.primary200));
+            row.setPadding(5,10,5,10);
+            TableLayout.LayoutParams trParams = new TableLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+            trParams.setMargins(0,5,0,5);
+            row.setLayoutParams(trParams);
+
+            main.setOrientation(LinearLayout.HORIZONTAL);
+            stack.setOrientation(LinearLayout.VERTICAL);
+
+            viewTitle.setText(w.getName().toString());
+            viewTitle.setTextSize(20);
+
+
+            double minutesDbl = w.getTime();
+            int secondsTotal = (int) (minutesDbl * 60);
+            int seconds = secondsTotal % 60;
+            int minutes = (secondsTotal - seconds) / 60;
+            String time = minutes + " minutes, " + seconds + " seconds";
+
+
+            time = dbh.displayDateTime(w.getDate()) + ": " + time;
+
+
+            viewTime.setText(time);
+
+            ViewGroup.LayoutParams stackParams = new LinearLayout.LayoutParams(600,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+            stack.setLayoutParams(stackParams);
+            stack.addView(viewTitle);
+            stack.addView(viewTime);
+            main.addView(stack);
+
+            row.addView(main);
+            a.addView(row);
+            title.setText("Workouts for Today");
+            i++;
         }
+
         dbh.close();
+    }
+
+    private void initiateNewUserProfileSetup() {
+        Toast toast = Toast.makeText(getApplicationContext(),
+                "Profile is not adequately complete. " +
+                        "In the future, launch Create Profile activity here. " +
+                        "DO NOT ATTEMPT CALORIE NEGATION.", Toast.LENGTH_LONG);
+        toast.show();
     }
 }
