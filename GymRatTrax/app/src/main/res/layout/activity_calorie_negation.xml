@@ -33,7 +33,7 @@
         android:text="SUGGEST WORKOUTS"
         android:id="@+id/negate_cal_button"
         android:clickable="true"
-        android:layout_below="@+id/textView"
+        android:layout_below="@+id/add_workout_strength"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
         android:textStyle="bold"

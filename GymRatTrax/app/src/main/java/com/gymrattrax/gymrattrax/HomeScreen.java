@@ -38,7 +38,7 @@ public class HomeScreen extends ActionBarActivity {
 
         ImageView gymRat = (ImageView) findViewById(R.id.home_rat);
         Button beginWorkoutButton = (Button) findViewById(R.id.BeginWorkoutButton);
-        Button viewScheduleButton = (Button) findViewById(R.id.ViewScheduleButton);
+        Button editScheduleButton = (Button) findViewById(R.id.EditScheduleButton);
         Button viewProfileButton = (Button) findViewById(R.id.ViewProfileButton);
         Button viewProgressButton = (Button) findViewById(R.id.ViewProgressButton);
         Button calorieNegationButton = (Button) findViewById(R.id.CalorieNegationButton);
@@ -87,7 +87,7 @@ public class HomeScreen extends ActionBarActivity {
             }
         });
 
-        viewScheduleButton.setOnClickListener(new Button.OnClickListener() {
+        editScheduleButton.setOnClickListener(new Button.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -177,10 +177,10 @@ public class HomeScreen extends ActionBarActivity {
         Intent intent = new Intent (HomeScreen.this, SettingsActivity.class);
         startActivity(intent);
     }
-    public void loadNotificationTest(View view){
-        Intent intent = new Intent (HomeScreen.this, NotificationActivity.class);
-        startActivity(intent);
-    }
+//    public void loadNotificationTest(View view){
+//        Intent intent = new Intent (HomeScreen.this, NotificationActivity.class);
+//        startActivity(intent);
+//    }
 
 
     //this method is triggered when user selects "View Progress" button from the main page

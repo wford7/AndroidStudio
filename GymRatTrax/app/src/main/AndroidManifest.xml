@@ -74,6 +74,11 @@
             android:name=".ProfileSetupActivity"
             android:label="@string/title_activity_profile_setup" >
         </activity>
+        <activity
+            android:name=".AddWorkoutActivity"
+            android:label="@string/title_activity_add_workout"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>

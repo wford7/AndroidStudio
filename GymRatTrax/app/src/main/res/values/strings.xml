@@ -47,5 +47,14 @@
     <string name="schedule_activity_add_workout">Add Workout</string>
     <string name="schedule_add_workout_button">Edit Workout</string>
     <string name="schedule_back_button">Back</string>
+    <string name="schedule_activity_view_google_calendar">View Google Calendar</string>
+    <string name="UpcomingWorkouts">Upcoming Workouts</string>
+    <string name="select_workout_type">Select a workout type:</string>
+    <string name="add_workout_activity_add_strength">Add Strength Workout</string>
+    <string name="add_workout_activity_add_cardio">Add Cardio Workout</string>
+    <string name="title_activity_add_workout">Add A Workout</string>
+    <string name="choose_an_exercise">Choose an exercise</string>
+    <string name="strength_workout_activity_add_exercise">Add exercise</string>
+    <string name="Select_Exercise">Select Exercise</string>
 
 </resources>

@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="schedule_back_button" type="id">Back</item>
+    <item name="schedule_google_calendar_button" type="id">View Google Calendar</item>
+    <item name="addStrengthWorkoutButton" type="id">Add Strength Workout</item>
+    <item name="addExerciseButton" type="id">Add Exercise</item>
+    <item name="add_workout_cardio" type="id">Add Cardio Workout</item>
+    <item name="EditScheduleButton" type="id">Edit Schedule</item>
 </resources>

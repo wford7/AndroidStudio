@@ -4,14 +4,20 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 
 public class StrengthWorkoutActivity extends ActionBarActivity {
+
+    private Button addExerciseButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_strength_workout);
+
+        addExerciseButton = (Button) findViewById(R.id.addExerciseButton);
+
     }
 
 
