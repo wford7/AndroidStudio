@@ -50,16 +50,18 @@ public class StrengthWorkoutItem extends WorkoutItem {
         return completedSets;
     }
 
-    public void setCompletedSets(int completedSets) {
+    public void addCompletedActivity(int completedReps, int completedSets, double weight) {
+        int allPastReps = this.completedReps * this.completedSets;
+        int allNewReps = completedReps * completedSets;
+        int allTotalReps = allPastReps + allNewReps;
+        this.weightUsed = this.weightUsed * (allPastReps / allTotalReps) +
+                weight * (allNewReps / allTotalReps);
+        this.completedReps = completedReps;
         this.completedSets = completedSets;
     }
 
     public int getCompletedReps() {
         return completedReps;
-    }
-
-    public void setCompletedReps(int completedReps) {
-        this.completedReps = completedReps;
     }
 
     public double getTime() {

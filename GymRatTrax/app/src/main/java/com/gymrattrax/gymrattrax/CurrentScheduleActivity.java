@@ -29,13 +29,11 @@ public class CurrentScheduleActivity extends ActionBarActivity {
         a.removeAllViews();
 
         DBHelper dbh = new DBHelper(this);
-        Schedule s = dbh.getCurrentSchedule();
-        WorkoutItem[] workouts = dbh.getWorkoutsFromSchedule(s);
+        WorkoutItem[] workouts = dbh.getWorkoutsForToday();
         //Linear
         linearContainer.addView(a);
 
-        textDateRange.setText(dbh.displayDate(s.getStartDay()) + " - " +
-                dbh.displayDate(s.getEndDay()));
+        textDateRange.setText("Current week");
 
         int i = 0;
         for (WorkoutItem w : workouts) {

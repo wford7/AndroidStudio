@@ -7,8 +7,8 @@
     <string-array name="debug_array">
         <item>Profile</item>
         <item>Weight</item>
-        <item>Schedule</item>
         <item>Workout</item>
+        <item>Complete</item>
     </string-array>
 
     <string-array name="graphs_array">

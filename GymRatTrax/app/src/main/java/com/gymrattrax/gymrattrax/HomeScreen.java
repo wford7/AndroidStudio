@@ -123,8 +123,8 @@ public class HomeScreen extends ActionBarActivity {
 
             @Override
             public void onClick(View view) {
-
                 loadSettings(view);
+//                loadNotificationTest(view);
             }
         });
 
@@ -174,8 +174,11 @@ public class HomeScreen extends ActionBarActivity {
 
 
     public void loadSettings(View view){
-
         Intent intent = new Intent (HomeScreen.this, SettingsActivity.class);
+        startActivity(intent);
+    }
+    public void loadNotificationTest(View view){
+        Intent intent = new Intent (HomeScreen.this, NotificationActivity.class);
         startActivity(intent);
     }
 
@@ -195,21 +198,6 @@ public class HomeScreen extends ActionBarActivity {
     /**
      * pull workouts (current day) from database and then populate ScrollView child
      */
-//    private void displayCurrentWorkouts() {
-//        DBHelper dbh = new DBHelper(this);
-////        WorkoutItem[] workoutItems = dbh.getWorkoutsForToday();
-//        WorkoutItem[] workoutItems = new WorkoutItem[0];
-//        for (WorkoutItem workoutItem : workoutItems) {
-//            LinearLayout dailyLayout = (LinearLayout) findViewById(R.id.LayoutScroll);
-//            TextView dailyWorkout = new TextView(HomeScreen.this);
-//            dailyWorkout.setText(workoutItem.getggName().toString());
-//            updateLayoutScroll = (ScrollView) findViewById(R.id.scrollView);
-//            dailyLayout.addView(dailyWorkout);
-//            updateLayoutScroll.addView(dailyLayout);
-//            // " display(workoutItem[i]) "
-//        }
-//        dbh.close();
-//    }
     private void displayCurrentWorkouts() {
         LinearLayout linearContainer = (LinearLayout) findViewById(R.id.daily_workout_layout);
         TextView title = (TextView) findViewById(R.id.daily_workout_title);
@@ -219,8 +207,6 @@ public class HomeScreen extends ActionBarActivity {
         a.removeAllViews();
 
         DBHelper dbh = new DBHelper(this);
-//        Schedule s = dbh.getCurrentSchedule();
-//        WorkoutItem[] workouts = dbh.getWorkoutsFromSchedule(s);
         WorkoutItem[] workouts = dbh.getWorkoutsForToday();
         //Linear
         linearContainer.addView(a);

@@ -6,6 +6,7 @@ public class CardioWorkoutItem extends WorkoutItem {
     private double time;
     private double METSVal;
     private double distance;
+    private double completedDistance;
 
     public CardioWorkoutItem() {
         super();
@@ -20,6 +21,10 @@ public class CardioWorkoutItem extends WorkoutItem {
         this.distance = distance;
         if (time > 0)
             setMETSVal();
+    }
+
+    public void addCompletedDistance(double distance) {
+        this.completedDistance += distance;
     }
 
     public int getID() {

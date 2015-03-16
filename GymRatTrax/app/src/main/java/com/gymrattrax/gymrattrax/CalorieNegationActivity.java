@@ -212,8 +212,7 @@ public class CalorieNegationActivity extends ActionBarActivity {
                 item.setDate(dat);
 
                 DBHelper dbh = new DBHelper(CalorieNegationActivity.this);
-                Schedule s = dbh.getCurrentSchedule();
-                dbh.addWorkoutToSchedule(s, item, new Profile(CalorieNegationActivity.this));
+                dbh.addWorkoutToSchedule(item, new Profile(CalorieNegationActivity.this));
                 dbh.close();
                 BackToHomeScreen(view);
             }
@@ -236,8 +235,7 @@ public class CalorieNegationActivity extends ActionBarActivity {
                 item.setDate(dat);
 
                 DBHelper dbh = new DBHelper(CalorieNegationActivity.this);
-                Schedule s = dbh.getCurrentSchedule();
-                dbh.addWorkoutToSchedule(s, item, new Profile(CalorieNegationActivity.this));
+                dbh.addWorkoutToSchedule(item, new Profile(CalorieNegationActivity.this));
                 dbh.close();
                 BackToHomeScreen(view);
             }
@@ -258,8 +256,7 @@ public class CalorieNegationActivity extends ActionBarActivity {
                 item.setDate(dat);
 
                 DBHelper dbh = new DBHelper(CalorieNegationActivity.this);
-                Schedule s = dbh.getCurrentSchedule();
-                dbh.addWorkoutToSchedule(s, item, new Profile(CalorieNegationActivity.this));
+                dbh.addWorkoutToSchedule(item, new Profile(CalorieNegationActivity.this));
                 dbh.close();
                 BackToHomeScreen(view);
             }
@@ -280,8 +277,7 @@ public class CalorieNegationActivity extends ActionBarActivity {
                 item.setDate(dat);
 
                 DBHelper dbh = new DBHelper(CalorieNegationActivity.this);
-                Schedule s = dbh.getCurrentSchedule();
-                dbh.addWorkoutToSchedule(s, item, new Profile(CalorieNegationActivity.this));
+                dbh.addWorkoutToSchedule(item, new Profile(CalorieNegationActivity.this));
                 dbh.close();
                 BackToHomeScreen(view);
             }
@@ -302,8 +298,7 @@ public class CalorieNegationActivity extends ActionBarActivity {
                 item.setDate(dat);
 
                 DBHelper dbh = new DBHelper(CalorieNegationActivity.this);
-                Schedule s = dbh.getCurrentSchedule();
-                dbh.addWorkoutToSchedule(s, item, new Profile(CalorieNegationActivity.this));
+                dbh.addWorkoutToSchedule(item, new Profile(CalorieNegationActivity.this));
                 dbh.close();
                 BackToHomeScreen(view);
             }
