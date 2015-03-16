@@ -10,19 +10,23 @@
     android:focusable="false"
     android:orientation="vertical">
 
+    <GridView
+        android:numColumns="3"
+        android:layout_width="match_parent"
+        android:layout_height="305dp"
+        android:id="@+id/gridView"
+        android:columnWidth="50dp"
+        android:stretchMode="columnWidth"
+        android:layout_gravity="center_horizontal" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/schedule_activity_current_schedule"
-        android:id="@+id/currentScheduleButton"
+        android:text="@string/schedule_activity_add_workout"
+        android:id="@+id/addWorkoutButton"
         android:clickable="true"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true"
         android:textStyle="bold"
         android:textSize="25sp"
-        android:layout_row="1"
-        android:layout_column="0"
         android:background="@drawable/button_shp_rvrs_press"
         android:layout_marginBottom="5dp"
         android:layout_gravity="center_horizontal" />
@@ -30,15 +34,13 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Edit Schedule"
-        android:id="@+id/editScheduleButton"
+        android:text="@string/schedule_add_workout_button"
+        android:id="@+id/schedule_activity_edit_workout"
         android:clickable="true"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true"
+
         android:textStyle="bold"
         android:textSize="25sp"
-        android:layout_row="1"
-        android:layout_column="0"
+
         android:background="@drawable/button_shp_rvrs_press"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="5dp" />
@@ -46,16 +48,13 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/schedule_activity_back"
-        android:id="@+id/backScheduleButton"
+        android:text="@string/schedule_back_button"
+        android:id="@+id/schedule_back_button"
         android:clickable="true"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true"
         android:textStyle="bold"
         android:textSize="25sp"
-        android:layout_row="1"
-        android:layout_column="0"
         android:background="@drawable/button_shp_rvrs_press"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="5dp" />
 
 </LinearLayout>

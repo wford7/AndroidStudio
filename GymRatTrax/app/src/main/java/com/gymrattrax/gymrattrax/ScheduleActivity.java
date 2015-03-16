@@ -32,8 +32,13 @@ import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -47,10 +52,24 @@ import java.util.Calendar;
 
 public class ScheduleActivity extends ActionBarActivity {
     private Button backScheduleButton;
-    private Button currentScheduleButton;
-    private Button editScheduleButton;
-    private Button viewScheduleButton;
-    private EditText nameEditText;
+    private Button addWorkoutButton;
+    private Button editWorkoutButton;
+
+    GridView gridView;
+
+    static final String[] upcoming_workouts = new String[] {
+            "Strength Workout","Wed. 4/1/2015", "5:15 pm",
+            "Cardio Workout", "Thurs. 4/2/2015", "2:30 pm",
+            "Cardio Workout", "Thurs. 4/2/2015", "5:15 pm",
+            "Strength Workout", "Fri. 4/3/2015", "6:00 pm",
+            "Strength Workout","Sat. 4/4/2015", "9:00 am",
+            "Cardio Workout", "Sat. 4/4/2015", "2:30 pm",
+            "Cardio Workout", "Sun. 4/5/2015", "12:15 pm",
+            "Strength Workout", "Mon. 4/6/2015", "6:45 pm",
+            "Strength Workout","Mon. 4/6/2015", "7:15 pm",
+            "Cardio Workout", "Tues. 4/7/2015", "2:30 pm",
+            "Cardio Workout", "Tues. 4/7/2015", "5:15 pm",
+            "Strength Workout", "Tues. 4/7/2015", "6:00 pm"};
 
     public String accountName = Account.class.getName();
 
@@ -59,9 +78,25 @@ public class ScheduleActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
 
-        currentScheduleButton = (Button) findViewById(R.id.currentScheduleButton);
-        editScheduleButton = (Button) findViewById(R.id.editScheduleButton);
+        gridView = (GridView) findViewById(R.id.gridView);
 
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, upcoming_workouts);
+
+        gridView.setAdapter(adapter);
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0 || position == 3 || position == 6 || position == 9) {
+                    String workoutId = "Strength#1";
+                    Toast.makeText(getApplicationContext(), ((TextView) view).getText() + ": WORKOUT DETAILS", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        addWorkoutButton = (Button) findViewById(R.id.addWorkoutButton);
+        editWorkoutButton = (Button) findViewById(R.id.schedule_activity_edit_workout);
+        backScheduleButton = (Button) findViewById(R.id.schedule_back_button);
 
         backScheduleButton.setOnClickListener(new Button.OnClickListener() {
 
@@ -71,7 +106,7 @@ public class ScheduleActivity extends ActionBarActivity {
             }
         });
 
-        currentScheduleButton.setOnClickListener(new Button.OnClickListener() {
+        addWorkoutButton.setOnClickListener(new Button.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -90,7 +125,12 @@ public class ScheduleActivity extends ActionBarActivity {
         });
     }
 
-//    private void createNewEvent(String exercise1, Calendar begin, Calendar end) {
+    private String workoutDetails(String details) {
+        details = "CURLS: 25 lbs SETS:2 REPS:20";
+        return details;
+    }
+
+//    private void addWorkout(String exercise1, Calendar begin, Calendar end) {
 //        Calendar dateToShow = Calendar.getInstance();
 //        dateToShow.set(2015, Calendar.MARCH, 12, 17, 00);
 //        long epochMillis = dateToShow.getTimeInMillis();

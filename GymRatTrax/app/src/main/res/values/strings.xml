@@ -44,5 +44,8 @@
     <string name="title_activity_strength_workout">Strength Workout Activity</string>
     <string name="hello_world">hello_world</string>
     <string name="title_activity_profile_setup">Profile Setup</string>
+    <string name="schedule_activity_add_workout">Add Workout</string>
+    <string name="schedule_add_workout_button">Edit Workout</string>
+    <string name="schedule_back_button">Back</string>
 
 </resources>
