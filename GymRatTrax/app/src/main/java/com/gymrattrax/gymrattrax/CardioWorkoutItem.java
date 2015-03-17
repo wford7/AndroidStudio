@@ -23,7 +23,11 @@ public class CardioWorkoutItem extends WorkoutItem {
             setMETSVal();
     }
 
-    public void addCompletedDistance(double distance) {
+    public double getCompletedDistance() {
+        return completedDistance;
+    }
+
+    public void setCompletedDistance(double distance) {
         this.completedDistance += distance;
     }
 
@@ -43,11 +47,11 @@ public class CardioWorkoutItem extends WorkoutItem {
         this.name = name;
     }
 
-    public double getTime() {
+    public double getTimeScheduled() {
         return time;
     }
 
-    public void setTime(double time) {
+    public void setTimeScheduled(double time) {
         this.time = time;
         if (distance > 0)
             setMETSVal();

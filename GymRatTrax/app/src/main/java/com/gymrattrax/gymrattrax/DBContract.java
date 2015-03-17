@@ -9,8 +9,6 @@ public final class DBContract {
     private static final String TYPE_INTEGER = " INTEGER";
     private static final String TYPE_REAL = " REAL";
     private static final String PRIMARY_KEY = " PRIMARY KEY";
-    private static final String FOREIGN_KEY = " FOREIGN KEY ";
-    private static final String REFERENCES = " REFERENCES ";
     private static final String NOT_NULL = " NOT NULL";
     private static final String AUTO = " AUTOINCREMENT";
     private static final String COMMA_SEP = ",";
@@ -42,6 +40,7 @@ public final class DBContract {
         public static final String DELETE_TABLE =
                 "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
+
     public static abstract class WeightTable implements BaseColumns {
         public static final String TABLE_NAME = "weight";
         public static final String COLUMN_NAME_DATE                = "date";
@@ -63,53 +62,39 @@ public final class DBContract {
         public static final String DELETE_TABLE =
                 "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
+
     public static abstract class WorkoutTable implements BaseColumns {
         public static final String TABLE_NAME = "workout";
-        public static final String COLUMN_NAME_EXERCISE       = "exercise";
-        public static final String COLUMN_NAME_DATE_SCHEDULED = "date_time";
-        public static final String COLUMN_NAME_CAR_DISTANCE   = "car_distance";
-        public static final String COLUMN_NAME_STR_REPS       = "str_reps";
-        public static final String COLUMN_NAME_STR_SETS       = "str_sets";
-        public static final String COLUMN_NAME_STR_WEIGHT     = "str_weight";
-        public static final String COLUMN_NAME_TIME_SCHEDULED = "time_spent";
+        public static final String COLUMN_NAME_EXERCISE                  = "exercise";
+        public static final String COLUMN_NAME_DATE_SCHEDULED            = "date_scheduled";
+        public static final String COLUMN_NAME_DATE_COMPLETED            = "date_completed";
+        public static final String COLUMN_NAME_CARDIO_DISTANCE_SCHEDULED = "cardio_distance_scheduled";
+        public static final String COLUMN_NAME_CARDIO_DISTANCE_COMPLETED = "cardio_distance_completed";
+        public static final String COLUMN_NAME_STRENGTH_REPS_SCHEDULED   = "strength_reps_scheduled";
+        public static final String COLUMN_NAME_STRENGTH_REPS_COMPLETED   = "strength_reps_completed";
+        public static final String COLUMN_NAME_STRENGTH_SETS_SCHEDULED   = "strength_sets_scheduled";
+        public static final String COLUMN_NAME_STRENGTH_SETS_COMPLETED   = "strength_sets_completed";
+        public static final String COLUMN_NAME_STRENGTH_WEIGHT           = "strength_weight";
+        public static final String COLUMN_NAME_CALORIES_BURNED           = "calories_burned";
+        public static final String COLUMN_NAME_TIME_SCHEDULED            = "time_scheduled";
+        public static final String COLUMN_NAME_TIME_SPENT                = "time_spent";
 
         public static final String CREATE_TABLE =
                 "CREATE TABLE " + TABLE_NAME + L_PAREN +
-                        BaseColumns._ID            + TYPE_INTEGER + PRIMARY_KEY + AUTO + COMMA_SEP +
-                        COLUMN_NAME_EXERCISE       + TYPE_TEXT    + NOT_NULL           + COMMA_SEP +
-                        COLUMN_NAME_DATE_SCHEDULED + TYPE_TEXT    + NOT_NULL           + COMMA_SEP +
-                        COLUMN_NAME_CAR_DISTANCE   + TYPE_REAL                         + COMMA_SEP +
-                        COLUMN_NAME_STR_REPS       + TYPE_INTEGER                      + COMMA_SEP +
-                        COLUMN_NAME_STR_SETS       + TYPE_INTEGER                      + COMMA_SEP +
-                        COLUMN_NAME_STR_WEIGHT     + TYPE_REAL                         + COMMA_SEP +
-                        COLUMN_NAME_TIME_SCHEDULED + TYPE_REAL                         + R_PAREN;
-        public static final String DELETE_TABLE =
-                "DROP TABLE IF EXISTS " + TABLE_NAME;
-    }
-    public static abstract class CompleteTable implements BaseColumns {
-        public static final String TABLE_NAME = "complete";
-        public static final String COLUMN_NAME_WORKOUT_ID      = "workout_id";
-        public static final String COLUMN_NAME_DATE_COMPLETED  = "date_completed";
-        public static final String COLUMN_NAME_CALORIES_BURNED = "calories_burned";
-        public static final String COLUMN_NAME_CAR_DISTANCE    = "car_distance";
-        public static final String COLUMN_NAME_STR_REPS        = "str_reps";
-        public static final String COLUMN_NAME_STR_SETS        = "str_sets";
-        public static final String COLUMN_NAME_STR_WEIGHT      = "str_weight";
-        public static final String COLUMN_NAME_TIME_SPENT      = "time_spent";
-
-        public static final String CREATE_TABLE =
-                "CREATE TABLE " + TABLE_NAME + L_PAREN +
-                        BaseColumns._ID            + TYPE_INTEGER + PRIMARY_KEY + AUTO + COMMA_SEP +
-                        COLUMN_NAME_WORKOUT_ID     + TYPE_INTEGER + NOT_NULL           + COMMA_SEP +
-                        COLUMN_NAME_DATE_COMPLETED + TYPE_TEXT    + NOT_NULL           + COMMA_SEP +
-                        COLUMN_NAME_CALORIES_BURNED+ TYPE_INTEGER + NOT_NULL           + COMMA_SEP +
-                        COLUMN_NAME_CAR_DISTANCE   + TYPE_REAL                         + COMMA_SEP +
-                        COLUMN_NAME_STR_REPS       + TYPE_INTEGER                      + COMMA_SEP +
-                        COLUMN_NAME_STR_SETS       + TYPE_INTEGER                      + COMMA_SEP +
-                        COLUMN_NAME_STR_WEIGHT     + TYPE_REAL                         + COMMA_SEP +
-                        COLUMN_NAME_TIME_SPENT     + TYPE_REAL                         + COMMA_SEP +
-                        FOREIGN_KEY + L_PAREN + COLUMN_NAME_WORKOUT_ID + R_PAREN + REFERENCES +
-                        WorkoutTable.TABLE_NAME + L_PAREN + WorkoutTable._ID + R_PAREN + R_PAREN;
+                        BaseColumns._ID        + TYPE_INTEGER + PRIMARY_KEY  + AUTO  + COMMA_SEP +
+                        COLUMN_NAME_EXERCISE                  + TYPE_TEXT + NOT_NULL + COMMA_SEP +
+                        COLUMN_NAME_DATE_SCHEDULED            + TYPE_TEXT + NOT_NULL + COMMA_SEP +
+                        COLUMN_NAME_DATE_COMPLETED            + TYPE_TEXT            + COMMA_SEP +
+                        COLUMN_NAME_CARDIO_DISTANCE_SCHEDULED + TYPE_REAL            + COMMA_SEP +
+                        COLUMN_NAME_CARDIO_DISTANCE_COMPLETED + TYPE_REAL            + COMMA_SEP +
+                        COLUMN_NAME_STRENGTH_REPS_SCHEDULED   + TYPE_INTEGER         + COMMA_SEP +
+                        COLUMN_NAME_STRENGTH_REPS_COMPLETED   + TYPE_INTEGER         + COMMA_SEP +
+                        COLUMN_NAME_STRENGTH_SETS_SCHEDULED   + TYPE_INTEGER         + COMMA_SEP +
+                        COLUMN_NAME_STRENGTH_SETS_COMPLETED   + TYPE_INTEGER         + COMMA_SEP +
+                        COLUMN_NAME_STRENGTH_WEIGHT           + TYPE_REAL            + COMMA_SEP +
+                        COLUMN_NAME_CALORIES_BURNED           + TYPE_REAL            + COMMA_SEP +
+                        COLUMN_NAME_TIME_SCHEDULED            + TYPE_REAL            + COMMA_SEP +
+                        COLUMN_NAME_TIME_SPENT                + TYPE_REAL            + R_PAREN;
         public static final String DELETE_TABLE =
                 "DROP TABLE IF EXISTS " + TABLE_NAME;
     }

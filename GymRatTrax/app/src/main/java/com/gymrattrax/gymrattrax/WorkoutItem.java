@@ -5,10 +5,12 @@ import java.util.Date;
 public class WorkoutItem {
     private ExerciseType type;
     private int ID;
-    private Date date;
+    private Date dateScheduled;
+    private Date dateCompleted;
     private double caloriesBurned;
     private double METSVal;
-    private double Time;
+    private double timeScheduled;
+    private double timeSpent;
     private ExerciseName name;
 
     public ExerciseName getName() {
@@ -35,12 +37,20 @@ public class WorkoutItem {
         this.ID = ID;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getDateScheduled() {
+        return dateScheduled;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDateScheduled(Date dateScheduled) {
+        this.dateScheduled = dateScheduled;
+    }
+
+    public Date getDateCompleted() {
+        return dateCompleted;
+    }
+
+    public void setDateCompleted(Date dateCompleted) {
+        this.dateCompleted = dateCompleted;
     }
 
     public double getCaloriesBurned() {
@@ -59,12 +69,20 @@ public class WorkoutItem {
         this.METSVal = METSVal;
     }
 
-    public double getTime() {
-        return Time;
+    public double getTimeScheduled() {
+        return timeScheduled;
     }
 
-    public void setTime(double time) {
-        Time = time;
+    public void setTimeScheduled(double timeScheduled) {
+        this.timeScheduled = timeScheduled;
+    }
+
+    public double getTimeSpent() {
+        return timeSpent;
+    }
+
+    public void setTimeSpent(double timeSpent) {
+        this.timeSpent = timeSpent;
     }
 
 }

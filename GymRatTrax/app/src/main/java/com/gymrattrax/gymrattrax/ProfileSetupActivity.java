@@ -134,7 +134,7 @@ public class ProfileSetupActivity extends ActionBarActivity {
         else
             System.out.println("No activity level checked");
 
-        dbh.setWeight(Double.valueOf(weightEditText.getText().toString()), bodyFat, activityLevel);
+        dbh.addWeight(Double.valueOf(weightEditText.getText().toString()), bodyFat, activityLevel);
 
 
         switch (profileSpinner.getItemAtPosition(

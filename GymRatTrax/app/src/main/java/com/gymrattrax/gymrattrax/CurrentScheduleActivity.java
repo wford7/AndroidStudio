@@ -63,14 +63,14 @@ public class CurrentScheduleActivity extends ActionBarActivity {
             viewTitle.setTextSize(20);
 
 
-            double minutesDbl = w.getTime();
+            double minutesDbl = w.getTimeScheduled();
             int secondsTotal = (int) (minutesDbl * 60);
             int seconds = secondsTotal % 60;
             int minutes = (secondsTotal - seconds) / 60;
             String time = minutes + " minutes, " + seconds + " seconds";
 
 
-            time = dbh.displayDateTime(w.getDate()) + ": " + time;
+            time = dbh.displayDateTime(w.getDateScheduled()) + ": " + time;
 
 
             viewTime.setText(time);

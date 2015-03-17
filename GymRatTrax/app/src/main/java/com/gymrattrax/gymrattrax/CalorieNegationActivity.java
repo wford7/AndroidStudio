@@ -206,13 +206,13 @@ public class CalorieNegationActivity extends ActionBarActivity {
                 item.setWeightUsed(10);
                 item.setMETSVal(3);
                 item.setName(exName[0]);
-                item.setTime(times[0]);
+                item.setTimeScheduled(times[0]);
                 Calendar cal = Calendar.getInstance();
                 Date dat = cal.getTime();
-                item.setDate(dat);
+                item.setDateScheduled(dat);
 
                 DBHelper dbh = new DBHelper(CalorieNegationActivity.this);
-                dbh.addWorkoutToSchedule(item, new Profile(CalorieNegationActivity.this));
+                dbh.addWorkout(item);
                 dbh.close();
                 BackToHomeScreen(view);
             }
@@ -229,13 +229,13 @@ public class CalorieNegationActivity extends ActionBarActivity {
                 item.setWeightUsed(20);
                 item.setMETSVal(7);
                 item.setName(exName[1]);
-                item.setTime(times[1]);
+                item.setTimeScheduled(times[1]);
                 Calendar cal = Calendar.getInstance();
                 Date dat = cal.getTime();
-                item.setDate(dat);
+                item.setDateScheduled(dat);
 
                 DBHelper dbh = new DBHelper(CalorieNegationActivity.this);
-                dbh.addWorkoutToSchedule(item, new Profile(CalorieNegationActivity.this));
+                dbh.addWorkout(item);
                 dbh.close();
                 BackToHomeScreen(view);
             }
@@ -250,13 +250,13 @@ public class CalorieNegationActivity extends ActionBarActivity {
                 item.setDistance(2);
                 item.setMETSVal(11);
                 item.setName(ExerciseName.WALK);
-                item.setTime(times[2]);
+                item.setTimeScheduled(times[2]);
                 Calendar cal = Calendar.getInstance();
                 Date dat = cal.getTime();
-                item.setDate(dat);
+                item.setDateScheduled(dat);
 
                 DBHelper dbh = new DBHelper(CalorieNegationActivity.this);
-                dbh.addWorkoutToSchedule(item, new Profile(CalorieNegationActivity.this));
+                dbh.addWorkout(item);
                 dbh.close();
                 BackToHomeScreen(view);
             }
@@ -271,13 +271,13 @@ public class CalorieNegationActivity extends ActionBarActivity {
                 item.setDistance(2);
                 item.setMETSVal(3.5);
                 item.setName(ExerciseName.JOG);
-                item.setTime(times[3]);
+                item.setTimeScheduled(times[3]);
                 Calendar cal = Calendar.getInstance();
                 Date dat = cal.getTime();
-                item.setDate(dat);
+                item.setDateScheduled(dat);
 
                 DBHelper dbh = new DBHelper(CalorieNegationActivity.this);
-                dbh.addWorkoutToSchedule(item, new Profile(CalorieNegationActivity.this));
+                dbh.addWorkout(item);
                 dbh.close();
                 BackToHomeScreen(view);
             }
@@ -292,13 +292,13 @@ public class CalorieNegationActivity extends ActionBarActivity {
                 item.setDistance(2);
                 item.setMETSVal(6);
                 item.setName(ExerciseName.RUN);
-                item.setTime(times[4]);
+                item.setTimeScheduled(times[4]);
                 Calendar cal = Calendar.getInstance();
                 Date dat = cal.getTime();
-                item.setDate(dat);
+                item.setDateScheduled(dat);
 
                 DBHelper dbh = new DBHelper(CalorieNegationActivity.this);
-                dbh.addWorkoutToSchedule(item, new Profile(CalorieNegationActivity.this));
+                dbh.addWorkout(item);
                 dbh.close();
                 BackToHomeScreen(view);
             }

@@ -238,12 +238,12 @@ public class HomeScreen extends ActionBarActivity {
             viewTitle.setText(w.getName().toString());
             viewTitle.setTextSize(20);
 
-            double minutesDbl = w.getTime();
+            double minutesDbl = w.getTimeScheduled();
             int secondsTotal = (int) (minutesDbl * 60);
             int seconds = secondsTotal % 60;
             int minutes = (secondsTotal - seconds) / 60;
             String time = minutes + " minutes, " + seconds + " seconds";
-            time = dbh.displayDateTime(w.getDate()) + ": " + time;
+            time = dbh.displayDateTime(w.getDateScheduled()) + ": " + time;
             viewTime.setText(time);
 
             ViewGroup.LayoutParams stackParams = new LinearLayout.LayoutParams(600,
