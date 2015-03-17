@@ -54,23 +54,23 @@ public class HomeScreen extends ActionBarActivity {
                 v.startAnimation(animTranslate);
             }
         });
-
-        if (DBContract.ALLOW_DEBUG) {
-            gymRat.setOnLongClickListener(new View.OnLongClickListener() {
-
-                @Override
-                public boolean onLongClick(View v) {
-                    debugCheck++;
-                    if (debugCheck == 3) {
-                        debugCheck = 0;
-                        Intent intent = new Intent(HomeScreen.this, DBDebug.class);
-                        startActivity(intent);
-                    }
-                    startTimer();
-                    return true;
-                }
-            });
-        }
+//
+//        if (DBContract.ALLOW_DEBUG) {
+//            gymRat.setOnLongClickListener(new View.OnLongClickListener() {
+//
+//                @Override
+//                public boolean onLongClick(View v) {
+//                    debugCheck++;
+//                    if (debugCheck == 3) {
+//                        debugCheck = 0;
+//                        Intent intent = new Intent(HomeScreen.this, DBDebug.class);
+//                        startActivity(intent);
+//                    }
+//                    startTimer();
+//                    return true;
+//                }
+//            });
+//        }
 
         beginWorkoutButton.setOnClickListener(new Button.OnClickListener() {
 
@@ -263,9 +263,8 @@ public class HomeScreen extends ActionBarActivity {
 
     private void initiateNewUserProfileSetup() {
         Toast toast = Toast.makeText(getApplicationContext(),
-                "Profile is not adequately complete. " +
-                        "In the future, launch Create Profile activity here. " +
-                        "DO NOT ATTEMPT CALORIE NEGATION.", Toast.LENGTH_LONG);
+                "Welcome to GymRatTrax!\n" +
+                        "Please set up your personal fitness profile.", Toast.LENGTH_LONG);
         toast.setDuration(Toast.LENGTH_LONG);
         toast.show();
         Intent intent = new Intent(HomeScreen.this, ProfileSetupActivity.class);

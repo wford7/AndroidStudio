@@ -65,6 +65,7 @@ public class ProfileSetupActivity extends ActionBarActivity {
                 String errors = validateInput();
                 if (errors.isEmpty()) {
                     saveChanges(view);
+                    //after profile is set up, return to HomeScreen or start tutorial
                 }
                 else {
                     Toast toast = Toast.makeText(getApplicationContext(), errors,
