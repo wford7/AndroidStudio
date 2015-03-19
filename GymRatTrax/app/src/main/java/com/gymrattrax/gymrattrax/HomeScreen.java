@@ -22,7 +22,7 @@ import java.util.TimerTask;
 
 public class HomeScreen extends ActionBarActivity {
 
-    private ScrollView updateLayoutScroll;
+    @Deprecated
     private int debugCheck;
 
     @Override
@@ -30,7 +30,7 @@ public class HomeScreen extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         //initiate tutorial/profile creation if there is no Profile ID in database
         Profile create = new Profile(this);
-        if (!create.isComplete() && DBContract.ALLOW_DEBUG) {
+        if (!create.isComplete()) {
             initiateNewUserProfileSetup();
         }
         setContentView(R.layout.activity_home_screen);
@@ -54,23 +54,23 @@ public class HomeScreen extends ActionBarActivity {
                 v.startAnimation(animTranslate);
             }
         });
-//
-//        if (DBContract.ALLOW_DEBUG) {
-//            gymRat.setOnLongClickListener(new View.OnLongClickListener() {
-//
-//                @Override
-//                public boolean onLongClick(View v) {
-//                    debugCheck++;
-//                    if (debugCheck == 3) {
-//                        debugCheck = 0;
-//                        Intent intent = new Intent(HomeScreen.this, DBDebug.class);
-//                        startActivity(intent);
-//                    }
-//                    startTimer();
-//                    return true;
-//                }
-//            });
-//        }
+
+        if (DBContract.ALLOW_DEBUG) {
+            gymRat.setOnLongClickListener(new View.OnLongClickListener() {
+
+                @Override
+                public boolean onLongClick(View v) {
+                    debugCheck++;
+                    if (debugCheck == 3) {
+                        debugCheck = 0;
+                        Intent intent = new Intent(HomeScreen.this, DBDebug.class);
+                        startActivity(intent);
+                    }
+                    startTimer();
+                    return true;
+                }
+            });
+        }
 
         beginWorkoutButton.setOnClickListener(new Button.OnClickListener() {
 
@@ -130,6 +130,7 @@ public class HomeScreen extends ActionBarActivity {
 
     }
 
+    @Deprecated
     private void startTimer() {
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {

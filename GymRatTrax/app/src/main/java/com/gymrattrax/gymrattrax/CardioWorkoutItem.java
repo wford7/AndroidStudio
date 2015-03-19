@@ -1,10 +1,6 @@
 package com.gymrattrax.gymrattrax;
 
 public class CardioWorkoutItem extends WorkoutItem {
-    private int ID;
-    private ExerciseName name;
-    private double time;
-    private double METSVal;
     private double distance;
     private double completedDistance;
 
@@ -19,8 +15,6 @@ public class CardioWorkoutItem extends WorkoutItem {
 
     public void setDistance(double distance) {
         this.distance = distance;
-        if (time > 0)
-            setMETSVal();
     }
 
     public double getCompletedDistance() {
@@ -31,38 +25,12 @@ public class CardioWorkoutItem extends WorkoutItem {
         this.completedDistance += distance;
     }
 
-    public int getID() {
-        return ID;
-    }
-
-    public void setID(int ID) {
-        this.ID = ID;
-    }
-
-    public ExerciseName getName() {
-        return name;
-    }
-
-    public void setName(ExerciseName name) {
-        this.name = name;
-    }
-
-    public double getTimeScheduled() {
-        return time;
-    }
-
-    public void setTimeScheduled(double time) {
-        this.time = time;
-        if (distance > 0)
-            setMETSVal();
-    }
-
-    public double getMETSVal() {
-        return METSVal;
-    }
-
-    private void setMETSVal() {
+    public double calculateMETs() {
         //miles per hour, multiplied by a factor of 1.6529
-        METSVal = 1.6529*distance/(time/60);
+        double METs = -1;
+        if (getTimeSpent() > 0 && completedDistance > 0) {
+            METs = 1.6529 * distance / (getTimeSpent() / 60);
+        }
+        return METs;
     }
 }

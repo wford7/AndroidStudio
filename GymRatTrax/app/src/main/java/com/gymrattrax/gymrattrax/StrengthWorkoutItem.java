@@ -1,41 +1,31 @@
 package com.gymrattrax.gymrattrax;
 
 public class StrengthWorkoutItem extends WorkoutItem {
-    private int ID;
-    private int numberOfSets;
-    private int numberOfReps;
     private double weightUsed;
-    private int completedSets;
-    private int completedReps;
-    private double time;
+    private int repsScheduled;
+    private int repsCompleted;
+    private int setsScheduled;
+    private int setsCompleted;
 
     public StrengthWorkoutItem() {
         super();
         this.setType(ExerciseType.STRENGTH);
     }
 
-    public int getID() {
-        return ID;
+    public int getSetsScheduled() {
+        return setsScheduled;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setSetsScheduled(int setsScheduled) {
+        this.setsScheduled = setsScheduled;
     }
 
-    public int getNumberOfSets() {
-        return numberOfSets;
+    public int getRepsScheduled() {
+        return repsScheduled;
     }
 
-    public void setNumberOfSets(int numberOfSets) {
-        this.numberOfSets = numberOfSets;
-    }
-
-    public int getNumberOfReps() {
-        return numberOfReps;
-    }
-
-    public void setNumberOfReps(int numberOfReps) {
-        this.numberOfReps = numberOfReps;
+    public void setRepsScheduled(int repsScheduled) {
+        this.repsScheduled = repsScheduled;
     }
 
     public double getWeightUsed() {
@@ -46,27 +36,28 @@ public class StrengthWorkoutItem extends WorkoutItem {
         this.weightUsed = weightUsed;
     }
 
-    public int getCompletedSets() {
-        return completedSets;
+    public int getSetsCompleted() {
+        return setsCompleted;
     }
 
-    public void setCompletedSets(int completedSets) {
-        this.completedSets = completedSets;
+    public void setSetsCompleted(int setsCompleted) {
+        this.setsCompleted = setsCompleted;
     }
 
-    public int getCompletedReps() {
-        return completedReps;
+    public int getRepsCompleted() {
+        return repsCompleted;
     }
 
-    public void setCompletedReps(int completedReps) {
-        this.completedReps = completedReps;
+    public void setRepsCompleted(int repsCompleted) {
+        this.repsCompleted = repsCompleted;
     }
 
-    public double getTimeScheduled() {
-        return time;
-    }
-
-    public void setTimeScheduled(double time) {
-        this.time = time;
+    public double calculateMETs() {
+        double METs = -1;
+        double exertionLevel = getExertionLevel();
+        if (exertionLevel > 0 && exertionLevel <= 3) {
+            METs = (exertionLevel * 1.25) + 2.25;
+        }
+        return METs;
     }
 }

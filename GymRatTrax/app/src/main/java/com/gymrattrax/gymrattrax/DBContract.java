@@ -15,6 +15,13 @@ public final class DBContract {
     private static final String L_PAREN = " (";
     private static final String R_PAREN = " )";
 
+    /**
+     * Allows debug functions to occur. Setting this to false should cause running the app to act
+     * as if it is a production build.
+     * @deprecated This variable serves no purpose to the customer, and it, along with all
+     * references, should be removed from the project before a production build.
+     */
+    @Deprecated
     public static final boolean ALLOW_DEBUG = true;
 
     private DBContract() {}
@@ -78,6 +85,7 @@ public final class DBContract {
         public static final String COLUMN_NAME_CALORIES_BURNED           = "calories_burned";
         public static final String COLUMN_NAME_TIME_SCHEDULED            = "time_scheduled";
         public static final String COLUMN_NAME_TIME_SPENT                = "time_spent";
+        public static final String COLUMN_NAME_EXERTION_LEVEL            = "exertion_level";
 
         public static final String CREATE_TABLE =
                 "CREATE TABLE " + TABLE_NAME + L_PAREN +
@@ -94,7 +102,8 @@ public final class DBContract {
                         COLUMN_NAME_STRENGTH_WEIGHT           + TYPE_REAL            + COMMA_SEP +
                         COLUMN_NAME_CALORIES_BURNED           + TYPE_REAL            + COMMA_SEP +
                         COLUMN_NAME_TIME_SCHEDULED            + TYPE_REAL            + COMMA_SEP +
-                        COLUMN_NAME_TIME_SPENT                + TYPE_REAL            + R_PAREN;
+                        COLUMN_NAME_TIME_SPENT                + TYPE_REAL            + COMMA_SEP +
+                        COLUMN_NAME_EXERTION_LEVEL            + TYPE_INTEGER         + R_PAREN;
         public static final String DELETE_TABLE =
                 "DROP TABLE IF EXISTS " + TABLE_NAME;
     }

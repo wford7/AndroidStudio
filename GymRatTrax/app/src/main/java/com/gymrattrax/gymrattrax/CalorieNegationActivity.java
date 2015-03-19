@@ -201,10 +201,10 @@ public class CalorieNegationActivity extends ActionBarActivity {
                 //Create light strength workout item and store it in today's schedule
 
                 StrengthWorkoutItem item = new StrengthWorkoutItem();
-                item.setNumberOfReps(12);
-                item.setNumberOfSets(4);
+                item.setRepsScheduled(12);
+                item.setSetsScheduled(4);
                 item.setWeightUsed(10);
-                item.setMETSVal(3);
+//                item.setMETSVal(3);
                 item.setName(exName[0]);
                 item.setTimeScheduled(times[0]);
                 Calendar cal = Calendar.getInstance();
@@ -224,10 +224,10 @@ public class CalorieNegationActivity extends ActionBarActivity {
             public void onClick(View view) {
                 //Create vigorous strength workout item and store it in today's schedule
                 StrengthWorkoutItem item = new StrengthWorkoutItem();
-                item.setNumberOfReps(20);
-                item.setNumberOfSets(6);
+                item.setRepsScheduled(20);
+                item.setSetsScheduled(6);
                 item.setWeightUsed(20);
-                item.setMETSVal(7);
+//                item.setMETSVal(7);
                 item.setName(exName[1]);
                 item.setTimeScheduled(times[1]);
                 Calendar cal = Calendar.getInstance();
@@ -248,7 +248,7 @@ public class CalorieNegationActivity extends ActionBarActivity {
                 //Create walking workout item and store it in today's schedule
                 CardioWorkoutItem item = new CardioWorkoutItem();
                 item.setDistance(2);
-                item.setMETSVal(11);
+//                item.setMETSVal(11);
                 item.setName(ExerciseName.WALK);
                 item.setTimeScheduled(times[2]);
                 Calendar cal = Calendar.getInstance();
@@ -269,7 +269,7 @@ public class CalorieNegationActivity extends ActionBarActivity {
                 //Create jogging workout item and store it in today's schedule
                 CardioWorkoutItem item = new CardioWorkoutItem();
                 item.setDistance(2);
-                item.setMETSVal(3.5);
+//                item.setMETSVal(3.5);
                 item.setName(ExerciseName.JOG);
                 item.setTimeScheduled(times[3]);
                 Calendar cal = Calendar.getInstance();
@@ -290,7 +290,7 @@ public class CalorieNegationActivity extends ActionBarActivity {
                 //Create running workout item and store it in today's schedule
                 CardioWorkoutItem item = new CardioWorkoutItem();
                 item.setDistance(2);
-                item.setMETSVal(6);
+//                item.setMETSVal(6);
                 item.setName(ExerciseName.RUN);
                 item.setTimeScheduled(times[4]);
                 Calendar cal = Calendar.getInstance();

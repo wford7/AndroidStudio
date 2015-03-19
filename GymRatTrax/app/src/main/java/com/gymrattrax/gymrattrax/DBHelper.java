@@ -206,13 +206,13 @@ public class DBHelper extends SQLiteOpenHelper {
                 break;
             case STRENGTH:
                 values.put(DBContract.WorkoutTable.COLUMN_NAME_STRENGTH_REPS_SCHEDULED,
-                        ((StrengthWorkoutItem)w).getNumberOfReps());
+                        ((StrengthWorkoutItem)w).getRepsScheduled());
                 values.put(DBContract.WorkoutTable.COLUMN_NAME_STRENGTH_SETS_SCHEDULED,
-                        ((StrengthWorkoutItem)w).getNumberOfSets());
+                        ((StrengthWorkoutItem)w).getSetsScheduled());
                 values.put(DBContract.WorkoutTable.COLUMN_NAME_STRENGTH_REPS_COMPLETED,
-                        ((StrengthWorkoutItem)w).getCompletedReps());
+                        ((StrengthWorkoutItem)w).getRepsCompleted());
                 values.put(DBContract.WorkoutTable.COLUMN_NAME_STRENGTH_SETS_COMPLETED,
-                        ((StrengthWorkoutItem)w).getCompletedSets());
+                        ((StrengthWorkoutItem)w).getSetsCompleted());
                 values.put(DBContract.WorkoutTable.COLUMN_NAME_STRENGTH_WEIGHT,
                         ((StrengthWorkoutItem)w).getWeightUsed());
                 break;
@@ -275,6 +275,24 @@ public class DBHelper extends SQLiteOpenHelper {
         return storeWorkouts(query);
     }
 
+    public WorkoutItem getWorkoutById(long id) {
+        /*
+        Convert the Date values into string matching the format, “yyyy-MM-dd HH:mm:ss.SSS,” but set
+        “HH:mm:ss.SSS” to “00:00:00.000” for variable fromStr and “11:59:59.999” for variable
+        endStr. Perform a database query operation, “select * from WORKOUT where DATE >= fromStr
+        and DATE <= endStr.” Take the output values and assign them to WorkoutItem values.
+         */
+        String query = "SELECT * FROM " + DBContract.WorkoutTable.TABLE_NAME + " WHERE " +
+                DBContract.WorkoutTable._ID + " >=  \"" + id + "\"";
+
+        WorkoutItem[] workouts = storeWorkouts(query);
+
+        if (workouts.length == 1)
+            return workouts[0];
+        else
+            return null;
+    }
+
     public int completeWorkout(WorkoutItem w) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -295,15 +313,17 @@ public class DBHelper extends SQLiteOpenHelper {
                 break;
             case STRENGTH:
                 values.put(DBContract.WorkoutTable.COLUMN_NAME_STRENGTH_REPS_COMPLETED,
-                        ((StrengthWorkoutItem)w).getCompletedReps());
+                        ((StrengthWorkoutItem)w).getRepsCompleted());
                 values.put(DBContract.WorkoutTable.COLUMN_NAME_STRENGTH_SETS_COMPLETED,
-                        ((StrengthWorkoutItem)w).getCompletedSets());
+                        ((StrengthWorkoutItem)w).getSetsCompleted());
                 break;
         }
         values.put(DBContract.WorkoutTable.COLUMN_NAME_TIME_SCHEDULED,
                 String.valueOf(w.getTimeScheduled()));
         values.put(DBContract.WorkoutTable.COLUMN_NAME_TIME_SPENT,
                 String.valueOf(w.getTimeSpent()));
+        values.put(DBContract.WorkoutTable.COLUMN_NAME_EXERTION_LEVEL,
+                String.valueOf(w.getExertionLevel()));
 
         String[] args = new String[1];
         args[0] = String.valueOf(w.getID());
@@ -345,6 +365,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return convertDate(dat);
     }
 
+    @Deprecated
     String[][] secretDebugDeleteFromFinalReleaseRawQuery(String table) {
         switch (table) {
             case "Profile":
@@ -389,16 +410,16 @@ public class DBHelper extends SQLiteOpenHelper {
                     DBContract.WorkoutTable.COLUMN_NAME_CARDIO_DISTANCE_SCHEDULED))) { //strength
                 workouts[i] = new StrengthWorkoutItem();
                 workouts[i].setType(ExerciseType.STRENGTH);
-                ((StrengthWorkoutItem) workouts[i]).setNumberOfReps(
+                ((StrengthWorkoutItem) workouts[i]).setRepsScheduled(
                         cursor.getInt(cursor.getColumnIndex(
                                 DBContract.WorkoutTable.COLUMN_NAME_STRENGTH_REPS_SCHEDULED)));
-                ((StrengthWorkoutItem) workouts[i]).setCompletedReps(
+                ((StrengthWorkoutItem) workouts[i]).setRepsCompleted(
                         cursor.getInt(cursor.getColumnIndex(
                                 DBContract.WorkoutTable.COLUMN_NAME_STRENGTH_REPS_COMPLETED)));
-                ((StrengthWorkoutItem) workouts[i]).setNumberOfSets(
+                ((StrengthWorkoutItem) workouts[i]).setSetsScheduled(
                         cursor.getInt(cursor.getColumnIndex(
                                 DBContract.WorkoutTable.COLUMN_NAME_STRENGTH_SETS_SCHEDULED)));
-                ((StrengthWorkoutItem) workouts[i]).setCompletedSets(
+                ((StrengthWorkoutItem) workouts[i]).setSetsCompleted(
                         cursor.getInt(cursor.getColumnIndex(
                                 DBContract.WorkoutTable.COLUMN_NAME_STRENGTH_SETS_COMPLETED)));
                 ((StrengthWorkoutItem) workouts[i]).setWeightUsed(
@@ -448,6 +469,8 @@ public class DBHelper extends SQLiteOpenHelper {
                     DBContract.WorkoutTable.COLUMN_NAME_TIME_SCHEDULED)));
             workouts[i].setTimeSpent(cursor.getDouble(cursor.getColumnIndex(
                     DBContract.WorkoutTable.COLUMN_NAME_TIME_SPENT)));
+            workouts[i].setExertionLevel(cursor.getInt(cursor.getColumnIndex(
+                    DBContract.WorkoutTable.COLUMN_NAME_EXERTION_LEVEL)));
 
             i++;
         }

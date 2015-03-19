@@ -2,16 +2,16 @@ package com.gymrattrax.gymrattrax;
 
 import java.util.Date;
 
-public class WorkoutItem {
-    private ExerciseType type;
+public abstract class WorkoutItem {
     private int ID;
+    private ExerciseName name;
+    private ExerciseType type;
     private Date dateScheduled;
     private Date dateCompleted;
     private double caloriesBurned;
-    private double METSVal;
     private double timeScheduled;
     private double timeSpent;
-    private ExerciseName name;
+    private int exertionLevel;
 
     public ExerciseName getName() {
         return name;
@@ -61,14 +61,6 @@ public class WorkoutItem {
         this.caloriesBurned = caloriesBurned;
     }
 
-    public double getMETSVal() {
-        return METSVal;
-    }
-
-    public void setMETSVal(double METSVal) {
-        this.METSVal = METSVal;
-    }
-
     public double getTimeScheduled() {
         return timeScheduled;
     }
@@ -85,4 +77,13 @@ public class WorkoutItem {
         this.timeSpent = timeSpent;
     }
 
+    public int getExertionLevel() {
+        return exertionLevel;
+    }
+
+    public void setExertionLevel(int exertionLevel) {
+        this.exertionLevel = exertionLevel;
+    }
+
+    abstract public double calculateMETs();
 }
