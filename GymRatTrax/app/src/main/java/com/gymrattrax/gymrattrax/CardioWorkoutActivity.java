@@ -4,6 +4,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.content.Intent;
+import android.widget.TextView;
 
 
 public class CardioWorkoutActivity extends ActionBarActivity {
@@ -12,6 +14,32 @@ public class CardioWorkoutActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cardio_workout);
+
+        TextView title = (TextView) findViewById(R.id.cardio_title);
+        TextView goalTime = (TextView) findViewById(R.id.scheduled_time);
+
+        Bundle b = getIntent().getExtras();
+        String name = b.getString("name");
+        double distance = b.getDouble("distance");
+        double time = b.getDouble("time");
+
+        title.setText(name);
+
+        double minutesDbl = time;
+        int secondsTotal = (int) (minutesDbl * 60);
+        int seconds = secondsTotal % 60;
+        int minutes = (secondsTotal - seconds) / 60;
+        String fmtTime = minutes + ":" + seconds;
+        goalTime.setText("Target Time: " + fmtTime);
+
+
+        //implement chronometer and click listener
+
+
+        //display scheduled/goal time
+
+        //display radio buttons for "How You felt" after completing workout activity.  These radio buttons
+        //will only be active after user clicks on COMPLETE
     }
 
 

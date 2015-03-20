@@ -3,6 +3,7 @@ package com.gymrattrax.gymrattrax;
 import java.util.Date;
 
 public abstract class WorkoutItem {
+
     private int ID;
     private ExerciseName name;
     private ExerciseType type;

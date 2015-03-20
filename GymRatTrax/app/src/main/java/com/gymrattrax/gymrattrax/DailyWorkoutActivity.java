@@ -8,12 +8,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 public class DailyWorkoutActivity extends ActionBarActivity {
@@ -49,6 +47,8 @@ public class DailyWorkoutActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //look into implementing this as a ListView
+
     private void displayCurrentWorkouts() {
         LinearLayout linearContainer = (LinearLayout) findViewById(R.id.populate_scroll);
         TextView title = (TextView) findViewById(R.id.title_main);
@@ -57,7 +57,7 @@ public class DailyWorkoutActivity extends ActionBarActivity {
         TableLayout a = new TableLayout(DailyWorkoutActivity.this);
         a.removeAllViews();
 
-        DBHelper dbh = new DBHelper(this);
+        final DBHelper dbh = new DBHelper(this);
         WorkoutItem[] workouts = dbh.getWorkoutsForToday();
         //Linear
         linearContainer.addView(a);
@@ -116,10 +116,14 @@ public class DailyWorkoutActivity extends ActionBarActivity {
 
                     if (w.getType().toString() == "STRENGTH"){
                         //get parameters for strength workout
-                        startStrengthWorkoutActivity();
+                        int ID = w.getID();
+                        int sets = ((StrengthWorkoutItem)w).getSetsScheduled();
+                        startStrengthWorkoutActivity(ID);
+
                     }
                     else if (w.getType().toString() == "CARDIO"){
-                        startCardioWorkoutActivity();
+                        int ID = w.getID();
+                        startCardioWorkoutActivity(ID);
                     }
                 }
             });
@@ -130,15 +134,21 @@ public class DailyWorkoutActivity extends ActionBarActivity {
         dbh.close();
     }
 
-    private void startCardioWorkoutActivity() {
+    private void startCardioWorkoutActivity(int ID) {
         Intent intent = new Intent(DailyWorkoutActivity.this, CardioWorkoutActivity.class);
-        // create bundle from parameters
+        // create bundle from parameters of a "broken down CardioWorkout object
+        Bundle b = new Bundle();
+        b.putInt("ID", ID);
+        intent.putExtras(b);
         startActivity(intent);
     }
 
-    private void startStrengthWorkoutActivity(){
+    private void startStrengthWorkoutActivity(int ID){
         Intent intent = new Intent(DailyWorkoutActivity.this, StrengthWorkoutActivity.class);
-        // create bundle from parameters
+        // create bundle from parameters of a "broken down" StrengthWorkout object
+        Bundle b = new Bundle();
+        b.putInt("ID", ID);
+        intent.putExtras(b);
         startActivity(intent);
     }
 }

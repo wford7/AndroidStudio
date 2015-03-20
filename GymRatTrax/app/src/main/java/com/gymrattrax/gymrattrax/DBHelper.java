@@ -47,6 +47,8 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
+
+
     public String getProfileInfo(String key) {
         String query = "SELECT * FROM " + DBContract.ProfileTable.TABLE_NAME + " WHERE " +
                 DBContract.ProfileTable.COLUMN_NAME_KEY + " =  \"" + key + "\"";
@@ -62,6 +64,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
         return value;
     }
+
 
     public void setProfileInfo(String key, String value) {
         /*

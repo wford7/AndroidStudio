@@ -9,11 +9,12 @@
     android:orientation="vertical"
     android:id="@+id/daily">
 
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Workouts For Today"
+        android:text="No Workouts Scheduled For Today"
         android:id="@+id/title_main"
         android:layout_gravity="center_horizontal" />
 

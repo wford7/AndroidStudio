@@ -7,7 +7,48 @@
     android:background="@color/primary"
     tools:context="com.gymrattrax.gymrattrax.CardioWorkoutActivity"
     android:clickable="false"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:orientation="vertical"
+    android:id="@+id/cardio_main_layout">
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="cardio_title"
+        android:id="@+id/cardio_title"
+        android:layout_gravity="center_horizontal" />
+
+    <Chronometer
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chronometer"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="scheduled_time"
+        android:id="@+id/scheduled_time"
+        android:layout_gravity="center_horizontal"
+        android:textAlignment="center" />
+
+    <Button
+        android:layout_width="128dp"
+        android:layout_height="43dp"
+        android:text="START TIMER"
+        android:id="@+id/button"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/button_shp_rvrs_press" />
+
+    <Button
+        android:layout_width="128dp"
+        android:layout_height="45dp"
+        android:text="COMPLETE"
+        android:id="@+id/complete_bttn"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/button_shape_press" />
 
 </LinearLayout>

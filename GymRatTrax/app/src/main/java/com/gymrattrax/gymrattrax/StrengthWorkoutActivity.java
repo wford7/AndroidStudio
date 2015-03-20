@@ -4,22 +4,41 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
+import android.widget.TextView;
 
 
 public class StrengthWorkoutActivity extends ActionBarActivity {
-
-    private Button addExerciseButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_strength_workout);
 
-        addExerciseButton = (Button) findViewById(R.id.addExerciseButton);
+        TextView title = (TextView)findViewById(R.id.strength_title);
+        TextView strengthSets = (TextView)findViewById(R.id.strength_sets);
+        TextView strengthReps = (TextView)findViewById(R.id.strength_reps);
 
+        Bundle b = getIntent().getExtras();
+        int ID = b.getInt("ID");
+
+        DBHelper dbh = new DBHelper(this);
+        WorkoutItem currentWorkout = dbh.getWorkoutById(ID);
+        int sets = ((StrengthWorkoutItem)currentWorkout).getSetsScheduled();
+        int reps = ((StrengthWorkoutItem)currentWorkout).getRepsScheduled();
+        String name = currentWorkout.getName().toString();
+        title.setText(name);
+
+        //populate screen with
+        for (int i = 0; i < sets; i++){
+
+        }
+
+//        strengthSets.setText("Reps: "+ Integer.toString(reps));
+        strengthReps.setText("Sets: " + Integer.toString(sets));
+
+        //radio buttons that user can select that describes difficulty of exercise.  this will be "easy" "moderate" "hard"
+        //EditText that user may input amount of time taken to complete workout
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
