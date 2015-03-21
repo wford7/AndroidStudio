@@ -44,21 +44,6 @@ public class DBHelperTest extends AndroidTestCase {
 
         long id = dbh.addWorkout(workout);
 
-//        Date date = null;
-//        try {
-//            date = dbHelper.convertDate("2015-03-20 00:00:00.000");
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        WorkoutItem[] returnedWorkouts = dbHelper.getWorkoutsInRange(date, date);
-//        WorkoutItem returnWorkout = null;
-//        for (WorkoutItem w : returnedWorkouts) {
-//            if (w.getID() == id) {
-//                returnWorkout = w;
-//                break;
-//            }
-//        }
-
         WorkoutItem returnWorkout = dbh.getWorkoutById(id);
 
         assert returnWorkout != null;
@@ -90,20 +75,6 @@ public class DBHelperTest extends AndroidTestCase {
         int result = dbh.completeWorkout(workout);
         assertTrue(result > 0);
 
-//        Date date = null;
-//        try {
-//            date = dbh.convertDate("2015-03-20 00:00:00.000");
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        WorkoutItem[] returnedWorkouts = dbh.getWorkoutsInRange(date, date);
-//        WorkoutItem returnWorkout = null;
-//        for (WorkoutItem w : returnedWorkouts) {
-//            if (w.getID() == workout.getID()) {
-//                returnWorkout = w;
-//                break;
-//            }
-//        }
         WorkoutItem returnWorkout = dbh.getWorkoutById(id);
 
         assertNotNull(returnWorkout);

@@ -20,6 +20,10 @@ public class DBHelper extends SQLiteOpenHelper {
         super(context, DBContract.DATABASE_NAME, null, DBContract.DATABASE_VERSION);
     }
 
+    /**
+     * Creates the database file if it does not currently exist.
+     * @param db The database file to create.
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(DBContract.ProfileTable.CREATE_TABLE);
@@ -33,6 +37,13 @@ public class DBHelper extends SQLiteOpenHelper {
         db.insert(DBContract.ProfileTable.TABLE_NAME, null, values);
     }
 
+    /**
+     * Upgrades the database file when the reported version is higher than the stored version.
+     * @param db The database file to update.
+     * @param oldVersion The database version currently stored on the device.
+     * @param newVersion The latest database version to which the device's database file will
+     *                   upgrade.
+     */
     @Override
     public void onUpgrade(final SQLiteDatabase db, final int oldVersion, final int newVersion) {
         int upgradeTo = oldVersion + 1;
@@ -47,8 +58,13 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-
-
+    /**
+     * Returns the stored value associated with a given key in the Profile table.
+     * @param key A String variable of a key in the Profile table. Use
+     *            DBContract.ProfileTable.KEY_<...>.
+     * @return The value in the database that corresponds to the provided key String. If the
+     * provided key is not available in the Profile table, an empty String is returned.
+     */
     public String getProfileInfo(String key) {
         String query = "SELECT * FROM " + DBContract.ProfileTable.TABLE_NAME + " WHERE " +
                 DBContract.ProfileTable.COLUMN_NAME_KEY + " =  \"" + key + "\"";
@@ -65,11 +81,17 @@ public class DBHelper extends SQLiteOpenHelper {
         return value;
     }
 
-
+    /**
+     * Sets the value associated with a given key in the Profile table.
+     * @param key A String variable of a key in the Profile table. Use
+     *            DBContract.ProfileTable.KEY_<...>.
+     * @param value The String value to replace the current value for the provided key. If the key
+     *              is not currently in the table, the record will be inserted. If the key does
+     *              exist but contains different data, the record will be updated. If the key does
+     *              exist and contains the same data, no action will be taken. If the key does exist
+     *              and the value is an empty String, the record will be deleted.
+     */
     public void setProfileInfo(String key, String value) {
-        /*
-        To delete profile info, insert a blank string for the value.
-         */
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT * FROM " + DBContract.ProfileTable.TABLE_NAME + " WHERE " +
                 DBContract.ProfileTable.COLUMN_NAME_KEY + " =  \"" + key + "\"";
@@ -112,6 +134,11 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    /**
+     * Returns the latest weight-related values from the Weight table.
+     * @return A double array containing {weight (in pounds), body fat percentage (where 100 =
+     * 100%), activity level}.
+     */
     public double[] getLatestWeight() {
         String query = "SELECT * FROM " + DBContract.WeightTable.TABLE_NAME + " ORDER BY " +
                 DBContract.WeightTable.COLUMN_NAME_DATE + " DESC";
@@ -134,6 +161,16 @@ public class DBHelper extends SQLiteOpenHelper {
         return values;
     }
 
+    /**
+     * Returns all weight measurements (in pounds) that fall within a provided Date range.
+     * @param from The beginning of the date range. Note: If a specific time is associated with the
+     *             Date, it will be disregarded and replaced with 00:00:00.000 (the very start of
+     *             the day).
+     * @param to The end of the date range. Note: If a specific time is associated with the Date, it
+     *           will be disregarded and replaced with 23:59:59.999 (the very end of the day).
+     * @return A Map structure with Date keys and weight double values for all weight records within
+     * the provided Date range.
+     */
     public Map<Date,Double> getWeights(Date from,Date to) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         String fromStr = dateFormat.format(from) + " 00:00:00.000";
@@ -286,7 +323,7 @@ public class DBHelper extends SQLiteOpenHelper {
         and DATE <= endStr.” Take the output values and assign them to WorkoutItem values.
          */
         String query = "SELECT * FROM " + DBContract.WorkoutTable.TABLE_NAME + " WHERE " +
-                DBContract.WorkoutTable._ID + " >=  \"" + id + "\"";
+                DBContract.WorkoutTable._ID + " =  \"" + id + "\"";
 
         WorkoutItem[] workouts = storeWorkouts(query);
 
