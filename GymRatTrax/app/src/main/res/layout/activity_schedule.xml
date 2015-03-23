@@ -20,7 +20,7 @@
         android:layout_gravity="center_horizontal" />
 
     <GridView
-        android:numColumns="3"
+        android:numColumns="1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:id="@+id/gridView"
@@ -69,7 +69,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/schedule_activity_view_google_calendar"
-        android:id="@id/openGoogleCalendarButton"
+        android:id="@+id/openGoogleCalendarButton"
         android:clickable="true"
         android:textStyle="bold"
         android:textSize="25sp"
