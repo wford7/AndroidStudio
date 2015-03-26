@@ -1,5 +1,7 @@
 package com.gymrattrax.gymrattrax;
 
+import android.net.Uri;
+
 import java.util.Date;
 
 public abstract class WorkoutItem {
@@ -13,6 +15,11 @@ public abstract class WorkoutItem {
     private double timeScheduled;
     private double timeSpent;
     private int exertionLevel;
+
+    private boolean notificationEnabled;
+    private boolean notificationVibrate;
+    private int notificationMinutesInAdvance;
+    private Uri notificationTone;
 
     public ExerciseName getName() {
         return name;
@@ -87,4 +94,36 @@ public abstract class WorkoutItem {
     }
 
     abstract public double calculateMETs();
+
+    public boolean isNotificationEnabled() {
+        return notificationEnabled;
+    }
+
+    public void setNotificationEnabled(boolean notificationEnabled) {
+        this.notificationEnabled = notificationEnabled;
+    }
+
+    public boolean isNotificationVibrate() {
+        return notificationVibrate;
+    }
+
+    public void setNotificationVibrate(boolean notificationVibrate) {
+        this.notificationVibrate = notificationVibrate;
+    }
+
+    public int getNotificationMinutesInAdvance() {
+        return notificationMinutesInAdvance;
+    }
+
+    public void setNotificationMinutesInAdvance(int notificationMinutesInAdvance) {
+        this.notificationMinutesInAdvance = notificationMinutesInAdvance;
+    }
+
+    public Uri getNotificationTone() {
+        return notificationTone;
+    }
+
+    public void setNotificationTone(Uri notificationTone) {
+        this.notificationTone = notificationTone;
+    }
 }

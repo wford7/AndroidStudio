@@ -65,4 +65,20 @@ public enum ExerciseName {
         }
         return null;
     }
+
+    /**
+     * If you want to return all ExerciseName enum values, use
+     * ExerciseName.getDeclaringClass().getEnumConstants(). If you want just the String values that
+     * represent these exercises, use this method. To use one of these values to go back to its
+     * ExerciseName value, use ExerciseName.fromString(String text).
+     *
+     * @return A String array with all values corresponding to ExerciseName enum values.
+     */
+    public String[] getAllExerciseNames(){
+        ExerciseName[] exerciseNames = getDeclaringClass().getEnumConstants();
+        String[] returnArr = new String[exerciseNames.length];
+        for (int i = 0; i < exerciseNames.length; i++)
+            returnArr[i] = exerciseNames[i].toString();
+        return returnArr;
+    }
 }
