@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.gymrattrax.gymrattrax" >
 
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -79,6 +82,16 @@
             android:label="@string/title_activity_add_workout"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name=".NotificationDebug"
+            android:label="NotificationDebug"
+            android:screenOrientation="portrait" >
+        </activity>
+        <!--<service android:name=".NotificationReceiver" android:enabled="true">-->
+            <!--<intent-filter> <action android:name="NOTIFICATION_SERVICE" /></intent-filter>-->
+        <!--</service>-->
+        <service android:name=".NotificationService" />
+        <service android:name=".NotificationNotifier" />
     </application>
 
 </manifest>

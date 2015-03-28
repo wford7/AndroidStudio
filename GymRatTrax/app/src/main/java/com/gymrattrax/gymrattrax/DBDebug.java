@@ -10,10 +10,13 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import java.util.Calendar;
+
 @Deprecated
 public class DBDebug extends ActionBarActivity {
     private Spinner tableSpinner;
     private TableLayout tableItself;
+    private NotificationScheduler notificationScheduler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +25,8 @@ public class DBDebug extends ActionBarActivity {
 
         tableSpinner = (Spinner)findViewById(R.id.debug_spinner);
         tableItself = (TableLayout)findViewById(R.id.table_scroll);
+        notificationScheduler = new NotificationScheduler(this);
+        notificationScheduler.doBindService();
 
         tableSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
@@ -62,5 +67,22 @@ public class DBDebug extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_home_screen, menu);
         return true;
+    }
+
+    public void onNotificationButtonClick(View v){
+        DBHelper dbh = new DBHelper(this);
+        WorkoutItem w = dbh.getWorkoutById(1);
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.SECOND, 2);
+        notificationScheduler.setAlarmForNotification(c, w);
+    }
+
+    @Override
+    protected void onStop() {
+        // When our activity is stopped ensure we also stop the connection to the service
+        // this stops us leaking our activity into the system *bad*
+        if(notificationScheduler != null)
+            notificationScheduler.doUnbindService();
+        super.onStop();
     }
 }

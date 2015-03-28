@@ -10,6 +10,12 @@
 
     android:weightSum="1">
 
+    <Button
+        android:id="@+id/notification_debug"
+        android:text="Test Notification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onNotificationButtonClick" />
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -41,19 +47,12 @@
 
     </LinearLayout>
 
-    <!--<ScrollView-->
-        <!--android:layout_width="1000dp"-->
-        <!--android:layout_height="200dp"-->
-        <!--android:id="@+id/scrollview_table"-->
-        <!--android:fillViewport="false"-->
-        <!--android:layout_weight="2.91">-->
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="544dp"
         android:scrollbars="none"
         android:id="@+id/scrollview_table">
 
-        <!--</LinearLayout>-->
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -66,10 +65,8 @@
                 android:layout_height="fill_parent"
                 android:id="@+id/table_scroll">
 
-
             </TableLayout>
         </HorizontalScrollView>
     </ScrollView>
-
 
 </LinearLayout>

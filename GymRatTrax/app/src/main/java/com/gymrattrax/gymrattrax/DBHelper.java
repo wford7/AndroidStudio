@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.Context;
+import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,6 +17,7 @@ import java.util.Locale;
 import java.util.Map;
 
 public class DBHelper extends SQLiteOpenHelper {
+    private static final String TAG = "DBHelper";
     public DBHelper(Context context) {
         super(context, DBContract.DATABASE_NAME, null, DBContract.DATABASE_VERSION);
     }
@@ -264,6 +266,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.close();
         w.setID((int)id);
+
         return id;
     }
 

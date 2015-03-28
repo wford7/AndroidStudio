@@ -1,5 +1,7 @@
 package com.gymrattrax.gymrattrax;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public enum ExerciseName {
@@ -74,11 +76,11 @@ public enum ExerciseName {
      *
      * @return A String array with all values corresponding to ExerciseName enum values.
      */
-    public String[] getAllExerciseNames(){
-        ExerciseName[] exerciseNames = getDeclaringClass().getEnumConstants();
-        String[] returnArr = new String[exerciseNames.length];
-        for (int i = 0; i < exerciseNames.length; i++)
-            returnArr[i] = exerciseNames[i].toString();
+    public static String[] getAllExerciseNames(){
+        List<ExerciseName> exerciseNames = Arrays.asList(ExerciseName.values());
+        String[] returnArr = new String[exerciseNames.size()];
+        for (int i = 0; i < exerciseNames.size(); i++)
+            returnArr[i] = exerciseNames.get(i).toString();
         return returnArr;
     }
 }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,12 +24,14 @@ import java.util.Date;
 
 public class CalorieNegationActivity extends ActionBarActivity {
 
+    private static final String TAG = "CalorieNegationActivity";
     Button SuggestWorkoutButton;
     EditText NegateEditText;
     LinearLayout linearContainer;
     Button[] buttons;
     double[] times;
     ExerciseName[] exName;
+    private NotificationScheduler notificationScheduler;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,9 @@ public class CalorieNegationActivity extends ActionBarActivity {
         }
         times = new double[5];
         exName = new ExerciseName[5];
+
+        notificationScheduler = new NotificationScheduler(this);
+        notificationScheduler.doBindService();
 
         SuggestWorkoutButton.setOnClickListener(new Button.OnClickListener() {
 
@@ -208,12 +214,12 @@ public class CalorieNegationActivity extends ActionBarActivity {
                 item.setName(exName[0]);
                 item.setTimeScheduled(times[0]);
                 Calendar cal = Calendar.getInstance();
+                cal.add(Calendar.SECOND,10);
+                Log.d(TAG,"Offset by 20 seconds for notification testing purposes.");
                 Date dat = cal.getTime();
                 item.setDateScheduled(dat);
 
-                DBHelper dbh = new DBHelper(CalorieNegationActivity.this);
-                dbh.addWorkout(item);
-                dbh.close();
+                addThisWorkout(item);
                 BackToHomeScreen(view);
             }
         });
@@ -234,9 +240,7 @@ public class CalorieNegationActivity extends ActionBarActivity {
                 Date dat = cal.getTime();
                 item.setDateScheduled(dat);
 
-                DBHelper dbh = new DBHelper(CalorieNegationActivity.this);
-                dbh.addWorkout(item);
-                dbh.close();
+                addThisWorkout(item);
                 BackToHomeScreen(view);
             }
         });
@@ -255,9 +259,7 @@ public class CalorieNegationActivity extends ActionBarActivity {
                 Date dat = cal.getTime();
                 item.setDateScheduled(dat);
 
-                DBHelper dbh = new DBHelper(CalorieNegationActivity.this);
-                dbh.addWorkout(item);
-                dbh.close();
+                addThisWorkout(item);
                 BackToHomeScreen(view);
             }
         });
@@ -276,9 +278,7 @@ public class CalorieNegationActivity extends ActionBarActivity {
                 Date dat = cal.getTime();
                 item.setDateScheduled(dat);
 
-                DBHelper dbh = new DBHelper(CalorieNegationActivity.this);
-                dbh.addWorkout(item);
-                dbh.close();
+                addThisWorkout(item);
                 BackToHomeScreen(view);
             }
         });
@@ -297,9 +297,7 @@ public class CalorieNegationActivity extends ActionBarActivity {
                 Date dat = cal.getTime();
                 item.setDateScheduled(dat);
 
-                DBHelper dbh = new DBHelper(CalorieNegationActivity.this);
-                dbh.addWorkout(item);
-                dbh.close();
+                addThisWorkout(item);
                 BackToHomeScreen(view);
             }
         });
@@ -335,4 +333,22 @@ public class CalorieNegationActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
+    public void addThisWorkout(WorkoutItem w) {
+        DBHelper dbh = new DBHelper(CalorieNegationActivity.this);
+        dbh.addWorkout(w);
+        dbh.close();
+        Calendar time = Calendar.getInstance();
+        time.setTime(w.getDateScheduled());
+        time.add(Calendar.SECOND,10);
+        notificationScheduler.setAlarmForNotification(time, w);
+    }
+
+    @Override
+    protected void onStop() {
+        // When our activity is stopped ensure we also stop the connection to the service
+        // this stops us leaking our activity into the system *bad*
+        if(notificationScheduler != null)
+            notificationScheduler.doUnbindService();
+        super.onStop();
+    }
 }
