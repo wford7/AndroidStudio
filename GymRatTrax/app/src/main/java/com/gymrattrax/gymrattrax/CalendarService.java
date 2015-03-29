@@ -192,7 +192,7 @@ public class CalendarService extends ScheduleActivity {
         return null;
     }
 
-    private Intent viewEvent() {
+    public Intent viewEvent() {
         long eventID = 208;
         Uri uri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, eventID);
         Intent intent = new Intent(Intent.ACTION_VIEW)

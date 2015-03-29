@@ -1,5 +1,8 @@
 package com.gymrattrax.gymrattrax;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -65,6 +68,20 @@ public class ProfileSetupActivity extends ActionBarActivity {
                 String errors = validateInput();
                 if (errors.isEmpty()) {
                     saveChanges(view);
+                    final AlertDialog.Builder finish = new AlertDialog.Builder(ProfileSetupActivity.this);
+                    finish.setTitle("GymRatTrax");
+                    finish.setMessage("Your Fitness Profile has been created.");
+
+                    finish.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                            Intent intent = new Intent(ProfileSetupActivity.this, HomeScreen.class);
+                            startActivity(intent);
+                        }
+
+                    });
+                    finish.show();
                     //after profile is set up, return to HomeScreen or start tutorial
                 }
                 else {
