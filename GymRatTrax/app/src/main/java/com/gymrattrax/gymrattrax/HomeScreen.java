@@ -192,8 +192,8 @@ public class HomeScreen extends ActionBarActivity {
     }
 
     public void loadSchedules(View view){
-//        Intent intent = new Intent (HomeScreen.this, ScheduleActivity.class);
-//        startActivity(intent);
+        Intent intent = new Intent (HomeScreen.this, ScheduleActivity.class);
+        startActivity(intent);
     }
 
     /**

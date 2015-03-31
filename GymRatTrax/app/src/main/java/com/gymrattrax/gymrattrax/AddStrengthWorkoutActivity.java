@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package com.gymrattrax.gymrattrax;
 
 import android.content.Intent;
@@ -61,8 +60,6 @@ public class AddStrengthWorkoutActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 }
-=======
->>>>>>> origin/master
 //package com.gymrattrax.gymrattrax;
 //
 //import android.content.Intent;
@@ -93,8 +90,4 @@ public class AddStrengthWorkoutActivity extends ActionBarActivity {
 //
 //
 //    }
-<<<<<<< HEAD
 //}
-=======
-//}
->>>>>>> origin/master
