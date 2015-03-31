@@ -26,8 +26,8 @@ public class AddStrengthWorkoutActivity extends ActionBarActivity {
         setContentView(R.layout.add_strength_details);
 
         TextView title = (TextView) findViewById(R.id.strength_title);
-        TextView strengthSets = (TextView) findViewById(R.id.strength_sets);
-        TextView strengthReps = (TextView) findViewById(R.id.strength_reps);
+//        TextView strengthSets = (TextView) findViewById(R.id.strength_sets);
+//        TextView strengthReps = (TextView) findViewById(R.id.strength_reps);
         final Button nextButton = (Button) findViewById(R.id.next);
 
         nextButton.setOnClickListener(new Button.OnClickListener() {

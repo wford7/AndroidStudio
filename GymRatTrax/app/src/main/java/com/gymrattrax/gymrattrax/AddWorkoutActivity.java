@@ -28,8 +28,7 @@ public class AddWorkoutActivity extends ActionBarActivity {
         displayAllWorkouts(workout_names);
 
         TextView title = (TextView) findViewById(R.id.strength_title);
-        TextView strengthSets = (TextView) findViewById(R.id.strength_sets);
-        TextView strengthReps = (TextView) findViewById(R.id.strength_reps);
+;
     }
 
     private void displayAllWorkouts(String[] s) {
