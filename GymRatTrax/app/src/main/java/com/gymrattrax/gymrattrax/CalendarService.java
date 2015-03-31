@@ -186,8 +186,17 @@ public class CalendarService extends ScheduleActivity {
 //    }
 
 
+<<<<<<< HEAD
     public long getID() {
         return ID;
+=======
+    public Intent viewEvent() {
+        long eventID = 208;
+        Uri uri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, eventID);
+        Intent intent = new Intent(Intent.ACTION_VIEW)
+                .setData(uri);
+        return intent;
+>>>>>>> origin/master
     }
     //    private void addWorkout(String exercise1, Calendar begin, Calendar end) {
 //        Calendar dateToShow = Calendar.getInstance();
