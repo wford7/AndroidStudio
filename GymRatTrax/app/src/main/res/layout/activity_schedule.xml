@@ -27,11 +27,13 @@
         android:columnWidth="50dp"
         android:stretchMode="columnWidth"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="0.96" />
+        android:layout_weight="0.96"
+        android:background="@color/primary100" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="@string/schedule_activity_add_workout"
         android:id="@+id/addWorkoutButton"
         android:clickable="true"
@@ -44,6 +46,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="@string/schedule_add_workout_button"
         android:id="@+id/schedule_activity_edit_workout"
         android:clickable="true"
@@ -53,27 +56,4 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="5dp" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/schedule_back_button"
-        android:id="@+id/schedule_back_button"
-        android:clickable="true"
-        android:textStyle="bold"
-        android:textSize="25sp"
-        android:background="@drawable/button_shp_rvrs_press"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="5dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/schedule_activity_view_google_calendar"
-        android:id="@+id/openGoogleCalendarButton"
-        android:clickable="true"
-        android:textStyle="bold"
-        android:textSize="25sp"
-        android:background="@drawable/button_shp_rvrs_press"
-        android:layout_marginBottom="5dp"
-        android:layout_gravity="center_horizontal" />
 </LinearLayout>

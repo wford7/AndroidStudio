@@ -21,7 +21,6 @@ public class DailyWorkoutActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily_workout);
 
-
         displayCurrentWorkouts();
     }
 
@@ -88,14 +87,20 @@ public class DailyWorkoutActivity extends ActionBarActivity {
 
             viewTitle.setText(w.getName().toString());
             viewTitle.setTextSize(20);
-
-            double minutesDbl = w.getTimeScheduled();
-            int secondsTotal = (int) (minutesDbl * 60);
-            int seconds = secondsTotal % 60;
-            int minutes = (secondsTotal - seconds) / 60;
-            String time = minutes + " minutes, " + seconds + " seconds";
-            time = dbh.displayDateTime(w.getDateScheduled()) + ": " + time;
-            viewTime.setText(time);
+            if (w.getType().toString() == "CARDIO") {
+                double minutesDbl = w.getTimeScheduled();
+                int secondsTotal = (int) (minutesDbl * 60);
+                int seconds = secondsTotal % 60;
+                int minutes = (secondsTotal - seconds) / 60;
+                String time = minutes + " minutes, " + seconds + " seconds";
+                time = dbh.displayDateTime(w.getDateScheduled()) + ": " + time;
+                viewTime.setText(time);
+            } else {
+                int sets = ((StrengthWorkoutItem)w).getSetsScheduled();
+                int reps = ((StrengthWorkoutItem)w).getRepsScheduled();
+                String info = sets + " Sets " + reps + " Reps";
+                viewTime.setText(info);
+            }
 
             ViewGroup.LayoutParams stackParams = new LinearLayout.LayoutParams(600,
                     ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -117,7 +122,6 @@ public class DailyWorkoutActivity extends ActionBarActivity {
                     if (w.getType().toString() == "STRENGTH"){
                         //get parameters for strength workout
                         int ID = w.getID();
-                        int sets = ((StrengthWorkoutItem)w).getSetsScheduled();
                         startStrengthWorkoutActivity(ID);
 
                     }

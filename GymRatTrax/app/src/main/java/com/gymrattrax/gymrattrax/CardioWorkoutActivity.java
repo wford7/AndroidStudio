@@ -1,37 +1,142 @@
 package com.gymrattrax.gymrattrax;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Intent;
+import android.view.View;
+import android.widget.Chronometer;
 import android.widget.TextView;
+import android.widget.Button;
+import android.os.*;
 
 
 public class CardioWorkoutActivity extends ActionBarActivity {
 
+    private long lastPause;
+    double timeScheduled;
+    double time;
+    int exertionLvl;
+    Button completeWorkout;
+    Button start;
+    Button stop;
+    Chronometer timer;
+    double recordedTime = 0;
+    TextView goalTime;
+    long timerState;
+    static final String TIMER_STATE = "timerState";
+
+
+
     @Override
+
+    protected void onSaveInstanceState(Bundle savedInstanceState){
+        savedInstanceState.putLong(TIMER_STATE, timerState);
+        super.onSaveInstanceState(savedInstanceState);
+    }
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(savedInstanceState != null){
+            timerState = savedInstanceState.getLong(TIMER_STATE);
+        }
         setContentView(R.layout.activity_cardio_workout);
 
+        DBHelper dbh = new DBHelper(this);
+
         TextView title = (TextView) findViewById(R.id.cardio_title);
-        TextView goalTime = (TextView) findViewById(R.id.scheduled_time);
+        TextView scheduled = (TextView)findViewById(R.id.scheduled_time);
+        goalTime = (TextView) findViewById(R.id.scheduled_time);
+        completeWorkout = (Button) findViewById(R.id.complete_cardio);
+        timer = (Chronometer)findViewById(R.id.chronometer);
+        start = (Button) findViewById(R.id.start_cardio);
+        stop = (Button) findViewById(R.id.stop_cardio);
+
+
+        start.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                    timerState = (SystemClock.elapsedRealtime() + lastPause);
+                    timer.setBase(timerState);
+                    timer.start();
+            }
+        });
+
+        stop.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                lastPause = timer.getBase() - SystemClock.elapsedRealtime();
+                timer.stop();
+            }
+        });
+
+
 
         Bundle b = getIntent().getExtras();
-        String name = b.getString("name");
-        double distance = b.getDouble("distance");
-        double time = b.getDouble("time");
+        int ID = b.getInt("ID");
+        WorkoutItem currentWorkout = dbh.getWorkoutById(ID);
 
+        String name = ((CardioWorkoutItem)currentWorkout).getName().toString();
+        double timeScheduled = ((CardioWorkoutItem)currentWorkout).getTimeScheduled();
+
+
+        scheduled.setText(Double.toString(timeScheduled));
         title.setText(name);
 
-        double minutesDbl = time;
-        int secondsTotal = (int) (minutesDbl * 60);
-        int seconds = secondsTotal % 60;
-        int minutes = (secondsTotal - seconds) / 60;
-        String fmtTime = minutes + ":" + seconds;
-        goalTime.setText("Target Time: " + fmtTime);
-
+//        completeWorkout.setOnClickListener(new View.OnClickListener(){
+//
+//            @Override
+//            public void onClick(View v) {
+//                //check to see if all sets have been completed
+//                //make sure time is documented
+//                //make sure a radio button is selected
+//                if ((CardioWorkoutItem).getSetsScheduled()){
+//                    //prompt user input
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(StrengthWorkoutActivity.this);
+//                    builder.setTitle("Attention");
+//                    builder.setMessage("You have not completed all scheduled sets. Are you sure you would like to " +
+//                            "complete this entry?");
+//
+//                    builder.setPositiveButton("Yes!", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            if (exertionLvl == 0){
+//                                final AlertDialog.Builder exertBuild = new AlertDialog.Builder(StrengthWorkoutActivity.this);
+//                                exertBuild.setTitle("Error");
+//                                exertBuild.setMessage("Please select an Exertion Level.");
+//
+//                                exertBuild.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(DialogInterface dialog, int which) {
+//                                        dialog.cancel();
+//                                    }
+//                                });
+//                                exertBuild.show();
+//                            } else
+//                                updateCompletedWorkout();
+//
+//                        }
+//                    });
+//
+//                    builder.setNegativeButton("No!", new DialogInterface.OnClickListener(){
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            dialog.cancel();
+//                        }
+//                    });
+//                    builder.show();
+//
+//                }
+//                else{
+//                    updateCompletedWorkout();
+//                }
+//
+//
+//            }
+//
+//        });
 
         //implement chronometer and click listener
 

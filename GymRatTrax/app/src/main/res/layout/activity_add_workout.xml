@@ -1,57 +1,32 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/primary"
-    tools:context=".ScheduleActivity"
-    android:orientation="vertical"
-    android:id="@+id/activity_add_workout">
+    android:baselineAligned="true"
+    android:weightSum="1">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textStyle="bold"
-        android:text="@string/select_workout_type"
-        android:id="@+id/add_workout_type"
-        android:layout_gravity="center_horizontal"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:text="@string/select_strength_to_add"
+        android:id="@+id/strength_title"
+        android:layout_gravity="center_horizontal" />
 
-    <Button
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/add_workout_activity_add_strength"
-        android:id="@+id/add_workout_strength"
-        android:clickable="true"
-        android:textStyle="bold"
-        android:textSize="25sp"
-        android:background="@drawable/button_shp_rvrs_press"
         android:layout_gravity="center_horizontal"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="142dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_weight="0.44">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/add_workout_activity_add_cardio"
-        android:id="@+id/addWorkoutButton"
-        android:clickable="true"
-        android:textStyle="bold"
-        android:textSize="25sp"
-        android:background="@drawable/button_shp_rvrs_press"
-        android:layout_gravity="center_horizontal"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="57dp"
-        android:layout_alignRight="@+id/add_workout_strength"
-        android:layout_alignEnd="@+id/add_workout_strength" />
+        <GridView
+            android:layout_width="wrap_content"
+            android:background="@color/primary100"
+            android:layout_height="536dp"
+            android:id="@+id/workouts_grid" />
+    </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

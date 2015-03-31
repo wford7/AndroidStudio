@@ -79,19 +79,27 @@
         </activity>
         <activity
             android:name=".AddWorkoutActivity"
-            android:label="@string/title_activity_add_workout"
-            android:screenOrientation="portrait" >
+            android:label="@string/add_workout_activity" >
         </activity>
         <activity
-            android:name=".NotificationDebug"
-            android:label="NotificationDebug"
-            android:screenOrientation="portrait" >
+            android:name=".AddStrengthWorkoutActivity"
+            android:label="@string/add_workout_activity_add_strength" >
         </activity>
+        <activity
+            android:name=".SelectDateTimeActivity"
+            android:label="@string/select_date_time_activity" >
+        </activity>
+        <!--<activity-->
+            <!--android:name=".NotificationDebug"-->
+            <!--android:label="NotificationDebug"-->
+            <!--android:screenOrientation="portrait" >-->
+        <!--</activity>-->
         <!--<service android:name=".NotificationReceiver" android:enabled="true">-->
             <!--<intent-filter> <action android:name="NOTIFICATION_SERVICE" /></intent-filter>-->
         <!--</service>-->
         <service android:name=".NotificationService" />
         <service android:name=".NotificationNotifier" />
+
     </application>
 
 </manifest>

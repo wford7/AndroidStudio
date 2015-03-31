@@ -46,19 +46,13 @@ import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 public class CalendarService extends ScheduleActivity {
-    private int calId;
-    private long eventID;
+    private static long eventID;
     private Date currentDay;
     private double time;
+    private long ID;
 
     public CalendarService() {
     }
-
-    public int getID() {
-        return calId;
-    }
-
-    public void setID(int ID) { this.calId = ID; }
 
     public Date getCurrentDay() {
         return currentDay;
@@ -76,31 +70,28 @@ public class CalendarService extends ScheduleActivity {
         this.time = time;
     }
 
-////    public Date getStartTime() {
-////        return startTime;
-////    }
-////
-////    public void setStartTime(Date startDay) {
-////        this.startTime = startDay;
-////    }
-////
-////    public Date getEndTime() {
-////        return endTime;
-////    }
-////
-////    public void setEndTime(Date endDay) {
-////        this.endTime = endDay;
-////    }
-//
-//
-//    public String name = "" + getStartTime().toString() + " - " + getEndTime().toString();
 
-    public String name = "TEST";
+
+    public String name = "GymRatTrax Workout Schedule";
 
     public String accountName = Account.class.getName();
 
-    String[] projection = new String[] { CalendarContract.Events.CALENDAR_ID, CalendarContract.Events.TITLE, CalendarContract.Events.DESCRIPTION, CalendarContract.Events.DTSTART, CalendarContract.Events.DTEND, CalendarContract.Events.ALL_DAY, CalendarContract.Events.EVENT_LOCATION };
+    // Projection array
+    public static final String[] EVENT_PROJECTION = new String[] {
+            CalendarContract.Calendars._ID,                         // 0
+            CalendarContract.Calendars.ACCOUNT_NAME,                // 1
+            CalendarContract.Calendars.CALENDAR_DISPLAY_NAME,       // 2
+            CalendarContract.Calendars.OWNER_ACCOUNT                // 3
 
+    };
+
+    // Indices for projection
+    private static final int PROJECTION_ID_INDEX = 0;
+    private static final int PROJECTION_ACCOUNT_NAME_INDEX = 1;
+    private static final int PROJECTION_DISPLAY_NAME_INDEX = 2;
+    private static final int PROJECTION_OWNER_ACCOUNT_INDEX = 3;
+
+    // Insert GRT calendar
     public static Uri createNewCalendar(Context ctx, String name, String accountName) {
         Uri target = Uri.parse(CalendarContract.Calendars.CONTENT_URI.toString());
         target = target.buildUpon().appendQueryParameter(CalendarContract.CALLER_IS_SYNCADAPTER, "true")
@@ -122,15 +113,12 @@ public class CalendarService extends ScheduleActivity {
         values.put(CalendarContract.Calendars.ALLOWED_REMINDERS, CalendarContract.Reminders.METHOD_DEFAULT);
         values.put(CalendarContract.Calendars.CAL_SYNC8, System.currentTimeMillis());
 
-        Uri newCalendar = ctx.getContentResolver().insert(target, values);
-
-        return newCalendar;
+        return ctx.getContentResolver().insert(target, values);
     }
 
     public long id = getID();
 
-//    public String data = "" + startTime + "/" + endTime;
-
+    // insert GTR workout event
     public static Uri addEvent(Context ctx, String accountName, String name, String data) {
         Uri target = Uri.parse(CalendarContract.Calendars.CONTENT_URI.toString());
         target = target.buildUpon().appendQueryParameter(CalendarContract.CALLER_IS_SYNCADAPTER, "true")
@@ -154,16 +142,13 @@ public class CalendarService extends ScheduleActivity {
         cv.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().toString());
 
         Uri newEvent = ctx.getContentResolver().insert(target, cv);
-        long eventID = Long.parseLong(newEvent.getLastPathSegment());
-
+        CalendarService.eventID = Long.parseLong(newEvent.getLastPathSegment());
 
         return newEvent;
     }
 
 
     public static boolean deleteEvent(Context ctx, String accountName, String name, long eventID) {
-
-
 
         return true;
     }
@@ -191,12 +176,33 @@ public class CalendarService extends ScheduleActivity {
 
         return null;
     }
+//
+//    public static Intent viewEvent() {
+//    public Intent viewEvent() {
+//        long eventID = 208;
+//        Uri uri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, eventID);
+//        return new Intent(Intent.ACTION_VIEW)
+//                .setData(uri);
+//    }
 
-    private Intent viewEvent() {
-        long eventID = 208;
-        Uri uri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, eventID);
-        Intent intent = new Intent(Intent.ACTION_VIEW)
-                .setData(uri);
-        return intent;
+
+    public long getID() {
+        return ID;
     }
+    //    private void addWorkout(String exercise1, Calendar begin, Calendar end) {
+//        Calendar dateToShow = Calendar.getInstance();
+//        dateToShow.set(2015, Calendar.MARCH, 12, 17, 00);
+//        long epochMillis = dateToShow.getTimeInMillis();
+//
+//        String data = "" + begin.toString() + "" + end.toString();
+//        Uri eventUri = CalendarService.addEvent(ctx, accountName, "EXERCISE 1", data);
+//        Uri.Builder uriBuilder = eventUri.buildUpon();
+//        uriBuilder.appendPath("time");
+//        ContentUris.appendId(uriBuilder, epochMillis);
+//        Uri uri = uriBuilder.build();
+//
+//        Intent intent = new Intent(Intent.ACTION_VIEW);
+//        intent.setData(uri);
+//        startActivity(intent);
+//    }
 }

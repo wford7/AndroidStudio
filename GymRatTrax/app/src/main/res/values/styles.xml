@@ -5,4 +5,6 @@
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary700</item>
     </style>
+    <style name="cust_dialog" parent="@android:style/Theme.NoTitleBar.Fullscreen">
+    </style>
 </resources>

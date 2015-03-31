@@ -6,4 +6,10 @@
     <item name="addExerciseButton" type="id">Add Exercise</item>
     <item name="add_workout_cardio" type="id">Add Cardio Workout</item>
     <item name="EditScheduleButton" type="id">Edit Schedule</item>
+    <item name="workouts_grid" type="id">Strength Workouts List</item>
+    <item name="calendar" type="id">calendar</item>
+    <item name="setTimeButton" type="id">Change time button</item>
+    <item name="doneButton" type="id">Done</item>
+    <item name="date_text" type="id">Date</item>
+
 </resources>
