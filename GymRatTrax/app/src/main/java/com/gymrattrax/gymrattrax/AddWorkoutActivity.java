@@ -44,17 +44,35 @@ public class AddWorkoutActivity extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Create strength workout item and set reps, sets, and weight
 
-                Toast.makeText(getApplicationContext(), ((TextView) view).getText(), Toast.LENGTH_LONG).show();
-                displayStrengthDetails();
+                String s = ((TextView) view).getText().toString();
+                switch (ExerciseName.fromString(s)) {
+                    case WALK:
+                        displayCardioDetails();
+                        break;
+                    case JOG:
+                        displayCardioDetails();
+                        break;
+                    case RUN:
+                        displayCardioDetails();
+                        break;
+                    default:
+                        displayStrengthDetails(s);
+                }
             }
         });
     }
 
-    private void displayStrengthDetails() {
-        Intent intent = new Intent(AddWorkoutActivity.this, AddStrengthWorkoutActivity.class);
+    private void displayCardioDetails() {
+        Intent intent = new Intent(AddWorkoutActivity.this, AddCardioWorkoutActivity.class);
         startActivity(intent);
     }
 
+    private void displayStrengthDetails(String s) {
+        Intent intent = new Intent(AddWorkoutActivity.this, AddStrengthWorkoutActivity.class);
+        ExerciseName details = ExerciseName.fromString(s);
+
+        startActivity(intent);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
