@@ -46,14 +46,26 @@ public class SelectDateTimeActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_date_time);
         calendar = (CalendarView) findViewById(R.id.calendar);
-        date = initializeCalendar(calendar);
         Calendar cal = Calendar.getInstance();
+
+        this.monthSelected = cal.get(Calendar.MONTH);
+        this.daySelected = cal.get(Calendar.DAY_OF_MONTH);
+        this.yearSelected = cal.get(Calendar.YEAR);
         this.selectedHour = cal.get(Calendar.HOUR_OF_DAY);
         this.selectedMinutes = cal.get(Calendar.MINUTE);
+
+        int newMonth = monthSelected + 1;
+        String dateString = ("" + newMonth + "/" + daySelected + "/" + yearSelected);
+
         dateText = (TextView) findViewById(R.id.date_text);
         timeText = (TextView) findViewById(R.id.TimeSelected);
-        updateDateUI(date);
+
+        updateDateUI(dateString);
+
+        initializeCalendar(calendar);
+
         updateTimeUI();
+
         setTimeButton = (Button) findViewById(R.id.setTimeButton);
         setTimeButton.setOnClickListener(new Button.OnClickListener(){
 
@@ -77,18 +89,29 @@ public class SelectDateTimeActivity extends ActionBarActivity {
     }
 
     private void updateTimeUI() {
-        String hour = (selectedHour > 9) ? ""+selectedHour: "0"+selectedHour ;
-        String minutes = (selectedMinutes > 9) ?""+selectedMinutes : "0"+selectedMinutes;
-        timeText.setText(hour + ":" + minutes);
+        String am = "AM";
+        String pm = "PM";
+
+        if (selectedHour > 12) {
+
+            selectedHour -= 12;
+            String hour = (selectedHour > 9) ? "" + selectedHour : "" + selectedHour;
+            String minutes = (selectedMinutes > 9) ? "" + selectedMinutes : "" + selectedMinutes;
+            timeText.setText(hour + ":" + minutes + " " + pm);
+        }
+        else {
+            String hour = (selectedHour > 9) ? "" + selectedHour : "0" + selectedHour;
+            String minutes = (selectedMinutes > 9) ? "" + selectedMinutes : "0" + selectedMinutes;
+            timeText.setText(hour + ":" + minutes + " " + am);
+        }
     }
 
     //  sets calendar details and returns date selected from calendar in String
-    private String initializeCalendar(CalendarView calendar) {
+    private void initializeCalendar(CalendarView calendar) {
         calendar.setShowWeekNumber(false);
         calendar.setFirstDayOfWeek(1);
         calendar.setSelectedWeekBackgroundColor(getResources().getColor(R.color.primary200));
         calendar.setSelectedDateVerticalBar(R.color.primary700);
-
 
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             public void onSelectedDayChange(CalendarView view, int year, int month, int day) {
@@ -97,7 +120,6 @@ public class SelectDateTimeActivity extends ActionBarActivity {
                 updateDateUI(dateSelected);
             }
         });
-        return dateSelected;
     }
 
     private void updateDateUI(String d) {

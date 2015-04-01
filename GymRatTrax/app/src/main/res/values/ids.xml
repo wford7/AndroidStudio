@@ -11,5 +11,14 @@
     <item name="setTimeButton" type="id">Change time button</item>
     <item name="doneButton" type="id">Done</item>
     <item name="date_text" type="id">Date</item>
+    <item name="hard_strength" type="id">hard</item>
+    <item name="moderate_strength" type="id">moderate</item>
+    <item name="easy_strength" type="id">easy</item>
+    <item name="strength_populate" type="id">populate</item>
+    <item name="complete_strength" type="id">completestr</item>
+    <item name="completed_sets" type="id">completesets</item>
+    <item name="weight_used" type="id">weight</item>
+    <item name="strength_reps" type="id">strsets</item>
+    <item name="strength_sets" type="id">strreps</item>
 
 </resources>
