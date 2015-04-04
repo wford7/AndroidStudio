@@ -31,7 +31,7 @@ public class CalorieNegationActivity extends ActionBarActivity {
     Button[] buttons;
     double[] times;
     ExerciseName[] exName;
-    private NotificationScheduler notificationScheduler;
+//    private NotifyScheduler notifyScheduler;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,8 +49,8 @@ public class CalorieNegationActivity extends ActionBarActivity {
         times = new double[5];
         exName = new ExerciseName[5];
 
-        notificationScheduler = new NotificationScheduler(this);
-        notificationScheduler.doBindService();
+//        notifyScheduler = new NotifyScheduler(this);
+//        notifyScheduler.doBindService();
 
         SuggestWorkoutButton.setOnClickListener(new Button.OnClickListener() {
 
@@ -65,8 +65,9 @@ public class CalorieNegationActivity extends ActionBarActivity {
                 InputMethodManager inputManager = (InputMethodManager)
                         getSystemService(Context.INPUT_METHOD_SERVICE);
 
-                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
-                        InputMethodManager.HIDE_NOT_ALWAYS);
+                if (getCurrentFocus() != null)
+                    inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                            InputMethodManager.HIDE_NOT_ALWAYS);
 
                 //Remove button views if they have already been used
                 for (Button b : buttons) {
@@ -210,14 +211,8 @@ public class CalorieNegationActivity extends ActionBarActivity {
                 item.setRepsScheduled(12);
                 item.setSetsScheduled(4);
                 item.setWeightUsed(10);
-//                item.setMETSVal(3);
                 item.setName(exName[0]);
                 item.setTimeScheduled(times[0]);
-                Calendar cal = Calendar.getInstance();
-                cal.add(Calendar.SECOND,10);
-                Log.d(TAG,"Offset by 20 seconds for notification testing purposes.");
-                Date dat = cal.getTime();
-                item.setDateScheduled(dat);
 
                 addThisWorkout(item);
                 BackToHomeScreen(view);
@@ -233,12 +228,8 @@ public class CalorieNegationActivity extends ActionBarActivity {
                 item.setRepsScheduled(20);
                 item.setSetsScheduled(6);
                 item.setWeightUsed(20);
-//                item.setMETSVal(7);
                 item.setName(exName[1]);
                 item.setTimeScheduled(times[1]);
-                Calendar cal = Calendar.getInstance();
-                Date dat = cal.getTime();
-                item.setDateScheduled(dat);
 
                 addThisWorkout(item);
                 BackToHomeScreen(view);
@@ -252,12 +243,8 @@ public class CalorieNegationActivity extends ActionBarActivity {
                 //Create walking workout item and store it in today's schedule
                 CardioWorkoutItem item = new CardioWorkoutItem();
                 item.setDistance(2);
-//                item.setMETSVal(11);
                 item.setName(ExerciseName.WALK);
                 item.setTimeScheduled(times[2]);
-                Calendar cal = Calendar.getInstance();
-                Date dat = cal.getTime();
-                item.setDateScheduled(dat);
 
                 addThisWorkout(item);
                 BackToHomeScreen(view);
@@ -271,12 +258,8 @@ public class CalorieNegationActivity extends ActionBarActivity {
                 //Create jogging workout item and store it in today's schedule
                 CardioWorkoutItem item = new CardioWorkoutItem();
                 item.setDistance(2);
-//                item.setMETSVal(3.5);
                 item.setName(ExerciseName.JOG);
                 item.setTimeScheduled(times[3]);
-                Calendar cal = Calendar.getInstance();
-                Date dat = cal.getTime();
-                item.setDateScheduled(dat);
 
                 addThisWorkout(item);
                 BackToHomeScreen(view);
@@ -290,12 +273,8 @@ public class CalorieNegationActivity extends ActionBarActivity {
                 //Create running workout item and store it in today's schedule
                 CardioWorkoutItem item = new CardioWorkoutItem();
                 item.setDistance(2);
-//                item.setMETSVal(6);
                 item.setName(ExerciseName.RUN);
                 item.setTimeScheduled(times[4]);
-                Calendar cal = Calendar.getInstance();
-                Date dat = cal.getTime();
-                item.setDateScheduled(dat);
 
                 addThisWorkout(item);
                 BackToHomeScreen(view);
@@ -334,21 +313,26 @@ public class CalorieNegationActivity extends ActionBarActivity {
     }
 
     public void addThisWorkout(WorkoutItem w) {
-        DBHelper dbh = new DBHelper(CalorieNegationActivity.this);
+        Calendar cal = Calendar.getInstance();
+        Date dat = cal.getTime();
+        cal.add(Calendar.SECOND, 3);
+        w.setDateScheduled(dat);
+        w.setNotificationDefault(true);
+        Log.d(TAG, "cancelNotifications called.");
+        NotifyReceiver.cancelNotifications(this);
+        DBHelper dbh = new DBHelper(this);
         dbh.addWorkout(w);
         dbh.close();
-        Calendar time = Calendar.getInstance();
-        time.setTime(w.getDateScheduled());
-        time.add(Calendar.SECOND,10);
-        notificationScheduler.setAlarmForNotification(time, w);
+        Log.d(TAG, "setNotifications called.");
+        NotifyReceiver.setNotifications(this);
     }
 
-    @Override
-    protected void onStop() {
-        // When our activity is stopped ensure we also stop the connection to the service
-        // this stops us leaking our activity into the system *bad*
-        if(notificationScheduler != null)
-            notificationScheduler.doUnbindService();
-        super.onStop();
-    }
+//    @Override
+//    protected void onStop() {
+//        // When our activity is stopped ensure we also stop the connection to the service
+//        // this stops us leaking our activity into the system *bad*
+//        if(notifyScheduler != null)
+//            notifyScheduler.doUnbindService();
+//        super.onStop();
+//    }
 }

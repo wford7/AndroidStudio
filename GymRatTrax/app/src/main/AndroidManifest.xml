@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.gymrattrax.gymrattrax" >
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
@@ -93,17 +94,14 @@
             android:name=".AddCardioWorkoutActivity"
             android:label="@string/add_workout_activity_add_cardio" >
         </activity>
-        
-        <!--<activity-->
-            <!--android:name=".NotificationDebug"-->
-            <!--android:label="NotificationDebug"-->
-            <!--android:screenOrientation="portrait" >-->
-        <!--</activity>-->
-        <!--<service android:name=".NotificationReceiver" android:enabled="true">-->
-            <!--<intent-filter> <action android:name="NOTIFICATION_SERVICE" /></intent-filter>-->
-        <!--</service>-->
-        <service android:name=".NotificationService" />
-        <service android:name=".NotificationNotifier" />
+
+        <receiver android:name=".NotifyReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+        <service android:name=".NotifyService" />
+        <!--<service android:name="service.NotifyNotifier" />-->
 
     </application>
 

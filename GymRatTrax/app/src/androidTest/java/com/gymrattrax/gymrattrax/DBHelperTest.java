@@ -4,7 +4,6 @@ import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
 
 import java.text.ParseException;
-import java.util.Date;
 
 public class DBHelperTest extends AndroidTestCase {
 
@@ -36,6 +35,7 @@ public class DBHelperTest extends AndroidTestCase {
         ((StrengthWorkoutItem) workout).setWeightUsed(15);
         ((StrengthWorkoutItem) workout).setRepsScheduled(12);
         ((StrengthWorkoutItem) workout).setSetsScheduled(4);
+        workout.setNotificationEnabled(false);
         return workout;
     }
 

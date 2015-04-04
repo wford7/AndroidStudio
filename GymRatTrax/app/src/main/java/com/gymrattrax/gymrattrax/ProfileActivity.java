@@ -199,7 +199,7 @@ public class ProfileActivity extends ActionBarActivity {
         // update database profile
         DBHelper dbh = new DBHelper(this);
         dbh.setProfileInfo(DBContract.ProfileTable.KEY_NAME, nameEditText.getText().toString());
-        dbh.setProfileInfo(DBContract.ProfileTable.KEY_HEIGHT, heightEditText.getText().toString());
+        dbh.setProfileInfo(DBContract.ProfileTable.KEY_HEIGHT_INCHES, heightEditText.getText().toString());
 
         String date = birthDateEditText.getText().toString();
         SimpleDateFormat inputFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);

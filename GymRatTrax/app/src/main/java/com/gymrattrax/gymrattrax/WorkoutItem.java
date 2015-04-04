@@ -16,10 +16,12 @@ public abstract class WorkoutItem {
     private double timeSpent;
     private int exertionLevel;
 
+    private boolean notificationDefault;
     private boolean notificationEnabled;
     private boolean notificationVibrate;
     private int notificationMinutesInAdvance;
     private Uri notificationTone;
+    private boolean notificationOngoing;
 
     public ExerciseName getName() {
         return name;
@@ -95,6 +97,14 @@ public abstract class WorkoutItem {
 
     abstract public double calculateMETs();
 
+    public boolean isNotificationDefault() {
+        return notificationDefault;
+    }
+
+    public void setNotificationDefault(boolean notificationDefault) {
+        this.notificationDefault = notificationDefault;
+    }
+
     public boolean isNotificationEnabled() {
         return notificationEnabled;
     }
@@ -125,5 +135,13 @@ public abstract class WorkoutItem {
 
     public void setNotificationTone(Uri notificationTone) {
         this.notificationTone = notificationTone;
+    }
+
+    public boolean isNotificationOngoing() {
+        return notificationOngoing;
+    }
+
+    public void setNotificationOngoing(boolean notificationOngoing) {
+        this.notificationOngoing = notificationOngoing;
     }
 }

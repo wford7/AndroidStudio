@@ -1,7 +1,5 @@
 package com.gymrattrax.gymrattrax;
 
-import java.util.Calendar;
-
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -9,26 +7,27 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.util.Log;
 
-public class NotificationScheduler {
-    private static final String TAG = "NotificationScheduler";
+@Deprecated
+public class NotifyScheduler {
+    private static final String TAG = "NotifyScheduler";
 
     // The hook into our service
-    private NotificationService mNotificationService;
+    private NotifyService mNotifyService;
     // The context to start the service in
     private Context mContext;
     // A flag if we are connected to the service or not
     private boolean mIsBound;
 
-    public NotificationScheduler(Context context) {
+    public NotifyScheduler(Context context) {
         mContext = context;
     }
 
     /**
-     * Call this to connect your activity to your service
+     * Call this to connect your activity to your service.
      */
     public void doBindService() {
         // Establish a connection with our service
-        mContext.bindService(new Intent(mContext, NotificationService.class), mConnection, Context.BIND_AUTO_CREATE);
+        mContext.bindService(new Intent(mContext, NotifyService.class), mConnection, Context.BIND_AUTO_CREATE);
         mIsBound = true;
     }
 
@@ -40,21 +39,22 @@ public class NotificationScheduler {
         public void onServiceConnected(ComponentName className, IBinder service) {
             // This is called when the connection with our service has been established,
             // giving us the service object we can use to interact with our service.
-            mNotificationService = ((NotificationService.ServiceBinder) service).getService();
+//            mNotifyService = ((NotifyService.ServiceBinder) service).getService();
         }
 
         public void onServiceDisconnected(ComponentName className) {
-            mNotificationService = null;
+            mNotifyService = null;
         }
     };
 
     /**
-     * Tell our service to set an alarm for the given date
-     * @param c a date to set the notification for
+     * Add workout to the database file and check for notifications.
+     * @param workoutItem WorkoutItem object that contains a date that will control a notification.
      */
-    public void setAlarmForNotification(Calendar c, WorkoutItem w){
-        Log.d(TAG, "Setting workout event (ID: " + w.getID() + ") alarm.");
-        mNotificationService.setAlarm(c, w);
+    public void setAlarmForNotification(WorkoutItem workoutItem){
+        Log.d(TAG, "Setting workout event (ID: " + workoutItem.getID() + ") alarm.");
+        mNotifyService = new NotifyService();
+        mNotifyService.setAlarm(workoutItem);
     }
 
     /**

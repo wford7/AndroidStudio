@@ -23,7 +23,7 @@ public class Profile {
         DBHelper dbh = new DBHelper(c);
         name = dbh.getProfileInfo(DBContract.ProfileTable.KEY_NAME);
         try {
-            height = Double.parseDouble(dbh.getProfileInfo(DBContract.ProfileTable.KEY_HEIGHT));
+            height = Double.parseDouble(dbh.getProfileInfo(DBContract.ProfileTable.KEY_HEIGHT_INCHES));
         } catch (NumberFormatException nfe) {
             height = -1.0;
         }

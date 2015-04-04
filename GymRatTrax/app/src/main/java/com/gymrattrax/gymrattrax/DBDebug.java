@@ -15,8 +15,7 @@ import java.util.Calendar;
 @Deprecated
 public class DBDebug extends ActionBarActivity {
     private Spinner tableSpinner;
-    private TableLayout tableItself;
-    private NotificationScheduler notificationScheduler;
+    private TableLayout tableTable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,16 +23,14 @@ public class DBDebug extends ActionBarActivity {
         setContentView(R.layout.activity_debug);
 
         tableSpinner = (Spinner)findViewById(R.id.debug_spinner);
-        tableItself = (TableLayout)findViewById(R.id.table_scroll);
-        notificationScheduler = new NotificationScheduler(this);
-        notificationScheduler.doBindService();
+        tableTable = (TableLayout)findViewById(R.id.table_scroll);
 
         tableSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String input = tableSpinner.getItemAtPosition(position).toString();
-                tableItself.removeAllViewsInLayout();
+                tableTable.removeAllViewsInLayout();
 
                 DBHelper dbh = new DBHelper(DBDebug.this);
                 String[][] dbValues = dbh.secretDebugDeleteFromFinalReleaseRawQuery(input);
@@ -51,7 +48,7 @@ public class DBDebug extends ActionBarActivity {
                                 TableRow.LayoutParams.WRAP_CONTENT));
                         tr.addView(tv);
                     }
-                    tableItself.addView(tr);
+                    tableTable.addView(tr);
                 }
             }
 
@@ -74,15 +71,14 @@ public class DBDebug extends ActionBarActivity {
         WorkoutItem w = dbh.getWorkoutById(1);
         Calendar c = Calendar.getInstance();
         c.add(Calendar.SECOND, 2);
-        notificationScheduler.setAlarmForNotification(c, w);
-    }
+        w.setDateScheduled(c.getTime());
 
-    @Override
-    protected void onStop() {
-        // When our activity is stopped ensure we also stop the connection to the service
-        // this stops us leaking our activity into the system *bad*
-        if(notificationScheduler != null)
-            notificationScheduler.doUnbindService();
-        super.onStop();
+        NotifyScheduler notifyScheduler;
+        notifyScheduler = new NotifyScheduler(this);
+        notifyScheduler.doBindService();
+
+        notifyScheduler.setAlarmForNotification(w);
+
+        notifyScheduler.doUnbindService();
     }
 }
