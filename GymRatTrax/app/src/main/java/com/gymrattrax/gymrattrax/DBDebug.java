@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import java.util.Calendar;
 
+//TODO: Rename to DatabaseDebug and put in com.gymrattrax.scheduler.activities
 @Deprecated
 public class DBDebug extends ActionBarActivity {
     private Spinner tableSpinner;
@@ -73,12 +74,12 @@ public class DBDebug extends ActionBarActivity {
         c.add(Calendar.SECOND, 2);
         w.setDateScheduled(c.getTime());
 
-        NotifyScheduler notifyScheduler;
-        notifyScheduler = new NotifyScheduler(this);
-        notifyScheduler.doBindService();
+//        NotifyScheduler notifyScheduler;
+//        notifyScheduler = new NotifyScheduler(this);
+//        notifyScheduler.doBindService();
 
-        notifyScheduler.setAlarmForNotification(w);
+//        notifyScheduler.setAlarmForNotification(w);
 
-        notifyScheduler.doUnbindService();
+//        notifyScheduler.doUnbindService();
     }
 }

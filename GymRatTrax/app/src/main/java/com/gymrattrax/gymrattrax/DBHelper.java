@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.Context;
+import android.net.Uri;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,6 +16,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+//TODO: Rename to DatabaseHelper and put in com.gymrattrax.scheduler.data
 public class DBHelper extends SQLiteOpenHelper {
     private static final String TAG = "DBHelper";
     public DBHelper(Context context) {
@@ -251,8 +253,6 @@ public class DBHelper extends SQLiteOpenHelper {
      * the notification will be set.
      * @param workoutItem The WorkoutItem Object that functions as a container for all relevant
      *                    values from which to populate the new database record.
-     * @param context The current context that will be passed into all relevant notification
-     *                services.
      * @return The new workout ID based on the Workout table's autoincrement primary key value. If
      * an error occurred during the database operation, a -1 will be returned.
      */
@@ -288,26 +288,31 @@ public class DBHelper extends SQLiteOpenHelper {
                 workoutItem.getTimeScheduled());
         values.put(DBContract.WorkoutTable.COLUMN_NAME_TIME_SPENT, workoutItem.getTimeSpent());
 
-
-        if (workoutItem.isNotificationDefault())
+        if (workoutItem.isNotificationDefault()) {
             values.put(DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_DEFAULT, 1);
-        else
-            values.put(DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_DEFAULT, 0);
-        if (workoutItem.isNotificationEnabled())
-            values.put(DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_ENABLED, 1);
-        else
-            values.put(DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_ENABLED, 0);
-        if (workoutItem.isNotificationVibrate())
-            values.put(DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_VIBRATE, 1);
-        else
-            values.put(DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_VIBRATE, 0);
-        values.put(DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_ADVANCE,
-                workoutItem.getNotificationMinutesInAdvance());
-        if (workoutItem.getNotificationTone() != null) {
-            values.put(DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_TONE,
-                    workoutItem.getNotificationTone().toString());
-        } else {
+            values.putNull(DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_ENABLED);
+            values.putNull(DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_VIBRATE);
+            values.putNull(DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_ADVANCE);
             values.putNull(DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_TONE);
+        }
+        else {
+            values.put(DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_DEFAULT, 0);
+            if (workoutItem.isNotificationEnabled())
+                values.put(DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_ENABLED, 1);
+            else
+                values.put(DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_ENABLED, 0);
+            if (workoutItem.isNotificationVibrate())
+                values.put(DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_VIBRATE, 1);
+            else
+                values.put(DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_VIBRATE, 0);
+            values.put(DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_ADVANCE,
+                    workoutItem.getNotificationMinutesInAdvance());
+            if (workoutItem.getNotificationTone() != null) {
+                values.put(DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_TONE,
+                        workoutItem.getNotificationTone().toString());
+            } else {
+                values.putNull(DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_TONE);
+            }
         }
 
         long id = db.insert(DBContract.WorkoutTable.TABLE_NAME, null, values);
@@ -577,6 +582,32 @@ public class DBHelper extends SQLiteOpenHelper {
             workouts[i].setExertionLevel(cursor.getInt(cursor.getColumnIndex(
                     DBContract.WorkoutTable.COLUMN_NAME_EXERTION_LEVEL)));
 
+
+            if (cursor.getInt(cursor.getColumnIndex(
+                    DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_DEFAULT)) > 0) {
+                workouts[i].setNotificationDefault(true);
+                workouts[i].setNotificationEnabled(
+                        getProfileInfo(DBContract.ProfileTable.KEY_NOTIFY_ENABLED).equals("1"));
+                workouts[i].setNotificationVibrate(
+                        getProfileInfo(DBContract.ProfileTable.KEY_NOTIFY_VIBRATE).equals("1"));
+                workouts[i].setNotificationMinutesInAdvance(Integer.parseInt(
+                        getProfileInfo(DBContract.ProfileTable.KEY_NOTIFY_ADVANCE)));
+                workouts[i].setNotificationTone(Uri.parse(
+                        getProfileInfo(DBContract.ProfileTable.KEY_NOTIFY_TONE)));
+            } else {
+                workouts[i].setNotificationDefault(true);
+                workouts[i].setNotificationEnabled(cursor.getInt(cursor.getColumnIndex(
+                        DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_ENABLED)) == 1);
+                workouts[i].setNotificationVibrate(cursor.getInt(cursor.getColumnIndex(
+                        DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_VIBRATE)) == 1);
+                workouts[i].setNotificationMinutesInAdvance(cursor.getInt(cursor.getColumnIndex(
+                        DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_ADVANCE)));
+                workouts[i].setNotificationTone(Uri.parse(cursor.getString(cursor.getColumnIndex(
+                        DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_TONE))));
+            }
+            workouts[i].setNotificationOngoing(
+                    getProfileInfo(DBContract.ProfileTable.KEY_NOTIFY_ONGOING).equals("1"));
+
             i++;
         }
         cursor.close();
@@ -585,52 +616,52 @@ public class DBHelper extends SQLiteOpenHelper {
         return workouts;
     }
 
-    //TODO: Consider getting rid of the following two methods altogether.
-    /**
-     * Schedules a notification based on a WorkoutItem having been up
-     * @param workoutItem The workout item that will control the notification, when it's timed and
-     *                    what its content will be.
-     * @param context The Context that will be used to bind DBHelper to the NotifyScheduler
-     *                service.
-     * @deprecated Please use NotifyService.cancelNotifications() and
-     * NotifyService.setNotifications() instead.
-     */
-    @Deprecated
-    private void addNotification(WorkoutItem workoutItem, Context context) {
-        NotifyScheduler notifyScheduler;
-        notifyScheduler = new NotifyScheduler(context);
-        notifyScheduler.doBindService();
-
-        notifyScheduler.setAlarmForNotification(workoutItem);
-
-        notifyScheduler.doUnbindService();
-    }
-
-    @Deprecated
-    public int updateWorkoutNotificationSettings(WorkoutItem workoutItem) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-
-        if (workoutItem.isNotificationVibrate())
-            values.put(DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_VIBRATE, 1);
-        else
-            values.put(DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_VIBRATE, 0);
-        values.put(DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_ADVANCE,
-                workoutItem.getNotificationMinutesInAdvance());
-        if (workoutItem.getNotificationTone() == null)
-            values.put(DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_TONE, "default");
-        else
-            values.put(DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_TONE,
-                    workoutItem.getNotificationTone().toString());
-
-        String[] args = new String[1];
-        args[0] = String.valueOf(workoutItem.getID());
-
-        int result = db.update(DBContract.WorkoutTable.TABLE_NAME, values,
-                DBContract.WorkoutTable._ID + "=?", args);
-
-        db.close();
-
-        return result;
-    }
+//    //TODO: Consider getting rid of the following two methods altogether.
+//    /**
+//     * Schedules a notification based on a WorkoutItem having been up
+//     * @param workoutItem The workout item that will control the notification, when it's timed and
+//     *                    what its content will be.
+//     * @param context The Context that will be used to bind DBHelper to the NotifyScheduler
+//     *                service.
+//     * @deprecated Please use NotifyService.cancelNotifications() and
+//     * NotifyService.setNotifications() instead.
+//     */
+//    @Deprecated
+//    private void addNotification(WorkoutItem workoutItem, Context context) {
+////        NotifyScheduler notifyScheduler;
+////        notifyScheduler = new NotifyScheduler(context);
+////        notifyScheduler.doBindService();
+////
+////        notifyScheduler.setAlarmForNotification(workoutItem);
+////
+////        notifyScheduler.doUnbindService();
+//    }
+//
+//    @Deprecated
+//    public int updateWorkoutNotificationSettings(WorkoutItem workoutItem) {
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        ContentValues values = new ContentValues();
+//
+//        if (workoutItem.isNotificationVibrate())
+//            values.put(DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_VIBRATE, 1);
+//        else
+//            values.put(DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_VIBRATE, 0);
+//        values.put(DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_ADVANCE,
+//                workoutItem.getNotificationMinutesInAdvance());
+//        if (workoutItem.getNotificationTone() == null)
+//            values.put(DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_TONE, "default");
+//        else
+//            values.put(DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_TONE,
+//                    workoutItem.getNotificationTone().toString());
+//
+//        String[] args = new String[1];
+//        args[0] = String.valueOf(workoutItem.getID());
+//
+//        int result = db.update(DBContract.WorkoutTable.TABLE_NAME, values,
+//                DBContract.WorkoutTable._ID + "=?", args);
+//
+//        db.close();
+//
+//        return result;
+//    }
 }

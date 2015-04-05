@@ -13,6 +13,7 @@ import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+//TODO: Rename to com.gymrattrax.scheduler.services.NotifyService
 /**
  * Receive Alarm and create the notification itself.
  */

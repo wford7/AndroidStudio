@@ -314,8 +314,8 @@ public class CalorieNegationActivity extends ActionBarActivity {
 
     public void addThisWorkout(WorkoutItem w) {
         Calendar cal = Calendar.getInstance();
-        Date dat = cal.getTime();
         cal.add(Calendar.SECOND, 3);
+        Date dat = cal.getTime();
         w.setDateScheduled(dat);
         w.setNotificationDefault(true);
         Log.d(TAG, "cancelNotifications called.");

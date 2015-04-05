@@ -56,7 +56,6 @@ public class NotifyReceiver extends BroadcastReceiver {
                     workoutItem.setNotificationVibrate(defaultVibrate);
                     workoutItem.setNotificationMinutesInAdvance(defaultMinutes);
                     workoutItem.setNotificationTone(defaultTone);
-                    dbh.updateWorkoutNotificationSettings(workoutItem);
                 } else {
                     workoutItem.setNotificationEnabled(false);
                 }

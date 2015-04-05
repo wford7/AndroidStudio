@@ -2,6 +2,7 @@ package com.gymrattrax.gymrattrax;
 
 import android.provider.BaseColumns;
 
+//TODO: Rename to DatabaseContract and put in (com.gymrattrax.scheduler.data)?
 public final class DBContract {
     public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "grt.db";
@@ -71,6 +72,8 @@ public final class DBContract {
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
 
+    //TODO: Spin Notifications into their own table, with WORKOUT ID as a foreign key.
+    //This way, past-due notifications will still appear, and rows are deleted as they are enabled.
     public static abstract class WorkoutTable implements BaseColumns {
         public static final String TABLE_NAME = "workout";
         public static final String COLUMN_NAME_EXERCISE                  = "exercise";
@@ -109,7 +112,7 @@ public final class DBContract {
                 COLUMN_NAME_TIME_SCHEDULED            + TYPE_REAL                      + COMMA_SEP +
                 COLUMN_NAME_TIME_SPENT                + TYPE_REAL                      + COMMA_SEP +
                 COLUMN_NAME_EXERTION_LEVEL            + TYPE_INTEGER                   + COMMA_SEP +
-                COLUMN_NAME_NOTIFY_DEFAULT            + TYPE_INTEGER                   + COMMA_SEP +
+                COLUMN_NAME_NOTIFY_DEFAULT            + TYPE_INTEGER + NOT_NULL        + COMMA_SEP +
                 COLUMN_NAME_NOTIFY_ENABLED            + TYPE_INTEGER                   + COMMA_SEP +
                 COLUMN_NAME_NOTIFY_VIBRATE            + TYPE_INTEGER                   + COMMA_SEP +
                 COLUMN_NAME_NOTIFY_TONE               + TYPE_TEXT                      + COMMA_SEP +
