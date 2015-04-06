@@ -292,7 +292,7 @@ public class ProfileActivity extends ActionBarActivity {
 
         if (profile.getAge() > 0) {
             DBHelper dbh = new DBHelper(ProfileActivity.this);
-            birthDateEditText.setText(dbh.displayDate(profile.getDOB()));
+            birthDateEditText.setText(dbh.displayDate(this, profile.getDOB()));
             dbh.close();
         }
         else {

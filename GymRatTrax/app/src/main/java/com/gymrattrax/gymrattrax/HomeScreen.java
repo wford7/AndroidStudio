@@ -1,5 +1,6 @@
 package com.gymrattrax.gymrattrax;
 
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -29,6 +30,7 @@ public class HomeScreen extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //initiate tutorial/profile creation if there is no Profile ID in database
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         Profile create = new Profile(this);
         if (!create.isComplete()) {
             initiateNewUserProfileSetup();
@@ -244,7 +246,7 @@ public class HomeScreen extends ActionBarActivity {
             int seconds = secondsTotal % 60;
             int minutes = (secondsTotal - seconds) / 60;
             String time = minutes + " minutes, " + seconds + " seconds";
-            time = dbh.displayDateTime(w.getDateScheduled()) + ": " + time;
+            time = dbh.displayDateTime(this, w.getDateScheduled()) + ": " + time;
             viewTime.setText(time);
 
             ViewGroup.LayoutParams stackParams = new LinearLayout.LayoutParams(600,

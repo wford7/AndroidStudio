@@ -6,9 +6,13 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.media.Ringtone;
 import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Binder;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -75,7 +79,6 @@ public class NotifyService extends Service {
         Intent intent = new Intent(this, DailyWorkoutActivity.class);
         if (workoutItem != null) {
             mBuilder.setContentTitle(workoutItem.getName().toString());
-
             switch (workoutItem.getType()) {
                 case CARDIO:
                     mBuilder.setContentText(String.valueOf(((CardioWorkoutItem)workoutItem).
@@ -96,10 +99,23 @@ public class NotifyService extends Service {
                     break;
             }
 
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+            if (workoutItem.isNotificationDefault()) {
+                if (sharedPref.getBoolean(SettingsActivity.PREF_NOTIFY_ENABLED, true)) {
+                    workoutItem.setNotificationEnabled(true);
+                    workoutItem.setNotificationVibrate(
+                            sharedPref.getBoolean(SettingsActivity.PREF_NOTIFY_VIBRATE, true));
+                    workoutItem.setNotificationMinutesInAdvance(Integer.parseInt(
+                            sharedPref.getString(SettingsActivity.PREF_NOTIFY_ADVANCE, "0")));
+                    workoutItem.setNotificationTone(Uri.parse(
+                            sharedPref.getString(SettingsActivity.PREF_NOTIFY_TONE, "")));
+                } else {
+                    stopSelf(); //The default has since been changed and we don't want it now.
+                }
+            }
             if (workoutItem.getNotificationTone() != null) {
                 mBuilder.setSound(workoutItem.getNotificationTone());
             } else {
-                //mBuilder.setDefaults(Notification.DEFAULT_SOUND);
                 mBuilder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
             }
             if (workoutItem.isNotificationVibrate()) {
@@ -107,7 +123,8 @@ public class NotifyService extends Service {
             } else {
                 mBuilder.setVibrate(new long[]{0, 0, 0});
             }
-            if (workoutItem.isNotificationOngoing()) {
+
+            if (sharedPref.getBoolean(SettingsActivity.PREF_NOTIFY_ONGOING, false)) {
                 mBuilder.setOngoing(true);
                 mBuilder.setAutoCancel(false);
             }
@@ -124,14 +141,12 @@ public class NotifyService extends Service {
         } else {
             mBuilder.setContentTitle("Time to work out!");
             mBuilder.setContentText("Let's go!");
-//            mBuilder.setDefaults(Notification.DEFAULT_SOUND);
             mBuilder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
             mBuilder.setVibrate(new long[]{0, 300, 0});
         }
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, 0);
         mBuilder.setContentIntent(contentIntent);
 
-        mBuilder.setDefaults(Notification.DEFAULT_SOUND);
         NotificationManager mNotificationManager =
                 (NotificationManager)this.getSystemService(Context.NOTIFICATION_SERVICE);
         Log.d(TAG, "Displaying notification for workout item (ID: " + workoutItem.getID() + ").");

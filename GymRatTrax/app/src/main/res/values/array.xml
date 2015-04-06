@@ -14,4 +14,9 @@
         <item>Weekly Weight</item>
         <item>Weekly Calories</item>
     </string-array>
+
+    <string-array name="date_format_array">
+        <item>MM/dd/yyyy</item>
+        <item>dd/MM/yyyy</item>
+    </string-array>
 </resources>

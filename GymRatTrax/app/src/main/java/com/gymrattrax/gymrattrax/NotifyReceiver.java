@@ -5,7 +5,9 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import java.util.Calendar;
@@ -33,16 +35,12 @@ public class NotifyReceiver extends BroadcastReceiver {
 
         DBHelper dbh = new DBHelper(context);
 
-        boolean defaultEnabled =
-                dbh.getProfileInfo(DBContract.ProfileTable.KEY_NOTIFY_ENABLED).equals("1");
-        boolean defaultVibrate =
-                dbh.getProfileInfo(DBContract.ProfileTable.KEY_NOTIFY_VIBRATE).equals("1");
-        int defaultMinutes = 0;
-        try {
-            defaultMinutes =
-                    Integer.valueOf(dbh.getProfileInfo(DBContract.ProfileTable.KEY_NOTIFY_ADVANCE));
-        } catch (NumberFormatException ignored){}
-        Uri defaultTone = Uri.parse(dbh.getProfileInfo(DBContract.ProfileTable.KEY_NOTIFY_TONE));
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        boolean defaultEnabled = sharedPref.getBoolean(SettingsActivity.PREF_NOTIFY_ENABLED, true);
+        boolean defaultVibrate = sharedPref.getBoolean(SettingsActivity.PREF_NOTIFY_VIBRATE, true);
+        int defaultMinutes = Integer.parseInt(
+                sharedPref.getString(SettingsActivity.PREF_NOTIFY_ADVANCE, "0"));
+        Uri defaultTone = Uri.parse(sharedPref.getString(SettingsActivity.PREF_NOTIFY_TONE, ""));
 
         Calendar today = Calendar.getInstance();
         Calendar nextWeek = Calendar.getInstance();

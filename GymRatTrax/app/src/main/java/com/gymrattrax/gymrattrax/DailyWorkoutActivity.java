@@ -93,7 +93,7 @@ public class DailyWorkoutActivity extends ActionBarActivity {
                 int seconds = secondsTotal % 60;
                 int minutes = (secondsTotal - seconds) / 60;
                 String time = minutes + " minutes, " + seconds + " seconds";
-                time = dbh.displayDateTime(w.getDateScheduled()) + ": " + time;
+                time = dbh.displayDateTime(this, w.getDateScheduled()) + ": " + time;
                 viewTime.setText(time);
             } else {
                 int sets = ((StrengthWorkoutItem)w).getSetsScheduled();

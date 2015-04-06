@@ -1,11 +1,13 @@
 package com.gymrattrax.gymrattrax;
 
 import android.content.ContentValues;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.Context;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,32 +34,6 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(DBContract.ProfileTable.CREATE_TABLE);
         db.execSQL(DBContract.WeightTable.CREATE_TABLE);
         db.execSQL(DBContract.WorkoutTable.CREATE_TABLE);
-
-        //initialize default values for Profile table
-        String key = DBContract.ProfileTable.COLUMN_NAME_KEY;
-        String val = DBContract.ProfileTable.COLUMN_NAME_VALUE;
-        String tabl = DBContract.ProfileTable.TABLE_NAME;
-        ContentValues values = new ContentValues();
-        //load default display date value
-        values.put(key, DBContract.ProfileTable.KEY_DATE_FORMAT);
-        values.put(val, "MM/dd/yyyy");
-        db.insert(tabl, null, values);
-        //initialize global default notification settings
-        values.put(key, DBContract.ProfileTable.KEY_NOTIFY_ENABLED);
-        values.put(val, "1");
-        db.insert(tabl, null, values);
-        values.put(key, DBContract.ProfileTable.KEY_NOTIFY_VIBRATE);
-        values.put(val, "1");
-        db.insert(tabl, null, values);
-        values.put(key, DBContract.ProfileTable.KEY_NOTIFY_ADVANCE);
-        values.put(val, "0");
-        db.insert(tabl, null, values);
-        values.put(key, DBContract.ProfileTable.KEY_NOTIFY_TONE);
-        values.put(val, "default");
-        db.insert(tabl, null, values);
-        values.put(key, DBContract.ProfileTable.KEY_NOTIFY_ONGOING);
-        values.put(val, "0");
-        db.insert(tabl, null, values);
     }
 
     /**
@@ -362,6 +338,11 @@ public class DBHelper extends SQLiteOpenHelper {
         return getWorkoutsInRange(cal.getTime(),cal.getTime());
     }
 
+    //TODO: Decide if a Context needs to be added to this.
+    /*
+     * The Context that will be passed into the getDefaultSharedPreferences routine
+     *                (if applicable for default notifications purposes).
+     */
     /**
      * Returns an array of all workout items that fall within a provided date range.
      * @param start A Date value that contains the start date requested for Workout records. The
@@ -384,6 +365,14 @@ public class DBHelper extends SQLiteOpenHelper {
         return storeWorkouts(query);
     }
 
+    /**
+     * Retrieve a single WorkoutItem based on its database ID. If the ID provided does not match
+     * a workout in the table, WorkoutItem will be returned null.
+     * @param id A long value representing the database ID of the workout item that is intended to
+     *           be returned.
+     * @return A complete WorkoutItem with workoutItem.getID() equal to the passed in id value,
+     * unless no such WorkoutItem can be found, in which case a null Object is returned.
+     */
     public WorkoutItem getWorkoutById(long id) {
         /*
         Convert the Date values into string matching the format, “yyyy-MM-dd HH:mm:ss.SSS,” but set
@@ -453,19 +442,40 @@ public class DBHelper extends SQLiteOpenHelper {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.US);
         return sdf.format(d);
     }
-    public String displayDate(Date d) {
-        String dateFormat = getProfileInfo(DBContract.ProfileTable.KEY_DATE_FORMAT);
+
+    /**
+     * Displays a passed in Date value (date only) according to the preferred date format.
+     * @param context The Context that will be passed into the getDefaultSharedPreferences routine.
+     * @param date The Date that will be displayed.
+     * @return A String value that represents the passed in date according to the preferred format.
+     * @see com.gymrattrax.gymrattrax.DBHelper#displayDateTime(android.content.Context,
+     * java.util.Date) displayDateTime returns a formatted string that includes the time value.
+     */
+    public String displayDate(Context context, Date date) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        String dateFormat = sharedPref.getString(SettingsActivity.PREF_DATE_FORMAT, "");
         if (dateFormat.trim().isEmpty())
             dateFormat = "MM/dd/yyyy";
         SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
-        return sdf.format(d);
+        return sdf.format(date);
     }
-    public String displayDateTime(Date d) {
-        String dateFormat = getProfileInfo(DBContract.ProfileTable.KEY_DATE_FORMAT);
+
+    /**
+     * Displays a passed in Date value (date with time) according to the preferred date format.
+     * @param context The Context that will be passed into the getDefaultSharedPreferences routine.
+     * @param date The Date that will be displayed.
+     * @return A String value that represents the passed in date (Date with time) according to the
+     * preferred format.
+     * @see com.gymrattrax.gymrattrax.DBHelper#displayDate(android.content.Context, java.util.Date)
+     * displayDate returns a formatted string that does not also include any time value.
+     */
+    public String displayDateTime(Context context, Date date) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        String dateFormat = sharedPref.getString(SettingsActivity.PREF_DATE_FORMAT, "");
         if (dateFormat.trim().isEmpty())
             dateFormat = "MM/dd/yyyy";
         SimpleDateFormat sdf = new SimpleDateFormat(dateFormat + " hh:mm a", Locale.US);
-        return sdf.format(d);
+        return sdf.format(date);
     }
 
     public String now() {
@@ -586,14 +596,6 @@ public class DBHelper extends SQLiteOpenHelper {
             if (cursor.getInt(cursor.getColumnIndex(
                     DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_DEFAULT)) > 0) {
                 workouts[i].setNotificationDefault(true);
-                workouts[i].setNotificationEnabled(
-                        getProfileInfo(DBContract.ProfileTable.KEY_NOTIFY_ENABLED).equals("1"));
-                workouts[i].setNotificationVibrate(
-                        getProfileInfo(DBContract.ProfileTable.KEY_NOTIFY_VIBRATE).equals("1"));
-                workouts[i].setNotificationMinutesInAdvance(Integer.parseInt(
-                        getProfileInfo(DBContract.ProfileTable.KEY_NOTIFY_ADVANCE)));
-                workouts[i].setNotificationTone(Uri.parse(
-                        getProfileInfo(DBContract.ProfileTable.KEY_NOTIFY_TONE)));
             } else {
                 workouts[i].setNotificationDefault(true);
                 workouts[i].setNotificationEnabled(cursor.getInt(cursor.getColumnIndex(
@@ -605,8 +607,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 workouts[i].setNotificationTone(Uri.parse(cursor.getString(cursor.getColumnIndex(
                         DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_TONE))));
             }
-            workouts[i].setNotificationOngoing(
-                    getProfileInfo(DBContract.ProfileTable.KEY_NOTIFY_ONGOING).equals("1"));
+//            workouts[i].setNotificationOngoing(
+//                    getProfileInfo(DBContract.ProfileTable.KEY_NOTIFY_ONGOING).equals("1"));
 
             i++;
         }
@@ -615,53 +617,4 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return workouts;
     }
-
-//    //TODO: Consider getting rid of the following two methods altogether.
-//    /**
-//     * Schedules a notification based on a WorkoutItem having been up
-//     * @param workoutItem The workout item that will control the notification, when it's timed and
-//     *                    what its content will be.
-//     * @param context The Context that will be used to bind DBHelper to the NotifyScheduler
-//     *                service.
-//     * @deprecated Please use NotifyService.cancelNotifications() and
-//     * NotifyService.setNotifications() instead.
-//     */
-//    @Deprecated
-//    private void addNotification(WorkoutItem workoutItem, Context context) {
-////        NotifyScheduler notifyScheduler;
-////        notifyScheduler = new NotifyScheduler(context);
-////        notifyScheduler.doBindService();
-////
-////        notifyScheduler.setAlarmForNotification(workoutItem);
-////
-////        notifyScheduler.doUnbindService();
-//    }
-//
-//    @Deprecated
-//    public int updateWorkoutNotificationSettings(WorkoutItem workoutItem) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        ContentValues values = new ContentValues();
-//
-//        if (workoutItem.isNotificationVibrate())
-//            values.put(DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_VIBRATE, 1);
-//        else
-//            values.put(DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_VIBRATE, 0);
-//        values.put(DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_ADVANCE,
-//                workoutItem.getNotificationMinutesInAdvance());
-//        if (workoutItem.getNotificationTone() == null)
-//            values.put(DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_TONE, "default");
-//        else
-//            values.put(DBContract.WorkoutTable.COLUMN_NAME_NOTIFY_TONE,
-//                    workoutItem.getNotificationTone().toString());
-//
-//        String[] args = new String[1];
-//        args[0] = String.valueOf(workoutItem.getID());
-//
-//        int result = db.update(DBContract.WorkoutTable.TABLE_NAME, values,
-//                DBContract.WorkoutTable._ID + "=?", args);
-//
-//        db.close();
-//
-//        return result;
-//    }
 }

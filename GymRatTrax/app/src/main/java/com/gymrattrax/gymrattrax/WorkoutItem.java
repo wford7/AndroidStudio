@@ -21,7 +21,6 @@ public abstract class WorkoutItem {
     private boolean notificationVibrate;
     private int notificationMinutesInAdvance;
     private Uri notificationTone;
-    private boolean notificationOngoing;
 
     public ExerciseName getName() {
         return name;
@@ -135,13 +134,5 @@ public abstract class WorkoutItem {
 
     public void setNotificationTone(Uri notificationTone) {
         this.notificationTone = notificationTone;
-    }
-
-    public boolean isNotificationOngoing() {
-        return notificationOngoing;
-    }
-
-    public void setNotificationOngoing(boolean notificationOngoing) {
-        this.notificationOngoing = notificationOngoing;
     }
 }

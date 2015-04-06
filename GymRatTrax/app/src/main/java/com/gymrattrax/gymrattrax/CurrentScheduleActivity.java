@@ -70,7 +70,7 @@ public class CurrentScheduleActivity extends ActionBarActivity {
             String time = minutes + " minutes, " + seconds + " seconds";
 
 
-            time = dbh.displayDateTime(w.getDateScheduled()) + ": " + time;
+            time = dbh.displayDateTime(this, w.getDateScheduled()) + ": " + time;
 
 
             viewTime.setText(time);
