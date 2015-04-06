@@ -44,7 +44,10 @@ public class NotifyReceiver extends BroadcastReceiver {
         } catch (NumberFormatException ignored){}
         Uri defaultTone = Uri.parse(dbh.getProfileInfo(DBContract.ProfileTable.KEY_NOTIFY_TONE));
 
-        WorkoutItem[] workouts = dbh.getWorkoutsForToday();
+        Calendar today = Calendar.getInstance();
+        Calendar nextWeek = Calendar.getInstance();
+        nextWeek.add(Calendar.DAY_OF_MONTH, 7);
+        WorkoutItem[] workouts = dbh.getWorkoutsInRange(today.getTime(), nextWeek.getTime());
 
 //        NotifyScheduler notifyScheduler;
 //        notifyScheduler = new NotifyScheduler(context);
@@ -66,8 +69,13 @@ public class NotifyReceiver extends BroadcastReceiver {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(workoutItem.getDateScheduled());
                 calendar.add(Calendar.MINUTE, -workoutItem.getNotificationMinutesInAdvance());
-                Log.d(TAG, "About to set notification (ID: " + workoutItem.getID() + ").");
-                setNotification(context, calendar, pIntent);
+                //TODO: Remove this 'quick fix' later.
+                if (calendar.after(today)) {
+                    Log.d(TAG, "About to set notification (ID: " + workoutItem.getID() + ").");
+                    setNotification(context, calendar, pIntent);
+                } else {
+                    Log.d(TAG, "Notification (ID: " + workoutItem.getID() + ") not set.");
+                }
             }
         }
 //        notifyScheduler.doUnbindService();
@@ -100,7 +108,7 @@ public class NotifyReceiver extends BroadcastReceiver {
     }
 
     private static PendingIntent createPendingIntent(Context context, WorkoutItem workoutItem) {
-        Intent intent = new Intent(context, NotifyNotifier.class);
+        Intent intent = new Intent(context, NotifyService.class);
         intent.putExtra(ID, workoutItem.getID());
         intent.putExtra(NAME, workoutItem.getName());
         Calendar cal = Calendar.getInstance();

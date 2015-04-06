@@ -1,10 +1,15 @@
 <resources>
-    <style name="AppTheme" parent="AppTheme.Base" />
-    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="AppTheme.NoBar.Base" />
+    <style name="AppTheme.NoBar.Base" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorAccent">@color/secondary</item>
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary700</item>
     </style>
-    <style name="cust_dialog" parent="@android:style/Theme.NoTitleBar.Fullscreen">
+    <style name="AppTheme.Base" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">@color/secondary</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary700</item>
     </style>
+    <style name="cust_dialog" parent="@android:style/Theme.NoTitleBar.Fullscreen" />
+    <style name="NewTheme" parent="AppTheme.Base" />
 </resources>

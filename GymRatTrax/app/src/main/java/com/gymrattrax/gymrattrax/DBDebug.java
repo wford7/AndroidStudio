@@ -68,18 +68,13 @@ public class DBDebug extends ActionBarActivity {
     }
 
     public void onNotificationButtonClick(View v){
+        NotifyReceiver.cancelNotifications(this);
         DBHelper dbh = new DBHelper(this);
         WorkoutItem w = dbh.getWorkoutById(1);
         Calendar c = Calendar.getInstance();
         c.add(Calendar.SECOND, 2);
         w.setDateScheduled(c.getTime());
-
-//        NotifyScheduler notifyScheduler;
-//        notifyScheduler = new NotifyScheduler(this);
-//        notifyScheduler.doBindService();
-
-//        notifyScheduler.setAlarmForNotification(w);
-
-//        notifyScheduler.doUnbindService();
+        dbh.addWorkout(w);
+        NotifyReceiver.setNotifications(this);
     }
 }

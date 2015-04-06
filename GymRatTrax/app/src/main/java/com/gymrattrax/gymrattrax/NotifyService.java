@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.os.Binder;
-import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -17,16 +16,16 @@ import android.util.Log;
 /**
  * Receive Alarm and create the notification itself.
  */
-public class NotifyNotifier extends Service {
-    private static final String TAG ="NotifyNotifier";
+public class NotifyService extends Service {
+    private static final String TAG ="NotifyService";
 
     private WorkoutItem workoutItem;
     /**
      * Class for clients to access
      */
     public class ServiceBinder extends Binder {
-        NotifyNotifier getService() {
-            return NotifyNotifier.this;
+        NotifyService getService() {
+            return NotifyService.this;
         }
     }
 
@@ -39,7 +38,7 @@ public class NotifyNotifier extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.i("LocalService", "Received start id " + startId + ": " + intent);
+        Log.i("TAG", "Received start id " + startId + ": " + intent);
 
         // If this service was started by out NotifyAlarm intent then we want to show our notification
 
@@ -49,7 +48,7 @@ public class NotifyNotifier extends Service {
             workoutItem = dbh.getWorkoutById(wid);
             dbh.close();
         }
-        if(intent.getBooleanExtra(NotifyReceiver.INTENT_NOTIFY, false))
+//        if(intent.getBooleanExtra(NotifyReceiver.INTENT_NOTIFY, false))
             showNotification();
 
         // We don't care if this service is stopped as we have already delivered our notification

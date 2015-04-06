@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+    <!--<ListPreference-->
+        <!--android:dependency="pref_sync"-->
+        <!--android:key="pref_syncConnectionType"-->
+        <!--android:title="Test list box"-->
+        <!--android:dialogTitle="Sync Connection Type Dialog"-->
+        <!--android:entries="@array/debug_array"-->
+        <!--android:entryValues="@array/graphs_array"-->
+        <!--android:defaultValue="Default value" />-->
+    <PreferenceScreen
+        android:key="button_voicemail_category_key"
+        android:title="Notifications"
+        android:persistent="true">
+        <SwitchPreference
+            android:key="pref_notify_enabled"
+            android:title="Enable notifications"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="pref_notify_vibrate"
+            android:title="Enable vibration"
+            android:defaultValue="true" />
+        <EditTextPreference
+            android:key="pref_notify_advance"
+            android:title="Advance notification"
+            android:summary="Number of minutes in advance to display the notification before the actual scheduled time."
+            android:defaultValue="0" />
+        <RingtonePreference
+            android:key="pref_notify_tone"
+            android:title="Default tone"
+            android:ringtoneType="notification" />
+        <CheckBoxPreference
+            android:key="pref_notify_ongoing"
+            android:title="Persistent notifications"
+            android:summary="Notification will not be dismissed until activity is actually logged."
+            android:defaultValue="false" />
+    </PreferenceScreen>
+</PreferenceScreen>

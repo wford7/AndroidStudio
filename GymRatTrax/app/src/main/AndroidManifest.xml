@@ -44,7 +44,12 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:theme="@style/NewTheme"
+            android:parentActivityName=".HomeScreen">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeScreen" />
         </activity>
         <activity
             android:name=".ProgressActivity"
@@ -101,7 +106,6 @@
             </intent-filter>
         </receiver>
         <service android:name=".NotifyService" />
-        <!--<service android:name="service.NotifyNotifier" />-->
 
     </application>
 
