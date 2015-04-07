@@ -2,62 +2,43 @@ package com.gymrattrax.gymrattrax;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
+import com.gymrattrax.gymrattrax.ListViewAdapterEdit.custButtonListener;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.GridView;
-import android.widget.NumberPicker;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.Calendar;
-import java.util.Date;
+import android.widget.ListView;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
-public class AddWorkoutActivity extends ActionBarActivity {
+public class AddWorkoutActivity extends ActionBarActivity implements custButtonListener, ListViewAdapterAdd.custButtonListener {
+    private ArrayList<String> workoutItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_workout);
 
-        String[] workout_names = getAllWorkouts();
-        displayAllWorkouts(workout_names);
+        displayAllWorkouts();
 
-        TextView title = (TextView) findViewById(R.id.strength_title);
-;
     }
 
-    private void displayAllWorkouts(String[] s) {
+    private void displayAllWorkouts() {
+        String[] workout_names = getAllWorkouts();
+        List<String> temp = Arrays.asList(workout_names);
+        workoutItems.addAll(temp);
+        ListView listView = (ListView) findViewById(R.id.add_workouts_list);
 
-        setContentView(R.layout.activity_add_workout);
-        GridView gridView = (GridView) findViewById(R.id.workouts_grid);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, s);
+        // custom listView adapter
+        ListViewAdapterAdd adapter = new ListViewAdapterAdd(AddWorkoutActivity.this, workoutItems);
+        adapter.setCustButtonListener(AddWorkoutActivity.this);
+        listView.setAdapter(adapter);
 
-        gridView.setAdapter(adapter);
 
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Create strength workout item and set reps, sets, and weight
-
-                String s = ((TextView) view).getText().toString();
-                switch (ExerciseName.fromString(s)) {
-                    case WALK:
-                        displayCardioDetails();
-                        break;
-                    case JOG:
-                        displayCardioDetails();
-                        break;
-                    case RUN:
-                        displayCardioDetails();
-                        break;
-                    default:
-                        displayStrengthDetails(s);
-                }
             }
         });
     }
@@ -69,28 +50,28 @@ public class AddWorkoutActivity extends ActionBarActivity {
 
     private void displayStrengthDetails(String s) {
         Intent intent = new Intent(AddWorkoutActivity.this, AddStrengthWorkoutActivity.class);
-        ExerciseName details = ExerciseName.fromString(s);
-
+//        ExerciseName details = ExerciseName.fromString(s);
         startActivity(intent);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_add_strength_workout, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-
-        return super.onOptionsItemSelected(item);
     }
 
     public String[] getAllWorkouts() {
         return ExerciseName.getAllExerciseNames();
+    }
+
+    @Override
+    public void onButtonClickListener(int position, String value) {
+        switch (ExerciseName.fromString(value)) {
+            case WALK:
+                displayCardioDetails();
+                break;
+            case JOG:
+                displayCardioDetails();
+                break;
+            case RUN:
+                displayCardioDetails();
+                break;
+            default:
+                displayStrengthDetails(value);
+        }
     }
 }

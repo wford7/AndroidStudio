@@ -12,9 +12,9 @@
     <string name="title_activity_daily_workout">Daily Workout</string>
     <string name="title_activity_calorie_negation">Calorie Negation</string>
     <string name="title_activity_fitness_profile">Fitness Profile</string>
+    <string name="title_activity_schedule">View Schedule</string>
+
     <string name="title_activity_settings">Settings</string>
-    <string name="title_activity_schedule">Workout Schedules</string>
-    <string name="schedule_activity_current_schedule">Current Schedule</string>
     <string name="schedule_activity_add_event">Add Event</string>
     <string name="schedule_activity_back">BACK</string>
     <string name="title_activity_view_progress">View Progress</string>
@@ -48,10 +48,9 @@
     <string name="schedule_add_workout_button">Edit Workout</string>
     <string name="schedule_back_button">Back</string>
     <string name="schedule_activity_view_google_calendar">View Google Calendar</string>
-    <string name="UpcomingWorkouts">Upcoming Workouts</string>
+    <string name="UpcomingWorkouts">Scheduled Workouts</string>
     <string name="select_workout_type">Select a workout type:</string>
-    <string name="add_workout_activity_add_strength">Add Strength Workout</string>
-    <string name="add_workout_activity_add_cardio">Add Cardio Workout</string>
+    <string name="add_workout_activity_add_strength">AddStrength</string>
     <string name="title_activity_add_workout">Add A Workout</string>
     <string name="choose_an_exercise">Choose an exercise</string>
     <string name="strength_workout_activity_add_exercise">Add exercise</string>
@@ -60,6 +59,7 @@
     <string name="Sets">Sets</string>
     <string name="Reps">Reps</string>
     <string name="Cardio">Cardio</string>
+    <string name="add_workout_activity_add_cardio">AddCardio</string>
     <string name="Strength">Strength</string>
     <string name="Schedule">Schedule</string>
     <string name="select_strength_to_add">Select An Exercise</string>
@@ -78,7 +78,20 @@
     <string name="finished">Done</string>
     <string name="CurrentTime">Time Selected: </string>
     <string name="select_cardio_to_add">Set Cardio Exercise Goal</string>
-    <string name="select_cardio_time">Time:</string>
-    <string name="select_cardio_distance">Distance:</string>
-
+    <string name="select_cardio_time">Set Time:</string>
+    <string name="select_cardio_distance">Set Distance:</string>
+    <string name="edit_workout_activity">Edit Workout</string>
+    <string name="Edit">Edit</string>
+    <string name="AddAWorkout">Add a Workout</string>
+    <string name="new_workout">New Workout</string>
+    <string name="edit_strength_workout_activity">Edit Strength</string>
+    <string name="edit_cardio_workout_activity">Edit Cardio</string>
+    <string name="CurrEx">Current Exercise:</string>
+    <string name="set_exercise_details">Set Exercise Details</string>
+    <string name="current">Current Goal:</string>
+    <string name="change_cardio_goal">Change Cardio Exercise Goal</string>
+    <string name="set_ex_goal">Set Strength Exercise Goal</string>
+    <string name="ex_name">Exercise:</string>
+    <string name="select_time_activity">Select Time</string>
+    <string name="Done">Done</string>
 </resources>

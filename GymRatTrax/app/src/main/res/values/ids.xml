@@ -20,5 +20,7 @@
     <item name="weight_used" type="id">weight</item>
     <item name="strength_reps" type="id">strsets</item>
     <item name="strength_sets" type="id">strreps</item>
+    <item name="edit_workout_cardio" type="id">Edit Workout</item>
+    <item name="TimeSelected" type="id">Time</item>
 
 </resources>

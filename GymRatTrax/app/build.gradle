@@ -24,4 +24,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'com.jjoe64:graphview:4.0.0'
     compile 'com.google.apis:google-api-services-calendar:v3-rev120-1.19.1'
+    compile 'com.google.android.gms:play-services:6.5.87'
+    compile files('src/main/libs/gson-2.2.4.jar')
 }

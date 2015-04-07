@@ -6,16 +6,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.GridView;
-import android.widget.NumberPicker;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.Calendar;
-import java.util.Date;
 
 
 public class AddStrengthWorkoutActivity extends ActionBarActivity {
@@ -40,7 +32,7 @@ public class AddStrengthWorkoutActivity extends ActionBarActivity {
     }
 
     private void loadDateTime() {
-        Intent intent = new Intent(AddStrengthWorkoutActivity.this, SelectDateTimeActivity.class);
+        Intent intent = new Intent(AddStrengthWorkoutActivity.this, SelectDateActivity.class);
         startActivity(intent);
     }
 

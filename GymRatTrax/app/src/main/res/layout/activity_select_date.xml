@@ -42,18 +42,6 @@
         android:id="@+id/date_text"
         android:layout_gravity="center_horizontal" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/SetTime"
-        android:id="@+id/setTimeButton"
-        android:clickable="true"
-        android:textStyle="bold"
-        android:textSize="25sp"
-        android:background="@drawable/button_shp_rvrs_press"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="10dp" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -63,19 +51,19 @@
         android:id="@+id/display_time"
         android:layout_gravity="left" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Time"
-        android:id="@+id/TimeSelected"
-        android:layout_gravity="center_horizontal" />
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+        <!--android:text="Time"-->
+        <!--android:id="@+id/TimeSelected"-->
+        <!--android:layout_gravity="center_horizontal" />-->
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/finished"
-        android:id="@+id/doneButton"
+        android:text="@string/next"
+        android:id="@+id/next"
         android:clickable="true"
         android:textStyle="bold"
         android:textSize="25sp"
