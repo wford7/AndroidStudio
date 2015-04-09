@@ -11,5 +11,8 @@
         <item name="colorPrimaryDark">@color/primary700</item>
     </style>
     <style name="cust_dialog" parent="@android:style/Theme.NoTitleBar.Fullscreen" />
-    <style name="NewTheme" parent="AppTheme.Base" />
+    <style name="NewTheme" parent="AppTheme.Base">
+        <item name="android:windowNoTitle">false</item>
+        <item name="android:windowActionBar">true</item>
+    </style>
 </resources>

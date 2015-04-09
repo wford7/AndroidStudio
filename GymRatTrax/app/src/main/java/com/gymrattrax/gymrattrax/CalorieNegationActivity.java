@@ -291,9 +291,6 @@ public class CalorieNegationActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -326,13 +323,4 @@ public class CalorieNegationActivity extends ActionBarActivity {
         Log.d(TAG, "setNotifications called.");
         NotifyReceiver.setNotifications(this);
     }
-
-//    @Override
-//    protected void onStop() {
-//        // When our activity is stopped ensure we also stop the connection to the service
-//        // this stops us leaking our activity into the system *bad*
-//        if(notifyScheduler != null)
-//            notifyScheduler.doUnbindService();
-//        super.onStop();
-//    }
 }

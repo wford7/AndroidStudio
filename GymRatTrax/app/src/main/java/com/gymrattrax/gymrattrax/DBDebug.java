@@ -13,12 +13,10 @@ import android.widget.TextView;
 import java.util.Calendar;
 
 //TODO: Rename to DatabaseDebug and put in com.gymrattrax.scheduler.activities
-@Deprecated
 public class DBDebug extends ActionBarActivity {
     private Spinner tableSpinner;
     private TableLayout tableTable;
 
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debug);
@@ -28,13 +26,12 @@ public class DBDebug extends ActionBarActivity {
 
         tableSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-            @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String input = tableSpinner.getItemAtPosition(position).toString();
                 tableTable.removeAllViewsInLayout();
 
                 DBHelper dbh = new DBHelper(DBDebug.this);
-                String[][] dbValues = dbh.secretDebugDeleteFromFinalReleaseRawQuery(input);
+                String[][] dbValues = dbh.debugRawQuery(input);
                 dbh.close();
 
                 for (int i = 0; i < dbValues.length; i++) {

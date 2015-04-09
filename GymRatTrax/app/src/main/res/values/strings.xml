@@ -94,4 +94,10 @@
     <string name="ex_name">Exercise:</string>
     <string name="select_time_activity">Select Time</string>
     <string name="Done">Done</string>
+    <string name="settings_notify">Notifications</string>
+    <string name="settings_notify_button">button_notify_category_key</string>
+    <string name="pref_notify_default">Default values for new notifications</string>
+    <string name="pref_notify_weigh">Weigh-in notification</string>
+    <string name="set">Set</string>
+    <string name="cancel">Cancel</string>
 </resources>

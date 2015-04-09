@@ -16,15 +16,6 @@ public final class DBContract {
     private static final String L_PAREN = " (";
     private static final String R_PAREN = " )";
 
-    /**
-     * Allows debug functions to occur. Setting this to false should cause running the app to act
-     * as if it is a production build.
-     * @deprecated This variable serves no purpose to the customer, and it, along with all
-     * references, should be removed from the project before a production build.
-     */
-    @Deprecated
-    public static final boolean ALLOW_DEBUG = true;
-
     private DBContract() {}
 
     public static abstract class ProfileTable implements BaseColumns {
@@ -37,11 +28,6 @@ public final class DBContract {
         public static final String KEY_SEX            = "SEX";
         public static final String KEY_HEIGHT_INCHES  = "HEIGHT";
         public static final String KEY_DATE_FORMAT    = "DATE_FORMAT";
-        public static final String KEY_NOTIFY_ENABLED = "NOTIFY_ENABLED";
-        public static final String KEY_NOTIFY_VIBRATE = "NOTIFY_VIBRATE";
-        public static final String KEY_NOTIFY_TONE    = "NOTIFY_TONE";
-        public static final String KEY_NOTIFY_ADVANCE = "NOTIFY_ADVANCE";
-        public static final String KEY_NOTIFY_ONGOING = "NOTIFY_ONGOING";
 
         public static final String VAL_SEX_MALE   = "M";
         public static final String VAL_SEX_FEMALE = "F";

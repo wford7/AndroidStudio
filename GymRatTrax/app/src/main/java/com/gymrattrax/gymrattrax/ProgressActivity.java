@@ -141,15 +141,6 @@ public class ProgressActivity extends ActionBarActivity {
 
                         break;
                 }
-
-//                DBHelper dbh = new DBHelper(ProgressActivity.this);
-//                String[][] dbValues = dbh.secretDebugDeleteFromFinalReleaseRawQuery(input);
-//                dbh.close();
-
-//                updateLayoutScroll.removeAllViews();
-//                updateLayoutScroll.addView(tableItself);
-//                linearLayout.removeAllViews();
-//                linearLayout.addView(table);
             }
 
             @Override

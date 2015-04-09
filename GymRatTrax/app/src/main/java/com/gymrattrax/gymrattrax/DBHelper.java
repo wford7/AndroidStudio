@@ -484,37 +484,39 @@ public class DBHelper extends SQLiteOpenHelper {
         return convertDate(dat);
     }
 
-    //TODO: Remove this method from final release.
-    @Deprecated
-    public String[][] secretDebugDeleteFromFinalReleaseRawQuery(String table) {
-        switch (table) {
-            case "Profile":
-                table = DBContract.ProfileTable.TABLE_NAME;
-                break;
-            case "Weight":
-                table = DBContract.WeightTable.TABLE_NAME;
-                break;
-            case "Workout":
-                table = DBContract.WorkoutTable.TABLE_NAME;
-                break;
-        }
+    public String[][] debugRawQuery(String table) {
+        if (BuildConfig.DEBUG_MODE) {
+            switch (table) {
+                case "Profile":
+                    table = DBContract.ProfileTable.TABLE_NAME;
+                    break;
+                case "Weight":
+                    table = DBContract.WeightTable.TABLE_NAME;
+                    break;
+                case "Workout":
+                    table = DBContract.WorkoutTable.TABLE_NAME;
+                    break;
+            }
 
-        String query = "SELECT * FROM " + table;
+            String query = "SELECT * FROM " + table;
 
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(query, null);
+            SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.rawQuery(query, null);
 
-        String[][] value = new String[cursor.getCount() + 1][cursor.getColumnCount()];
-        for (int i = 0; i < cursor.getColumnCount(); i++) {
-            value[0][i] = "[ " + cursor.getColumnName(i) + " ]";
+            String[][] value = new String[cursor.getCount() + 1][cursor.getColumnCount()];
+            for (int i = 0; i < cursor.getColumnCount(); i++) {
+                value[0][i] = "[ " + cursor.getColumnName(i) + " ]";
+            }
+            while (cursor.moveToNext()) {
+                for (int i = 0; i < cursor.getColumnCount(); i++)
+                    value[cursor.getPosition() + 1][i] = cursor.getString(i);
+            }
+            cursor.close();
+            db.close();
+            return value;
+        } else {
+            return null;
         }
-        while (cursor.moveToNext()) {
-            for (int i = 0; i < cursor.getColumnCount(); i++)
-                value[cursor.getPosition() + 1][i] = cursor.getString(i);
-        }
-        cursor.close();
-        db.close();
-        return value;
     }
 
     private WorkoutItem[] storeWorkouts(String query) {
